@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!-- 新 Bootstrap 核心 CSS 文件 -->
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<!-- 可选的Bootstrap主题文件（一般不使用） -->
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<!--页面内的动画效果以及函数 -->
+		<script type="text/javascript" src="../static/index_of.js"></script>
+		<!-- 页面内用到的css-->
+		<link type="text/css" href="../static/index.css" rel="stylesheet"/>
+		<link type="text/css" href="../static/styles.css"  rel="stylesheet"/>
+		<title>房屋租赁</title>
+	</head>
+	<body onload="init()">
+		<!--首页顶部-->
+		<div class='banner extBanner' fbHeight='850' defaultwidth='0' style=' height: 850px; background: none;' >
+			<div id='bannerV2' class='banner defaultBannerMain J_bannerItem' style='background:url(../static/image/1.jpg) 50% 50% no-repeat;background-size: cover;height:850px;'>
+				<!-- 顶部的登录注册的四个按钮-->
+				<div class="row navigation">
+					<div class="col-md-1">
+					</div>
+					<div class="col-md-3">
+						<font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
+					</div>
+					<div class="col-md-2 title">
+					</div>
+					<div class="col-md-2 title">
+						<a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
+					</div>
+					<div class="col-md-2 title">
+						<a href="#" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
+					</div>
+					<div class="col-md-2 title">
+						<a href="javascript:showDialog()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">登录/注册</font></a>
+					</div>
+				</div>
+				<div id="dialog_contact" class="htmleaf-container">
+					<div class="login-wrap">
+						<div class="contact-html">
+							<label class="tab" style="">Suggestion</label>
+							<div class="contact">
+								<div class="group">
+									<textarea class="contact_text" rows="10" cols="40">
+									</textarea>
+								</div>
+								<div class="group">
+									<input type="submit" class="button" style="cursor: pointer;" value="Submit">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="dialog_login" class="htmleaf-container">
+				<div class="login-wrap">
+					<div class="login-html">
+						<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+						<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+						<div class="login-form">
+							<div class="sign-in-htm">
+								<div class="group">
+									<label for="user_login" class="label">Username</label>
+									<input id="user_login" type="text" class="input">
+								</div>
+								<div class="group">
+									<label for="pass_login" class="label">Password</label>
+									<input id="pass_login" type="password" class="input" data-type="password">
+								</div>
+								<div class="group">
+									<input type="submit" class="button" style="cursor: pointer;" value="Sign In">
+								</div>
+							</div>
+							<div class="sign-up-htm">
+								<div class="group">
+									<label for="user_sign" class="label">Username</label>
+									<input id="user_sign" type="text" class="input">
+								</div>
+								<div class="group">
+									<label for="pass_sign" class="label">Password</label>
+									<input id="pass_sign" type="password" class="input" data-type="password">
+								</div>
+								<div class="group">
+									<label for="pass_repeat" class="label">Repeat Password</label>
+									<input id="pass_repeat" type="password" class="input" data-type="password">
+								</div>
+								<div class="group">
+									<label for="email" class="label">Email Address</label>
+									<input id="email" type="text" class="input">
+								</div>
+								<div class="group">
+									<input type="submit" class="button" style="cursor: pointer;" value="Sign Up">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+				<!-- 搜索框-->
+				<div id="search" class="row" style="margin-top:300px">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8 input-group search">
+						<input type="text" class="form-control search">
+                    	<span class="input-group-btn">
+                        	<button class="btn btn-default search" type="button"><font size="5" color="#FFFFFF">Go!</font></button>
+                    	</span>
+					</div>
+					<div class="col-md-2">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 房子推荐的文本部分 静态 -->
+		<div class="row" style='background-color: #00000;background-size: cover;height:100px;'>
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-11 bottom">
+				<p style="color: rgb(0, 0, 0); font-size: 12px;">
+					<span style="font-size: 30px;">
+						<b>
+							<font face="微软雅黑, Microsoft YaHei">好房推荐</font>
+						</b>
+						<span>
+							<b>
+								<font face="微软雅黑, Microsoft YaHei"></font>
+							</b>
+						</span>
+					</span>
+					<span style="font-size: 30px;">
+						<b>
+							<font face="微软雅黑, Microsoft YaHei"></font>
+						</b>
+						<span style="font-family: 微软雅黑; color: rgb(68, 68, 68);">为你而选</span>
+					</span>
+				</p>
+				<p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;">
+					<span style="font-family: 微软雅黑; font-size: 14px; color: rgb(136, 136, 136);">好房源那么多，我们为你精心挑选，包您喜欢，包您满意</span>
+				</p>
+			</div>
+		</div>
+		<!--房子推荐的图片部分-->
+		<div class="row" style="margin-top: 70px">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+				<div class="row">
+					<div class="col-md-3">
+						<img alt='毓秀中央 精装修 三房两厅 &nbsp;' src='../static/image/index_house1.jpg' style='width:250px;height:170px;'/>
+						&nbsp;
+						<a href="#" target="_blank"><font color="#00000" style="color: rgb(0, 0, 0);" size="4">毓秀中央 精装修 三房两厅</font></a>
+					</div>
+					<div class="col-md-3">
+						<img alt='毓秀中央 精装修 三房一厅 &nbsp;' src='../static/image/index_house2.jpg' style='width:250px;height:170px;'/>
+						&nbsp;
+						<a href="#" target="_blank"><font color="#00000" style="color: rgb(0, 0, 0);" size="4">毓秀中央 精装修 三房一厅</font></a>
+					</div>
+					<div class="col-md-3">
+						<img alt='毓秀中央 精装修 四房两厅 &nbsp;' src='../static/image/index_house3.jpg' style='width:250px;height:170px;'/>
+						&nbsp;
+						<a href="#" target="_blank"><font color="#00000" style="color: rgb(0, 0, 0);" size="4">毓秀中央 精装修 四房两厅</font></a>
+					</div>
+					<div class="col-md-3">
+						<img alt='毓秀中央 毛胚 ；两房一厅 &nbsp;' src='../static/image/index_house4.jpg' style='width:250px;height:170px;'/>
+						&nbsp;
+						<a href="#" target="_blank"><font color="#00000" style="color: rgb(0, 0, 0);" size="4">毓秀中央 毛胚 两房一厅</font></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
+		<!--页面中订房流程介绍部分-->
+		<div class="row" style='background-color: #00000;background-size: cover;height:100px;'>
+			<div class="col-md-1" style="margin-top: 30px">
+			</div>
+			<div class="col-md-11" style="margin-top: 30px">
+				<font style="color: rgb(0, 0, 0);" color="#000000">
+					<b>
+						<span style="font-size: 32px;">订房流程</span>
+					</b>
+				</font> &nbsp;
+				<font style="" color="#a9a9a9">
+					<font style="color: rgb(153, 153, 153);" color="#999999">
+						<span style="font-size: 16px;">Purchase Process</span>
+					</font>
+				</font>
+			</div>
+		</div>
+		<div class="row" style='background-color: #00000;background-size: cover;height:350px;'>
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-2" style="margin-top: 50px">
+				<img src="../static/image/icon_bottom5.png">
+				<br/>
+				<span style="font-size: 22px; line-height: 39.6px; text-align: center;"><b><i><span style="font-size: 40px;"><font style="color: rgb(74, 179, 68);" color="#4ab344" face="Arial">1</font></span></i></b>&nbsp; 挑选房子</span>
+			</div>
+			<div class="col-md-2" style="margin-top: 50px">
+				<img src="../static/image/icon_bottom4.png">
+				<br/>
+				<span style="font-size: 22px; line-height: 39.6px; text-align: center;"><b><i><span style="font-size: 40px;"><font style="color: rgb(74, 179, 68);" color="#4ab344" face="Arial">2</font></span></i></b>&nbsp; 预订成功</span>
+			</div>
+			<div class="col-md-2" style="margin-top: 50px">
+				<img src="../static/image/icon_bottom3.png">
+				<br/>
+				<span style="font-size: 22px; line-height: 39.6px; text-align: center;"><b><i><span style="font-size: 40px;"><font style="color: rgb(74, 179, 68);" color="#4ab344" face="Arial">3</font></span></i></b>&nbsp; 接送看房</span>
+			</div>
+			<div class="col-md-2" style="margin-top: 50px">
+				<img src="../static/image/icon_bottom2.png">
+				<br/>
+				<span style="font-size: 22px; line-height: 39.6px; text-align: center;"><b><i><span style="font-size: 40px;"><font style="color: rgb(74, 179, 68);" color="#4ab344" face="Arial">4</font></span></i></b>&nbsp; 订房成功</span>
+			</div>
+			<div class="col-md-2" style="margin-top: 50px">
+				<img src="../static/image/icon_bottom1.png">
+				<br/>
+				<span style="font-size: 22px; line-height: 39.6px; text-align: center;"><b><i><span style="font-size: 40px;"><font style="color: rgb(74, 179, 68);" color="#4ab344" face="Arial">5</font></span></i></b>&nbsp; 搬家入住</span>
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
+		<!--页面底部-->
+		<div class="row" style='background-color: #696969;background-size: cover;height:150px;'>
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-1 title">
+				<img src="../static/image/icon_button1.png">
+			</div>
+			<div class="col-md-2 bottom">
+				<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">联系我们</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">020-00000000</span></p></span>
+			</div>
+			<div class="col-md-1 title">
+				<img src="../static/image/icon_button2.png">
+			</div>
+			<div class="col-md-2 bottom">
+				<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">预约看房</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">预约成功后线下看房选房</span></p></span>
+			</div>
+			<div class="col-md-1 title">
+				<img src="../static/image/icon_button3.png">
+			</div>
+			<div class="col-md-2 bottom">
+				<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">欢迎咨询</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">有任何问题请联系我们</span></p></span>
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
+	</body>
+</html>
