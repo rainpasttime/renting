@@ -10,7 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(20))                                    #密码   最大20个字符
     phone_number = db.Column(db.Integer, unique=True)                       #手机号码
     email = db.Column(db.String(25), unique=True)                           #邮箱  唯一
-    house = db.relationship('house')
+    salt = db.Column(db.String(32))
 
     def __init__(self, username, password, email, phone_number):
         self.username = username
@@ -77,7 +77,7 @@ class House(db.Model):
         self.status = status
 
 
-class Facility:
+class Facility(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)   # ID 设备唯一的标识 同时表示设备在字符串中的位置
     facility_name = db.Column(db.String(20), unique=True)  # 设备名  唯一   最大10个字符
     
@@ -85,7 +85,7 @@ class Facility:
         self.facility = facility
 
 
-class Oreder:
+class Oreder(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)    #订单唯一的ID
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))         #房屋ID 作为外键
     saller = db.Column(db.String(10), db.ForeignKey('user.username'))   #房屋的卖家  作为外键
