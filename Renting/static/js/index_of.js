@@ -19,30 +19,13 @@ function init(){
 	setInterval("changeImg()",3000);
 }
 
-//	自动居中元素
-function autoCenter( el ){
-	let bodyW = document.documentElement.clientWidth;
-	let bodyH = document.documentElement.clientHeight;
-
-	let elW = el.offsetWidth;
-	let elH = el.offsetHeight;
-
-	el.style.left = (bodyW-elW)/2 + 'px';
-	el.style.top = (bodyH-elH)/2 + 'px';
-}
-
-//	自动扩展元素到全部显示区域
-function fillToBody( el ){
-	el.style.width  = document.documentElement.clientWidth  +'px';
-	el.style.height = document.documentElement.clientHeight + 'px';
-}
-
-//	重新调整对话框的位置和遮罩，并且展现
+//	重新调整登录注册对话框的位置和遮罩，并且展现
 function showDialog(){
 	g('dialog_login').style.display = 'block';
 	g('search').style.display = 'none';
 }
 
+//联系我们的弹出框
 function showDialogContact(){
 	g('dialog_contact').style.display = 'block';
 	g('search').style.display = 'none';

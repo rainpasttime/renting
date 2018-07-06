@@ -1,5 +1,7 @@
 # -*-encoding:UTF-8 -*-
 from Renting import db
+from datetime import datetime
+
 
 #用户表的定义
 class User(db.Model):
@@ -8,6 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(20))                                    #密码   最大20个字符
     phone_number = db.Column(db.Integer, unique=True)                       #手机号码
     email = db.Column(db.String(25), unique=True)                           #邮箱  唯一
+    house = db.relationship('house')
 
     def __init__(self, username, password, email, phone_number):
         self.username = username
@@ -92,11 +95,11 @@ class Oreder:
     total_price = db.Column(db.Integer)                                 #订单的价格
     status = db.Column(db.Integer)                                      #订单状态 0表示订单已取消  1表示订单未受理  2表示订单受理  3表示订单正在取消
 
-    def __init__(self,house_id, saller, renter, start_time, end_time, total_price, status):
+    def __init__(self,house_id, saller, renter, end_time, total_price, status):
         self.house_id = house_id
         self.saller = saller
         self.renter = renter
-        self.start_time = start_time
+        self.start_time = datetime.now()
         self.end_time = end_time
         self.total_price = total_price
         self.status = status

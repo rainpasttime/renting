@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
 		<!-- 新 Bootstrap 核心 CSS 文件 -->
 		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 		<!-- 可选的Bootstrap主题文件（一般不使用） -->
@@ -11,10 +10,16 @@
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!--页面内的动画效果以及函数 -->
-		<script type="text/javascript" src="../static/index_of.js"></script>
+		<script type="text/javascript" src="../static/js/index_of.js"></script>
+		<!--导入菜鸟的JS的validate相关的库-->
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+		<!--导入自己的js文件-->
+		<script type="text/javascript" src="../static/js/register.js"></script>
 		<!-- 页面内用到的css-->
-		<link type="text/css" href="../static/index.css" rel="stylesheet"/>
-		<link type="text/css" href="../static/styles.css"  rel="stylesheet"/>
+		<link type="text/css" href="../static/css/index.css" rel="stylesheet"/>
+		<link type="text/css" href="../static/css/styles.css"  rel="stylesheet"/>
+		<meta charset="UTF-8">
 		<title>房屋租赁</title>
 	</head>
 	<body onload="init()">
@@ -37,9 +42,14 @@
 						<a href="#" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
 					</div>
 					<div class="col-md-2 title">
-						<a href="javascript:showDialog()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">登录/注册</font></a>
+						<a href="javascript:showDialog()">
+							<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+							登陆注册
+							</font>
+						</a>
 					</div>
 				</div>
+				<!-- 联系我们-->
 				<div id="dialog_contact" class="htmleaf-container">
 					<div class="login-wrap">
 						<div class="contact-html">
@@ -56,50 +66,56 @@
 						</div>
 					</div>
 				</div>
-				<div id="dialog_login" class="htmleaf-container">
-				<div class="login-wrap">
-					<div class="login-html">
-						<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-						<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-						<div class="login-form">
-							<div class="sign-in-htm">
-								<div class="group">
-									<label for="user_login" class="label">Username</label>
-									<input id="user_login" type="text" class="input">
+				<!--登陆注册-->
+				<form  method="post" id="signupinform">
+					<div id="dialog_login" class="htmleaf-container">
+					<div class="login-wrap">
+						<!--登录部分-->
+						<div class="login-html">
+							<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+							<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+							<div class="login-form">
+								<div class="sign-in-htm">
+									<div class="group">
+										<label for="user_login" class="label1" >Username</label>
+										<input id="user_login" type="text" class="input" name="user_login">
+									</div>
+									<div class="group">
+										<label for="pass_login" class="label1" >Password</label>
+										<input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
+									</div>
+									<div class="group">
+										<!--<input type="submit" class="button" style="cursor: pointer;" value="Sign In">-->
+										<button class="button" onclick="">Sign In</button>
+									</div>
 								</div>
-								<div class="group">
-									<label for="pass_login" class="label">Password</label>
-									<input id="pass_login" type="password" class="input" data-type="password">
-								</div>
-								<div class="group">
-									<input type="submit" class="button" style="cursor: pointer;" value="Sign In">
-								</div>
-							</div>
-							<div class="sign-up-htm">
-								<div class="group">
-									<label for="user_sign" class="label">Username</label>
-									<input id="user_sign" type="text" class="input">
-								</div>
-								<div class="group">
-									<label for="pass_sign" class="label">Password</label>
-									<input id="pass_sign" type="password" class="input" data-type="password">
-								</div>
-								<div class="group">
-									<label for="pass_repeat" class="label">Repeat Password</label>
-									<input id="pass_repeat" type="password" class="input" data-type="password">
-								</div>
-								<div class="group">
-									<label for="email" class="label">Email Address</label>
-									<input id="email" type="text" class="input">
-								</div>
-								<div class="group">
-									<input type="submit" class="button" style="cursor: pointer;" value="Sign Up">
+								<div class="sign-up-htm">
+									<div class="group">
+										<label for="user_sign" class="label1">Username</label>
+										<input id="user_sign" type="text" class="input" name="user_sign">
+									</div>
+									<div class="group">
+										<label for="pass_sign" class="label1">Password</label>
+										<input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
+									</div>
+									<div class="group">
+										<label for="pass_repeat" class="label1">Repeat Password</label>
+										<input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
+									</div>
+									<div class="group">
+										<label for="email" class="label1">Email Address</label>
+										<input id="email" type="text" class="input" name="email">
+									</div>
+									<div class="group">
+										<!--<input type="submit" class="button" style="cursor: pointer;" value="Sign Up">-->
+										<button class="button" onclick="form=document.getElementById('signupinform');form.action='/reg/';">Sign Up</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				</div>
+					</div>
+				</form>
 				<!-- 搜索框-->
 				<div id="search" class="row" style="margin-top:300px">
 					<div class="col-md-2">
