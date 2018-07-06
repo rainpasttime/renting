@@ -67,14 +67,13 @@
 					</div>
 				</div>
 				<!--登陆注册-->
-				<form  method="post" id="signupinform">
-					<div id="dialog_login" class="htmleaf-container">
+				<div id="dialog_login" class="htmleaf-container">
 					<div class="login-wrap">
 						<div class="login-html">
 							<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
 							<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
 							<div class="login-form">
-								<div class="sign-in-htm">
+								<form method="post" id="loginform">
 									<div class="group">
 										<label for="user_login" class="label1" >Username</label>
 										<input id="user_login" type="text" class="input" name="user_login">
@@ -85,9 +84,10 @@
 									</div>
 									<div class="group">
 										<!--<input type="submit" class="button" style="cursor: pointer;" value="Sign In">-->
-										<button class="button" onclick="">Sign In</button>
+										<button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
 									</div>
-								</div>
+								</form>
+								<form  method="post" id="signupinform">
 								<div class="sign-up-htm">
 									<div class="group">
 										<label for="user_sign" class="label1">Username</label>
@@ -110,11 +110,11 @@
 										<button class="button" onclick="form=document.getElementById('signupinform');form.action='/reg/';">Sign Up</button>
 									</div>
 								</div>
+								</form>
 							</div>
 						</div>
 					</div>
-					</div>
-				</form>
+				</div>
 				<!-- 搜索框-->
 				<div id="search" class="row" style="margin-top:300px">
 					<div class="col-md-2">

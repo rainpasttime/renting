@@ -56,16 +56,22 @@ def login():
 
     #输入的用户名或者密码为空
     if username == '' or password == '':
-        return redirect('/index/')
+        return redirect_with_msg('/index/', u'用户名和密码不能为空', 'login')
 
     user_database = User.query.filter_by(username=username).first()
 
     #用户名不存在
     if user_database == None:
-        return redirect('/index/')
+        return redirect('/index/',u'用户名不存在', 'login')
 
-    if user_database.password == password:
-        print("登录成功")
+    m = hashlib.md5()
+    m.update((password + user_database.salt).encode('utf8'))
+    if m.hexdigest() != user_database.password:
+        return redirect('/index/', u'密码错误', 'login')
+
+    print("登录成功")
 
     return redirect('/')
+
+
 
