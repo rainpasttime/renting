@@ -49,7 +49,7 @@ class House(db.Model):
     city = db.Column(db.String(10))                     # 市
     district = db.Column(db.String(10))                 # 地区
     address = db.Column(db.String(100))                #具体地址
-    username = db.Column(db.String(10), db.ForeignKey('User.username'))       #房屋主人的名字，外键
+    username = db.Column(db.String(10), db.ForeignKey('user.username'))       #房屋主人的名字，外键
     status = db.Column(db.Integer)                     #房屋状态，0表示未审核，1表示审核
 
     def __init__(self, house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type,
@@ -77,14 +77,26 @@ class House(db.Model):
 class Facility:
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)   # ID 设备唯一的标识 同时表示设备在字符串中的位置
     facility_name = db.Column(db.String(20), unique=True)  # 设备名  唯一   最大10个字符
+    
+    def __init__(self,facility):
+        self.facility = facility
 
 
 class Oreder:
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)    #订单唯一的ID
-    house_id = db.Cloumn(db.Integer, db.ForeignKey('House.id'))         #房屋ID 作为外键
-    saller = db.Column(db.String(10), db.ForeignKey('User.username'))   #房屋的卖家  作为外键
-    renter = db.Column(db.String(10), db.ForeignKey('User.username'))   #房屋租户  作为外键
+    house_id = db.Column(db.Integer, db.ForeignKey('house.id'))         #房屋ID 作为外键
+    saller = db.Column(db.String(10), db.ForeignKey('user.username'))   #房屋的卖家  作为外键
+    renter = db.Column(db.String(10), db.ForeignKey('user.username'))   #房屋租户  作为外键
     start_time = db.Column(db.DateTime)                                 #订单开始时间
     end_time = db.Column(db.DateTime)                                   # 订单结束时间
     total_price = db.Column(db.Integer)                                 #订单的价格
     status = db.Column(db.Integer)                                      #订单状态 0表示订单已取消  1表示订单未受理  2表示订单受理  3表示订单正在取消
+
+    def __init__(self,house_id, saller, renter, start_time, end_time, total_price, status):
+        self.house_id = house_id
+        self.saller = saller
+        self.renter = renter
+        self.start_time = start_time
+        self.end_time = end_time
+        self.total_price = total_price
+        self.status = status
