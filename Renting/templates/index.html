@@ -42,11 +42,19 @@
 						<a href="#" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
 					</div>
 					<div class="col-md-2 title">
+						{% if current_user.is_authenticated %}
+						<a href="/profile/{{current_user.id}}">
+							<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+								{{current_user.username}}
+							</font>
+						</a>
+						{% else %}
 						<a href="javascript:showDialog()">
 							<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
 							登陆注册
 							</font>
 						</a>
+						{% endif %}
 					</div>
 				</div>
 				<!-- 联系我们-->

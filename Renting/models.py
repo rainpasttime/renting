@@ -1,5 +1,5 @@
 # -*-encoding:UTF-8 -*-
-from Renting import db
+from Renting import db, login_manager
 from datetime import datetime
 
 
@@ -20,6 +20,24 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %d %s>' %(self.id, self.username)
+
+
+    # Flask Login接口
+    def is_authenticated(self):
+        print('is_authenticated')
+        return True
+
+    def is_active(self):
+        print('is_active')
+        return True
+
+    def is_anonymous(self):
+        print('is_anonymous')
+        return False
+
+    def get_id(self):
+        print('get_id')
+        return self.id
 
 
 #管理员表的定义
@@ -103,3 +121,7 @@ class Oreder(db.Model):
         self.end_time = end_time
         self.total_price = total_price
         self.status = status
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.get(userid)
