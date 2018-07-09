@@ -148,8 +148,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> 订单管理 <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <!--历史订单显示所有订单，无论是别人的订单还是自己下的订单-->
-                            <li><a href="/history/">查看历史订单</a></li>
+                            <!--查看自己租房子的订单-->
+                            <li><a href="/renting/">查看订房订单</a></li>
                             <!--只显示自己发布的房屋所需要受理的订单-->
                             <li><a href="#">未受理的订单</a></li>
                             <li><a href="#"></a></li>
@@ -178,6 +178,7 @@
                 </button>
                 <div class="container">
                     <div class="row">
+                        {% if result_renter.length !=0: %}
                         <table class="table table-striped" style="margin-top:100px">
                             <thead>
                                 <tr>
@@ -190,32 +191,30 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            {% for item in result_renter: %}
                                 <tr>
-                                    <td>Tanmay</td>
-                                    <td>Bangalore</td>
-                                    <td>560001</td>
-                                    <td>Tanmay</td>
-                                    <td>Bangalore</td>
-                                    <td>560001</td>
-                                </tr>
-                                <tr>
-                                    <td>Sachin</td>
-                                    <td>Mumbai</td>
-                                    <td>400003</td>
-                                    <td>Tanmay</td>
-                                    <td>Bangalore</td>
-                                    <td>560001</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                    <td>Tanmay</td>
-                                    <td>Bangalore</td>
-                                    <td>560001</td>
+                                    <td>{{item['house'].house_name}}</td>
+                                    {% if item['house'].house_type==0 %}
+                                    <td>整租</td>
+                                    {% elif item['house'].house_type==1 %}
+                                    <td>单间</td>
+                                    {% else %}
+                                    <td>床位</td>
+                                    {% endif %}
+                                    <td>{{item['house'].province}}省 {{item['house'].city}}市
+                                        {% if item['house'].district !=None %}
+                                        {{item['house'].district}}区
+                                        {% endif %}
+                                        {{item['house'].address}}
+                                    </td>
+                                    <td>{{item['order'].start_time}}</td>
+                                    <td>{{item['order'].end_time}}</td>
+                                    <td>{{item['order'].total_price}}</td>
                                 </tr>
                             </tbody>
                         </table>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

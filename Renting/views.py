@@ -1,7 +1,7 @@
 # -*- encoding=UTF-8 -*-
 
 from Renting import app, db
-from Renting.models import User, Order
+from Renting.models import User, Order, House
 from flask import render_template, request, flash, get_flashed_messages, redirect
 from flask_login import login_user, logout_user, current_user, login_required
 import random
@@ -21,7 +21,7 @@ def profile(user_id):
     user = User.query.get(user_id)
     if user is None:
         return redirect('/')
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user,result_renter=[])
 
 
 def redirect_with_msg(target, msg, category):
@@ -107,16 +107,25 @@ def logout():
     return redirect('/index/')
 
 
-@app.route('/history')
+@app.route('/renting/')
 def history():
     '''先得到目前的用户
         然后从数据库中查询这个用户的所有订单
     '''
-    #得到这个用户的作为买家和作为卖家的所有订单
+    #得到这个用户的作为买家的所有订单
     user = current_user
-    saller_list = Order.query.filter_by(saller=user.username).all()
+    result_renter = []
     renter_list = Order.query.filter_by(renter=user.username).all()
-    return saller_list, renter_list
+    for item in renter_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        print(one)
+        result_renter.append(one)
+    #返回的是List类型
+    return render_template('profile.html', result_renter=result_renter)
+
 
 
 
