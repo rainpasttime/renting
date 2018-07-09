@@ -103,7 +103,7 @@ class Facility(db.Model):
         self.facility = facility
 
 
-class Oreder(db.Model):
+class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)    #订单唯一的ID
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))         #房屋ID 作为外键
     saller = db.Column(db.String(10), db.ForeignKey('user.username'))   #房屋的卖家  作为外键

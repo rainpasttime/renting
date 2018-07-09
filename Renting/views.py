@@ -1,7 +1,7 @@
 # -*- encoding=UTF-8 -*-
 
 from Renting import app, db
-from Renting.models import User
+from Renting.models import User, Order
 from flask import render_template, request, flash, get_flashed_messages, redirect
 from flask_login import login_user, logout_user, current_user, login_required
 import random
@@ -13,9 +13,15 @@ import hashlib
 def index():
     return render_template('index.html')
 
-@app.route('/profile/')
-def profile():
-    return render_template('profile.html')
+
+#个人中心页面 带有一个参数user表示现在的user
+@app.route('/profile/<int:user_id>')
+@login_required
+def profile(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return redirect('/')
+    return render_template('profile.html', user=user)
 
 
 def redirect_with_msg(target, msg, category):
@@ -99,5 +105,17 @@ def login():
 def logout():
     logout_user()
     return redirect('/index/')
+
+
+@app.route('/history')
+def history():
+    '''先得到目前的用户
+        然后从数据库中查询这个用户的所有订单
+    '''
+    #得到这个用户的作为买家和作为卖家的所有订单
+    user = current_user
+    saller_list = Order.query.filter_by(saller=user.username).all()
+    renter_list = Order.query.filter_by(renter=user.username).all()
+
 
 

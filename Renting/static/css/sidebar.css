@@ -89,10 +89,12 @@ html {
   width: 3px;
   z-index: -1;
 }
-.sidebar-nav li:first-child a {
+
+/*.sidebar-nav li:first-child a {
   background-color: #1a1a1a;
   color: #ffffff;
-}
+}*/
+
 .sidebar-nav li:nth-child(2):before {
   background-color: #402d5c;
 }
