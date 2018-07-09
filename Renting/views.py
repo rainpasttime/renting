@@ -116,6 +116,7 @@ def history():
     user = current_user
     saller_list = Order.query.filter_by(saller=user.username).all()
     renter_list = Order.query.filter_by(renter=user.username).all()
+    return saller_list, renter_list
 
 
 
