@@ -1,3 +1,8 @@
+//	获取元素对象
+function g(id){
+    return document.getElementById(id);
+}
+
 //	重新调整登录注册对话框的位置和遮罩，并且展现
 function showDialog(){
 	g('dialog_login').style.display = 'block';
