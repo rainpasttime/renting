@@ -19,14 +19,3 @@ function init(){
 	setInterval("changeImg()",3000);
 }
 
-//	重新调整登录注册对话框的位置和遮罩，并且展现
-function showDialog(){
-	g('dialog_login').style.display = 'block';
-	g('search').style.display = 'none';
-}
-
-//联系我们的弹出框
-function showDialogContact(){
-	g('dialog_contact').style.display = 'block';
-	g('search').style.display = 'none';
-}

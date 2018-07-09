@@ -13,6 +13,10 @@ import hashlib
 def index():
     return render_template('index.html')
 
+@app.route('/profile/')
+def profile():
+    return render_template('profile.html')
+
 
 def redirect_with_msg(target, msg, category):
     if msg is not None:
@@ -50,6 +54,9 @@ def reg():
     print("user_get:"+str(type(user_get)))
     login_user(user_get)
 
+    next_page = request.values.get('next')
+    if next_page is not None and next_page.startswith('/') > 0:
+        return redirect(next_page)
     return redirect('/')
 
 
@@ -81,6 +88,9 @@ def login():
     login_user(user_database)
     print("登录成功")
 
+    next_page= request.values.get('next')
+    if next_page is not None and next_page.startswith('/') > 0:
+        return redirect(next_page)
     return redirect('/')
 
 

@@ -9,16 +9,17 @@
 		<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!--页面内的动画效果以及函数 -->
-		<script type="text/javascript" src="../static/js/index_of.js"></script>
 		<!--导入菜鸟的JS的validate相关的库-->
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<!--导入自己的js文件-->
 		<script type="text/javascript" src="../static/js/register.js"></script>
+		<script type="text/javascript" src="../static/js/index_of.js"></script>
+		<script type="text/javascript" src="../static/js/navigation.js"></script>
 		<!-- 页面内用到的css-->
 		<link type="text/css" href="../static/css/index.css" rel="stylesheet"/>
 		<link type="text/css" href="../static/css/styles.css"  rel="stylesheet"/>
+		<link type="text/css" href="../static/css/navigation.css"  rel="stylesheet"/>
 		<meta charset="UTF-8">
 		<title>房屋租赁</title>
 	</head>
@@ -26,37 +27,41 @@
 		<!--首页顶部-->
 		<div class='banner extBanner' fbHeight='850' defaultwidth='0' style=' height: 850px; background: none;' >
 			<div id='bannerV2' class='banner defaultBannerMain J_bannerItem' style='background:url(../static/image/1.jpg) 50% 50% no-repeat;background-size: cover;height:850px;'>
-				<!-- 顶部的登录注册的四个按钮-->
-				<div class="row navigation">
-					<div class="col-md-1">
-					</div>
-					<div class="col-md-3">
-						<font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
-					</div>
-					<div class="col-md-2 title">
-					</div>
-					<div class="col-md-2 title">
-						<a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
-					</div>
-					<div class="col-md-2 title">
-						<a href="#" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
-					</div>
-					<div class="col-md-2 title">
-						{% if current_user.is_authenticated %}
-						<a href="/profile/{{current_user.id}}">
-							<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
-								{{current_user.username}}
-							</font>
-						</a>
-						{% else %}
-						<a href="javascript:showDialog()">
-							<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
-							登陆注册
-							</font>
-						</a>
-						{% endif %}
-					</div>
-				</div>
+				<!--导航栏-->
+				<header class="header-navigation" id="header">
+					<nav>
+						<div class="row">
+							<div class="col-md-1">
+							</div>
+							<div class="col-md-3">
+								<font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
+							</div>
+							<div class="col-md-2 title">
+							</div>
+							<div class="col-md-2 title">
+								<a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
+							</div>
+							<div class="col-md-2 title">
+								<a href="#" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
+							</div>
+							<div class="col-md-2 title">
+								{% if current_user.is_authenticated %}
+								<a href="/profile/{{current_user.id}}">
+									<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+										{{current_user.username}}
+									</font>
+								</a>
+								{% else %}
+								<a href="javascript:showDialog()">
+									<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+										登陆注册
+									</font>
+								</a>
+								{% endif %}
+							</div>
+						</div>
+					</nav>
+				</header>
 				<!-- 联系我们-->
 				<div id="dialog_contact" class="htmleaf-container">
 					<div class="login-wrap">
@@ -75,7 +80,6 @@
 					</div>
 				</div>
 				<!--登陆注册-->
-
 					<div id="dialog_login" class="htmleaf-container">
 					<div class="login-wrap">
 						<div class="login-html">
@@ -87,6 +91,7 @@
 									<div class="group">
 										<label for="user_login" class="label1" >Username</label>
 										<input id="user_login" type="text" class="input" name="user_login">
+										<input type="hidden" name="next" value="{{next}}"/>
 									</div>
 									<div class="group">
 										<label for="pass_login" class="label1" >Password</label>
@@ -103,6 +108,7 @@
 										<div class="group">
 											<label for="user_sign" class="label1">Username</label>
 											<input id="user_sign" type="text" class="input" name="user_sign">
+											<input type="hidden" name="next" value="{{next}}"/>
 										</div>
 										<div class="group">
 											<label for="pass_sign" class="label1">Password</label>
@@ -126,9 +132,8 @@
 						</div>
 					</div>
 					</div>
-				</form>
 				<!-- 搜索框-->
-				<div id="search" class="row" style="margin-top:300px">
+				<div id="search" class="row" style="padding-top:300px">
 					<div class="col-md-2">
 					</div>
 					<div class="col-md-8 input-group search">
@@ -143,7 +148,6 @@
 				<div class="border" id="useragain"></div>
 			</div>
 		</div>
-
 		<!-- 房子推荐的文本部分 静态 -->
 		<div class="row" style='background-color: #00000;background-size: cover;height:100px;'>
 			<div class="col-md-1">
