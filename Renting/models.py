@@ -74,7 +74,7 @@ class House(db.Model):
     status = db.Column(db.Integer)                     #房屋状态，0表示未审核，1表示审核
 
     def __init__(self, house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type,
-                 price, description, facility, province, city, district, address, username, status):
+                 price, description, facility, province, city, district, address, username):
         self.house_name = house_name
         self.house_type = house_type
         self.area = area
@@ -92,7 +92,7 @@ class House(db.Model):
         self.district = district
         self.address = address
         self.username = username
-        self.status = status
+        self.status = 0
 
 
 class Facility(db.Model):

@@ -21,6 +21,7 @@
         <link href="../static/css/navigation.css" rel="stylesheet">
         <script src="../static/js/profile.js"></script>
         <script type="text/javascript" src="../static/js/navigation.js"></script>
+        <link href="../static/css/profile.css" rel="stylesheet">
         <!--侧边栏样式-->
          <link href="../static/css/sidebar.css" rel="stylesheet">
         <script type="text/javascript" src="../static/js/sidebar.js"></script>
@@ -136,7 +137,7 @@
         </div>
        <!--侧边栏以及内容-->
        <!--侧边栏-->
-       <div id="wrapper">
+       <div id="wrapper" style="margin-top=25px">
             <div class="overlay"></div>
             <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
                 <ul class="nav sidebar-nav">
@@ -157,12 +158,12 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> 订单管理 <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> 房屋管理 <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <!--查看自己租房子的订单-->
-                            <li><a href="/renting/">查看订房订单</a></li>
-                            <!--只显示自己发布的房屋所需要受理的订单-->
-                            <li><a href="#">未受理的订单</a></li>
+                            <!--查看自己发布的房屋-->
+                            <li><a href="/myhouse/">查看我的房屋</a></li>
+                            <!--发布房屋按钮-->
+                            <li><a href="/release/">发布房屋</a></li>
                             <li><a href="#"></a></li>
                             <li><a href="#"></a></li>
                         </ul>

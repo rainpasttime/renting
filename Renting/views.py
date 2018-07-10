@@ -123,11 +123,26 @@ def history():
         one['house'] = one_house
         print(one)
         result_renter.append(one)
-    #返回的是List类型
+    #返回的是list类型
     return render_template('renting.html', result_renter=result_renter)
 
 @app.route('/release/')
 def release():
-    '''先得到前端传送过来的数据，然后存储到数据库中，最后跳转到查看自己的房屋的界面'''
+    '''显示房屋发布界面'''
+    return render_template('release.html')
 
+@app.route('/release_buttom')
+def release_buttom():
+    '''先得到前端传送过来的数据，然后存储到数据库中，最后跳转到查看自己的房屋的界面'''
+    user = current_user
+    house = House.query.filter_by(username=user.username).all()
+    return render_template('myhouse.html', house=house)
+
+
+@app.route('/myhouse/')
+def myhouse():
+    '''根据当前用户查询房屋表，得到这个用户的房屋信息返回给前端'''
+    user = current_user
+    house = House.query.filter_by(username=user.username).all()
+    return render_template('myhouse.html', house=house)
 
