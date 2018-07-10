@@ -10,7 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(20))                                    #密码   最大20个字符
     phone_number = db.Column(db.Integer, unique=True)                       #手机号码
     email = db.Column(db.String(25), unique=True)                           #邮箱  唯一
-    salt = db.Column(db.String(32))
+    salt = db.Column(db.String(32))                                        #密码加盐
 
     def __init__(self, username, password, email, salt):
         self.username = username

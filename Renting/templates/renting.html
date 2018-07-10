@@ -186,7 +186,41 @@
                 </button>
                 <div class="container">
                     <div class="row">
-                        <!--个人信息显示以及修改按钮-->
+                        <table class="table table-striped" style="margin-top:100px">
+                            <thead>
+                                <tr>
+                                    <th>房名</th>
+                                    <th>类型</th>
+                                    <th>地址</th>
+                                    <th>入住时间</th>
+                                    <th>离开时间</th>
+                                    <th>订单价格</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in result_renter: %}
+                                <tr>
+                                    <td>{{item['house'].house_name}}</td>
+                                    {% if item['house'].house_type==0 %}
+                                    <td>整租</td>
+                                    {% elif item['house'].house_type==1 %}
+                                    <td>单间</td>
+                                    {% else %}
+                                    <td>床位</td>
+                                    {% endif %}
+                                    <td>{{item['house'].province}}省 {{item['house'].city}}市
+                                        {% if item['house'].district !=None %}
+                                        {{item['house'].district}}区
+                                        {% endif %}
+                                        {{item['house'].address}}
+                                    </td>
+                                    <td>{{item['order'].start_time}}</td>
+                                    <td>{{item['order'].end_time}}</td>
+                                    <td>{{item['order'].total_price}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

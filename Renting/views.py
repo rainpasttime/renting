@@ -21,7 +21,7 @@ def profile(user_id):
     user = User.query.get(user_id)
     if user is None:
         return redirect('/')
-    return render_template('profile.html', user=user,result_renter=[])
+    return render_template('profile.html', user=user)
 
 
 def redirect_with_msg(target, msg, category):
@@ -124,8 +124,10 @@ def history():
         print(one)
         result_renter.append(one)
     #返回的是List类型
-    return render_template('profile.html', result_renter=result_renter)
+    return render_template('renting.html', result_renter=result_renter)
 
-
+@app.route('/release/')
+def release():
+    '''先得到前端传送过来的数据，然后存储到数据库中，最后跳转到查看自己的房屋的界面'''
 
 
