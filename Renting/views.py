@@ -126,17 +126,104 @@ def history():
     #返回的是list类型
     return render_template('renting.html', result_renter=result_renter)
 
-@app.route('/release/')
+@app.route('/release/', methods={'post', 'get'},)
 def release():
     '''显示房屋发布界面'''
     return render_template('release.html')
 
-@app.route('/release_buttom')
+
+@app.route('/release_buttom/', methods={'post', 'get'})
 def release_buttom():
     '''先得到前端传送过来的数据，然后存储到数据库中，最后跳转到查看自己的房屋的界面'''
+
+    #house_name = request.values.get('house_name').strip()
+    tem = request.values.get('rent_type').strip()
+    print("rent_type" +tem)
+    if tem == '整租':
+        house_type = 0
+    elif tem == '单间':
+        house_type = 1
+    else:
+        house_type = 2
+
+    area = request.values.get('area').strip()
+    people = request.values.get('people').strip()
+    bedroom = request.values.get('bedroom').strip()
+    toilet = request.values.get('toilet').strip()
+
+    tem = request.values.get(' kitchen').strip()
+    if tem == "有":
+        kitchen = 1
+    else:
+        kitchen = 0
+
+    bed = request.values.get('bed').strip()
+
+    tem = request.values.get('bed_type').strip()
+    if tem == "单人床":
+        bed_type = 0
+    else:
+        bed_type = 1
+
+    description = request.values.get('description').strip()
+    price = request.values.get('price').strip()
+    facility =""
+    tem = request.values.get('TV').strip()
+    if tem == "有":
+        facility = facility+"1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('fridge').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('washer').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('conditioner').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('wifi').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('heater').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('wardrobe').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('parking').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+
+    province = request.values.get('province').strip()
+    city = request.values.get('city').strip()
+    district = request.values.get('district').strip()
+    address = request.values.get('address').strip()
+
     user = current_user
-    house = House.query.filter_by(username=user.username).all()
-    return render_template('myhouse.html', house=house)
+
+    house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price, description,
+                  facility, province, city, district, address, user.username)
+
+    db.session.add(house)
+    db.session.commit()
+
+    all_house = House.query.filter_by(username=user.username).all()
+    return render_template('myhouse.html', house=all_house)
 
 
 @app.route('/myhouse/')

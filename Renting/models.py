@@ -55,7 +55,7 @@ class Admin(db.Model):
 class House(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # ID 房屋唯一的标识
     house_name = db.Column(db.String(20), unique=True)  # 房屋名  唯一   最大10个字符
-    house_type = db.Column(db.Integer)                  #房屋类型，0表示整租，1表示单间# ，2表示床位
+    house_type = db.Column(db.Integer)                  #房屋类型，0表示整租，1表示单间 ，2表示床位
     area = db.Column(db.Integer)                        #房屋面积
     people = db.Column(db.Integer)                      # 可住人数
     bedroom = db.Column(db.Integer)                     # 卧房数
