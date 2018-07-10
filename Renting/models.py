@@ -54,7 +54,7 @@ class Admin(db.Model):
 #房屋表的定义
 class House(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # ID 房屋唯一的标识
-    house_name = db.Column(db.String(20), unique=True)  # 房屋名  唯一   最大10个字符
+    house_name = db.Column(db.String(20))  # 房屋名  唯一   最大10个字符
     house_type = db.Column(db.Integer)                  #房屋类型，0表示整租，1表示单间 ，2表示床位
     area = db.Column(db.Integer)                        #房屋面积
     people = db.Column(db.Integer)                      # 可住人数
@@ -72,6 +72,11 @@ class House(db.Model):
     address = db.Column(db.String(100))                #具体地址
     username = db.Column(db.String(10), db.ForeignKey('user.username'))       #房屋主人的名字，外键
     status = db.Column(db.Integer)                     #房屋状态，0表示未审核，1表示审核
+    url_one = db.Column(db.String(100))                # 房屋图片
+    url_two = db.Column(db.String(100))                # 房屋图片
+    url_three = db.Column(db.String(100))              # 房屋图片
+    url_four = db.Column(db.String(100))               # 房屋图片
+    url_five = db.Column(db.String(100))               # 房屋图片
 
     def __init__(self, house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type,
                  price, description, facility, province, city, district, address, username):

@@ -126,7 +126,8 @@ def history():
     #返回的是list类型
     return render_template('renting.html', result_renter=result_renter)
 
-@app.route('/release/', methods={'post', 'get'},)
+
+@app.route('/release/', methods={'post', 'get'})
 def release():
     '''显示房屋发布界面'''
     return render_template('release.html')
@@ -134,11 +135,10 @@ def release():
 
 @app.route('/release_buttom/', methods={'post', 'get'})
 def release_buttom():
-    '''先得到前端传送过来的数据，然后存储到数据库中，最后跳转到查看自己的房屋的界面'''
-
-    #house_name = request.values.get('house_name').strip()
+    house_name = request.values.get('house_name').strip()
     tem = request.values.get('rent_type').strip()
-    print("rent_type" +tem)
+    print("house" + house_name)
+
     if tem == '整租':
         house_type = 0
     elif tem == '单间':
@@ -146,18 +146,18 @@ def release_buttom():
     else:
         house_type = 2
 
-    area = request.values.get('area').strip()
-    people = request.values.get('people').strip()
-    bedroom = request.values.get('bedroom').strip()
-    toilet = request.values.get('toilet').strip()
+    area = int(request.values.get('area').strip())
+    people = int(request.values.get('people').strip())
+    bedroom = int(request.values.get('bedroom').strip())
+    toilet = int(request.values.get('toilet').strip())
 
-    tem = request.values.get(' kitchen').strip()
+    tem = request.values.get('kitchen').strip()
     if tem == "有":
         kitchen = 1
     else:
         kitchen = 0
 
-    bed = request.values.get('bed').strip()
+    bed = int(request.values.get('bed').strip())
 
     tem = request.values.get('bed_type').strip()
     if tem == "单人床":
@@ -166,7 +166,7 @@ def release_buttom():
         bed_type = 1
 
     description = request.values.get('description').strip()
-    price = request.values.get('price').strip()
+    price = int(request.values.get('price').strip())
     facility =""
     tem = request.values.get('TV').strip()
     if tem == "有":

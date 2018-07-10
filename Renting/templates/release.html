@@ -28,6 +28,8 @@
         <!--登录注册弹出框-->
         <link type="text/css" href="../static/css/dialog.css"  rel="stylesheet"/>
         <script type="text/javascript" src="../static/js/register.js"></script>
+        <!--发布房屋的表单验证-->
+        <script type="text/javascript" src="../static/js/release_validate.js"></script>
 	</head>
 	<body>
        <!--导航栏-->
@@ -191,14 +193,14 @@
                         </div>
                         <!--发布房屋的表单-->
                         <div class="col-md-8">
-                            <form class="form-horizontal" role="form" style="margin-top:50px" id="release_form">
+                            <form class="form-horizontal" role="form" style="margin-top:50px" id="release_form" name="release_form">
                                 <div class="form-group">     <!--房屋名字-->
                                     <label for="house_name" class="control-label">房屋名字</label>
-                                    <input type="text" class="form-control" id="house_name" placeholder="请输入房屋名字">
+                                    <input type="text" class="form-control" name="house_name" id="house_name" placeholder="请输入房屋名字">
                                 </div>
                                 <div class="form-group">     <!--出租类型-->
                                     <label for="rent_type" class="control-label">出租类型</label>
-                                    <select id="rent_type">
+                                    <select id="rent_type" name="rent_type">
                                         <option>整租</option>
                                         <option>单间</option>
                                         <option>床位</option>
@@ -206,72 +208,72 @@
                                 </div>
                                 <div class="form-group">      <!--房屋面积-->
                                     <label for="area" class="control-label">房屋面积</label>
-                                    <input type="text" class="form-control" id="area" placeholder="请输入房屋面积">
+                                    <input type="text" class="form-control" id="area" name="area" placeholder="请输入房屋面积">
                                 </div>
                                 <div class="form-group">      <!--房屋可住人数-->
                                     <label for="people" class="control-label">可住人数</label>
-                                    <input type="text" class="form-control" id="people" placeholder="请输入可住人数">
+                                    <input type="text" class="form-control" id="people" name="people" placeholder="请输入可住人数">
                                 </div>
                                 <div class="form-group">     <!--房屋卧室数-->
                                     <label for="bedroom" class="control-label">卧室数</label>
-                                    <input type="text" class="form-control" id="bedroom" placeholder="请输入卧室数">
+                                    <input type="text" class="form-control" id="bedroom" name="bedroom" placeholder="请输入卧室数">
                                 </div>
                                 <div class="form-group">     <!--房屋卫生间数-->
                                     <label for="toilet" class="control-label">卫生间数</label>
-                                    <input type="text" class="form-control" id="toilet" placeholder="请输入卫生间数">
+                                    <input type="text" class="form-control" id="toilet" name="toilet" placeholder="请输入卫生间数">
                                 </div>
                                 <div class="form-group">     <!--是否有厨房-->
                                     <label for="kitchen" class="control-label">是否有厨房</label>
-                                    <select id="kitchen">
+                                    <select id="kitchen" name="kitchen">
                                         <option>有</option>
                                         <option>无</option>
                                     </select>
                                 </div>
                                 <div class="form-group">     <!--床位数-->
                                     <label for="bed" class="control-label">床位数目</label>
-                                    <input type="text" class="form-control" id="bed" placeholder="请输入床位数目">
+                                    <input type="text" class="form-control" id="bed" name="bed" placeholder="请输入床位数目">
                                 </div>
                                 <div class="form-group">     <!--床型-->
                                     <label for="bed_type" class="control-label">选择床型</label>
-                                    <select id="bed_type">
+                                    <select id="bed_type" name="bed_type">
                                         <option>单人床</option>
                                         <option>双人床</option>
                                     </select>
                                 </div>
                                 <div class="form-group">     <!--房屋描述-->
                                     <label for="description" class="control-label">房屋描述</label>
-                                    <textarea type="text" class="form-control" id="description" placeholder="请输入描述，少于100个字" rows="10" cols="100"></textarea>
+                                    <textarea name="description" class="form-control" id="description" placeholder="请输入描述，少于100个字" rows="10" cols="100"></textarea>
                                 </div>
                                 <div class="form-group">     <!--价格-->
                                     <label for="price" class="control-label">输入价格</label>
-                                    <input type="text" class="form-control" id="price" placeholder="请输入价格">
+                                    <input type="text" class="form-control" id="price" name="price" placeholder="请输入价格">
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-6">
                                         <div class="form-group">     <!--电视-->
                                             <label for="TV" class="control-label">是否有电视</label>
-                                            <select id="TV">
+                                            <select id="TV" name="TV">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
                                         </div>
                                         <div class="form-group">     <!--冰箱-->
                                             <label for="fridge" class="control-label">是否有冰箱</label>
-                                            <select id="fridge">
+                                            <select id="fridge" name="fridge">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
                                         </div>
                                         <div class="form-group">     <!--洗衣机-->
                                             <label for="washer" class="control-label">是否有洗衣机</label>
-                                            <select id="washer">
+                                            <select id="washer" name="washer">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
                                         </div>
                                         <div class="form-group">     <!--空调-->
                                             <label for="conditioner" class="control-label">是否有空调</label>
-                                            <select id="conditioner">
+                                            <select id="conditioner" name="conditioner">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
@@ -280,28 +282,28 @@
                                     <div class="col-md-6">
                                         <div class="form-group">     <!--wifi-->
                                             <label for="wifi" class="control-label">是否有Wifi</label>
-                                            <select id="wifi">
+                                            <select id="wifi" name="wifi">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
                                         </div>
                                         <div class="form-group">     <!--热水器-->
                                             <label for="heater" class="control-label">是否有热水器</label>
-                                            <select id="heater">
+                                            <select id="heater" name="heater">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
                                         </div>
                                         <div class="form-group">     <!--洗衣机-->
                                             <label for="wardrobe" class="control-label">是否有洗衣机</label>
-                                            <select id="wardrobe">
+                                            <select id="wardrobe" name="wardrobe">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
                                         </div>
                                         <div class="form-group">     <!--停车场-->
                                             <label for="parking" class="control-label">是否有停车场</label>
-                                            <select id="parking">
+                                            <select id="parking" name="parking">
                                                 <option>有</option>
                                                 <option>无</option>
                                             </select>
@@ -310,32 +312,32 @@
                                 </div>
                                 <div class="form-group">     <!--省-->
                                     <label for="province" class="control-label">输入省</label>
-                                    <input type="text" class="form-control" id="province" placeholder="请输入省">
+                                    <input type="text" class="form-control" id="province" name="province" placeholder="请输入省">
                                 </div>
                                 <div class="form-group">     <!--市-->
                                     <label for="city" class="control-label">输入市</label>
-                                    <input type="text" class="form-control" id="city" placeholder="请输入市">
+                                    <input type="text" class="form-control" id="city" name="city" placeholder="请输入市">
                                 </div>
                                 <div class="form-group">     <!--区-->
                                     <label for="district" class="control-label">输入区</label>
-                                    <input type="text" class="form-control" id="district" placeholder="请输入区">
+                                    <input type="text" class="form-control" id="district" name="district" placeholder="请输入区">
                                 </div>
                                 <div class="form-group">     <!--具体地址-->
                                     <label for="address" class="control-label">输入具体地址</label>
-                                    <input type="text" class="form-control" id="address" placeholder="请输入具体地址">
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="请输入具体地址">
                                 </div>
-                            </form>
-                            <div class="row">
-                                <div class="col-md-5">
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">     <!--按钮-->
-                                        <button type="submit" class="btn btn-default" id="release-button" onclick="form=document.getElementById('release_form');form.action='/release_buttom/';">发布</button>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">     <!--按钮-->
+                                            <button type="submit" class="btn btn-default" id="release-button" onclick="form=document.getElementById('release_form');form.action='/release_buttom/';">发布</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
                                     </div>
                                 </div>
-                                <div class="col-md-5">
-                                </div>
-                            </div>
+                            </form>
                         </div>
                         <div class="col-md-2">
                         </div>
