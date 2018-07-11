@@ -13,18 +13,20 @@
 		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<!--导入自己的js文件-->
-		<script type="text/javascript" src="../static/js/register.js"></script>
-		<script type="text/javascript" src="../static/js/index_of.js"></script>
-		<script type="text/javascript" src="../static/js/navigation.js"></script>
+		<script type="text/javascript" src="/static/js/register.js"></script>
+		<script type="text/javascript" src="/static/js/index_of.js"></script>
+		<script type="text/javascript" src="/static/js/navigation.js"></script>
+		<script type="text/javascript" src="/static/js/window.js"></script>
 		<!-- 页面内用到的css-->
-		<link type="text/css" href="../static/css/index.css" rel="stylesheet"/>
-		<link type="text/css" href="../static/css/dialog.css"  rel="stylesheet"/>
-		<link type="text/css" href="../static/css/navigation.css"  rel="stylesheet"/>
-		<link href="../static/css/profile.css" rel="stylesheet">
+		<link type="text/css" href="/static/css/index.css" rel="stylesheet"/>
+		<link type="text/css" href="/static/css/dialog.css"  rel="stylesheet"/>
+		<link type="text/css" href="/static/css/navigation.css"  rel="stylesheet"/>
+		<link type="text/css" href="/static/css/profile.css" rel="stylesheet">
+		<link type="text/css" href="/static/css/window.css"  rel="stylesheet"/>
 		<meta charset="UTF-8">
 		<title>房屋租赁</title>
 	</head>
-	<body onload="init()">
+	<body onload="init(); _confirm()">
 		<!--首页顶部-->
 		<div class='banner extBanner' fbHeight='850' defaultwidth='0' style=' height: 850px; background: none;' >
 			<div id='bannerV2' class='banner defaultBannerMain J_bannerItem' style='background:url(../static/image/1.jpg) 50% 50% no-repeat;background-size: cover;height:850px;'>
@@ -55,7 +57,7 @@
 								{% else %}
 								<a href="javascript:showDialog()">
 									<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
-										登陆注册
+										登陆/注册
 									</font>
 								</a>
 								{% endif %}
@@ -103,7 +105,7 @@
 									</div>
 								</div>
 								</form>
-								<form  method="post" id="signupinform">
+								<form  method="post" id="signupform">
 									<div class="sign-up-htm">
 										<div class="group">
 											<label for="user_sign" class="label1">Username</label>
@@ -123,7 +125,7 @@
 											<input id="email" type="text" class="input" name="email">
 										</div>
 										<div class="group">
-											<button class="button" onclick="form=document.getElementById('signupinform');form.action='/reg/';">Sign Up</button>
+											<button class="button" onclick="form=document.getElementById('signupform');form.action='/reg/';">Sign Up</button>
 										</div>
 									</div>
 								</form>
@@ -279,7 +281,13 @@
 			<div class="col-md-1">
 			</div>
 		</div>
-		<script>
+
+		<script type="text/javascript">
+			{%if (msg | length) > 0 %}
+			function _confirm() {
+				 win.confirm('提示', '{{msg}}');
+				}
+			{% endif %}
 		</script>
 	</body>
 </html>

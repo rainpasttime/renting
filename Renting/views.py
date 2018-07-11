@@ -6,16 +6,20 @@ from flask import render_template, request, flash, get_flashed_messages, redirec
 from flask_login import login_user, logout_user, current_user, login_required
 import random
 import hashlib
+from datetime import date, datetime
 
 
 @app.route('/index/', methods={'post', 'get'})
 @app.route('/', methods={'post', 'get'})
 def index():
-    return render_template('index.html')
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['reglogin']):
+        msg = msg + m
+    return render_template('index.html', msg=msg)
 
 
 #个人中心页面 带有一个参数user表示现在的user
-@app.route('/profile/<int:user_id>')
+@app.route('/profile/<int:user_id>/')
 @login_required
 def profile(user_id):
     user = User.query.get(user_id)
@@ -47,8 +51,9 @@ def reg():
     if user_check is not None:
         return redirect_with_msg('/', u'用户名已经存在', 'reglogin')
 
-    if password != repeat_password:
-        return redirect_with_msg('/', u'两次输入密码不相同', 'reglogin')
+    user_check = User.query.filter_by(email=email).first()
+    if user_check is not None:
+        return redirect_with_msg('/', u'邮箱已经存在', 'reglogin')
 
     salt = '.'.join(random.sample('0123456789ABCdef', 10))
     m = hashlib.md5()
@@ -232,4 +237,49 @@ def myhouse():
     user = current_user
     house = House.query.filter_by(username=user.username).all()
     return render_template('myhouse.html', house=house)
+
+@app.route('/description/<int:house_id>/')
+def house_des(house_id):
+    house = House.query.filter_by(id=house_id).first()
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['message']):
+        msg = msg + m
+    return render_template('description.html', house=house, msg=msg)
+
+
+@app.route('/makeorder/<int:house_id>/', methods={'get', 'post'})
+def make_order(house_id):
+    renter = current_user.username
+    house = House.query.filter_by(id=house_id).first()
+    seller = house.username
+    starttime = request.values.get('datepicker')
+    endtime = request.values.get('datepicker1')
+
+    startyear = int(starttime[6]) * 1000 + int(starttime[7]) * 100 + int(starttime[8]) * 10 + int(starttime[9])
+    startmonth = int(starttime[0]) * 10 + int(starttime[1])
+    startday = int(starttime[3]) * 10 + int(starttime[4])
+    startdate = date(startyear, startmonth, startday)
+
+    endyear = int(endtime[6]) * 1000 + int(endtime[7]) * 100 + int(endtime[8]) * 10 + int(endtime[9])
+    endmonth = int(endtime[0]) * 10 + int(endtime[1])
+    endday = int(endtime[3]) * 10 + int(endtime[4])
+    enddate = date(endyear, endmonth, endday)
+
+    if startdate > enddate:
+        return redirect_with_msg('/description/' + str(house_id) + '/', u'住房时间比退房时间晚，预订失败', 'message')
+    day = (enddate - startdate).days
+    status = 1
+    total_price = house.price * day
+
+    # 判断以往订单时间上是否有冲突
+    house_order = Order.query.filter_by(house_id=house_id).all()
+    for order in house_order:
+        if (order.start_time >= startdate and order.start_time <= enddate) or (order.end_time >= startdate and order.end_time <= enddate):
+            return redirect_with_msg('/description/' + str(house_id) + '/', u'该时间与已知订单冲突，预订失败', 'message')
+
+    new_order = Order(house_id, seller, renter, startdate, enddate, total_price, status)
+    db.session.add(new_order)
+    db.session.commit()
+
+    return redirect_with_msg('/description/' + str(house_id) + '/', u'预订成功', 'message')
 

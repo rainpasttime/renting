@@ -7,7 +7,7 @@ body, html{
 
 input, button {
   outline: none;
-  border: none;
+  borde: none;
 }
 
 .login-wrap{
@@ -62,7 +62,7 @@ input, button {
 }
 
 .login-html .tab,
-.login-form .group .label,
+.login-form .group .label1,
 .login-form .group .button{
 	text-transform:uppercase;
 }
@@ -90,7 +90,7 @@ input, button {
 .login-form .group{
 	margin-bottom:20px;
 }
-.login-form .group .label,
+.login-form .group .label1,
 .login-form .group .input,
 .login-form .group .button{
 	width:100%;
@@ -108,7 +108,7 @@ input, button {
 	text-security:circle;
 	-webkit-text-security:circle;
 }
-.login-form .group .label{
+.login-form .group .label1{
 	color:#aaa;
 	font-size:12px;
 }
@@ -116,7 +116,7 @@ input, button {
 	background:#1161ee;
 }
 
-.login-form .group .check:checked + label{
+.login-form .group .check:checked + label1{
 	color:#fff;
 }
 
@@ -156,7 +156,7 @@ input, button {
 }
 
 .contact-html .tab,
-.contact-form .group .label,
+.contact-form .group .label1,
 .contact-form .group .button{
 	text-transform:uppercase;
 }
