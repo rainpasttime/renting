@@ -1,4 +1,4 @@
-var win = new function () {
+let win = new function () {
     // 确认框和提示框宽度
     this.width = 300;
 
@@ -18,8 +18,8 @@ var win = new function () {
             if ($.isFunction(closed)) closed();
         };
 
-        var html = '<div class="win"><div class="mask-layer"></div><div class="window-panel"><iframe class="title-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe><div class="title"><h3></h3></div><a href="javascript:void(0)" onclick="win._close();" class="close-btn" title="关闭">×</a><iframe class="body-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto" src=""></iframe></div></div>';
-        var jq = $(html);
+        let html = '<div class="win"><div class="mask-layer"></div><div class="window-panel"><iframe class="title-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe><div class="title"><h3></h3></div><a href="javascript:void(0)" onclick="win._close();" class="close-btn" title="关闭">×</a><iframe class="body-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto" src=""></iframe></div></div>';
+        let jq = $(html);
         jq.find(".window-panel").height(height).width(width).css("margin-left", -width / 2).css("margin-top", -height / 2);
         jq.find(".title").find(":header").html(title);
         jq.find(".body-panel").height(height - 36).attr("src", url);
@@ -30,7 +30,7 @@ var win = new function () {
     // 显示消息框
     function messageBox(html, title, message) {
         win.close();
-        var jq = $(html);
+        let jq = $(html);
 
         jq.find(".window-panel").height(win.height).width(win.width).css("margin-left", -win.width / 2).css("margin-top", -win.height / 2);
         jq.find(".title-panel").height(win.height);
@@ -48,7 +48,7 @@ var win = new function () {
             if ($.isFunction(selected)) selected(r);
         };
 
-        var html = '<div class="win"><div class="mask-layer"></div><div class="window-panel"><iframe class="title-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe><div class="title"><h3></h3></div><a href="javascript:void(0)" onclick="win._close(false);" class="close-btn" title="关闭">×</a><div class="body-panel"><p class="content"></p><p class="btns"><button class="w-btn" tabindex="1" onclick="win._close(true);">确定</button><button class="w-btn" onclick="win._close(false);">取消</button></p></div></div></div>';
+        let html = '<div class="win"><div class="mask-layer"></div><div class="window-panel"><iframe class="title-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe><div class="title"><h3></h3></div><a href="javascript:void(0)" onclick="win._close(false);" class="close-btn" title="关闭">×</a><div class="body-panel"><p class="content"></p><p class="btns"><button class="w-btn" tabindex="1" onclick="win._close(true);">确定</button><button class="w-btn" onclick="win._close(false);">取消</button></p></div></div></div>';
         messageBox(html, title, message);
     };
 
@@ -59,7 +59,7 @@ var win = new function () {
             if ($.isFunction(closed)) closed();
         };
 
-        var html = '<div class="win"><div class="mask-layer"></div><div class="window-panel"><iframe class="title-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe><div class="title"><h3></h3></div><a href="javascript:void(0)" onclick="win._close();" class="close-btn" title="关闭">×</a><div class="body-panel"><p class="content"></p><p class="btns"><button class="w-btn" tabindex="1" onclick="win._close();">确定</button></p></div></div></div>';
+        let html = '<div class="win"><div class="mask-layer"></div><div class="window-panel"><iframe class="title-panel" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe><div class="title"><h3></h3></div><a href="javascript:void(0)" onclick="win._close();" class="close-btn" title="关闭">×</a><div class="body-panel"><p class="content"></p><p class="btns"><button class="w-btn" tabindex="1" onclick="win._close();">确定</button></p></div></div></div>';
         messageBox(html, title, message);
     }
 

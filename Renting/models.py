@@ -80,7 +80,7 @@ class House(db.Model):
     url_five = db.Column(db.String(100))               # 房屋图片
 
     def __init__(self, house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type,
-                 price, description, facility, province, city, district, address, username):
+                 price, description, facility, province, city, district, address, username, url):
         self.house_name = house_name
         self.house_type = house_type
         self.area = area
@@ -100,7 +100,17 @@ class House(db.Model):
         self.username = username
         self.upload_time = datetime.now()
         self.status = 0
-
+        for i in range(len(url)):
+            if i == 0:
+                self.url_one = url[0]
+            elif i ==1:
+                self.url_two = url[1]
+            elif i == 2:
+                self.url_three = url[2]
+            elif i ==3:
+                self.url_four = url[3]
+            else:
+                self.url_five = url[4]
 
 class Facility(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)   # ID 设备唯一的标识 同时表示设备在字符串中的位置

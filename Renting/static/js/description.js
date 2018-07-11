@@ -1,7 +1,7 @@
 window.onload = function () {
-    var oxx = document.getElementById('xx');
-    var obanner = document.getElementById('top-banner');
-    var otext = document.getElementById('textt');
+    let oxx = document.getElementById('xx');
+    let obanner = document.getElementById('top-banner');
+    let otext = document.getElementById('textt');
 }
 
 $(document).ready(function () {
@@ -10,17 +10,17 @@ $(document).ready(function () {
 
     $('#two li').mouseover(function () {
         $(this).addClass('on').siblings().removeClass('on');
-        var index = $(this).index();
+        let index = $(this).index();
         i = index;
         // $('#one li').eq(index).stop().fadeIn(300).siblings().stop().fadeOut(300);
         $('#one li').eq(i).addClass('on').siblings().removeClass('on');
     })
 
 
-    var len = $("#two li").length;
+    let len = $("#two li").length;
     //自动播放
-    var i = 0;
-    var t = setInterval(move, 4000);
+    let i = 0;
+    let t = setInterval(move, 4000);
     //自动播放核心函数
     function move() {
         i++;

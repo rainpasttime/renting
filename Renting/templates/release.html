@@ -165,7 +165,7 @@
                             <!--查看自己发布的房屋-->
                             <li><a href="/myhouse/">查看我的房屋</a></li>
                             <!--发布房屋按钮-->
-                            <li><a href=/release/">发布房屋</a></li>
+                            <li><a href="/release/">发布房屋</a></li>
                             <li><a href="#"></a></li>
                             <li><a href="#"></a></li>
                         </ul>
@@ -193,7 +193,7 @@
                         </div>
                         <!--发布房屋的表单-->
                         <div class="col-md-8">
-                            <form class="form-horizontal" role="form" style="margin-top:50px" id="release_form" name="release_form">
+                            <form class="form-horizontal" role="form" style="margin-top:50px" id="release_form" name="release_form" method="post" enctype="multipart/form-data">
                                 <div class="form-group">     <!--房屋名字-->
                                     <label for="house_name" class="control-label">房屋名字</label>
                                     <input type="text" class="form-control" name="house_name" id="house_name" placeholder="请输入房屋名字">
@@ -326,6 +326,8 @@
                                     <label for="address" class="control-label">输入具体地址</label>
                                     <input type="text" class="form-control" id="address" name="address" placeholder="请输入具体地址">
                                 </div>
+                                <input id="file" name="file" type="file" style="opacity:0;left:0;display:block;width:100%;">
+                                <button class="btn-success">上传图片</button>
                                 <div class="row">
                                     <div class="col-md-5">
                                     </div>

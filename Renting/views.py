@@ -2,11 +2,20 @@
 
 from Renting import app, db
 from Renting.models import User, Order, House
-from flask import render_template, request, flash, get_flashed_messages, redirect
+from flask import render_template, request, flash, get_flashed_messages, redirect,send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
 import random
 import hashlib
+import uuid
+import os
 from datetime import date, datetime
+
+all_url_image = []
+
+def save_to_local(file, file_name):
+    save_dir = app.config['UPLOAD_DIR']
+    file.save(os.path.join(save_dir, file_name))
+    return '../static/image/upload/'+file_name
 
 
 @app.route('/index/', methods={'post', 'get'})
@@ -138,6 +147,24 @@ def release():
     return render_template('release.html')
 
 
+@app.route('/upload/', methods={"post"})
+def upload():
+    print("11111111111")
+    file = request.files['file']
+    file_ext = ''
+    if file.filename.find('.') > 0:
+        file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
+    if file_ext in app.config['ALLOWED_EXT']:
+        file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
+        url = save_to_local(file, file_name)
+        if url is not None:
+            all_url_image.append(url)
+    print("22222222222222222")
+    print(all_url_image)
+    return redirect('/release/')
+    #return all_url_image
+
+
 @app.route('/release_buttom/', methods={'post', 'get'})
 def release_buttom():
     house_name = request.values.get('house_name').strip()
@@ -221,13 +248,30 @@ def release_buttom():
 
     user = current_user
 
+    print("11111111111")
+    file = request.files['file']
+    file_ext = ''
+    if file.filename.find('.') > 0:
+        file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
+    if file_ext in app.config['ALLOWED_EXT']:
+        file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
+        url = save_to_local(file, file_name)
+        if url is not None:
+            all_url_image.append(url)
+    print("22222222222222222")
+    print(all_url_image)
+
     house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price, description,
-                  facility, province, city, district, address, user.username)
+                  facility, province, city, district, address, user.username, all_url_image)
 
     db.session.add(house)
     db.session.commit()
 
     all_house = House.query.filter_by(username=user.username).all()
+
+    while len(all_url_image)>0:
+        all_url_image.pop()
+
     return render_template('myhouse.html', house=all_house)
 
 
@@ -282,4 +326,8 @@ def make_order(house_id):
     db.session.commit()
 
     return redirect_with_msg('/description/' + str(house_id) + '/', u'预订成功', 'message')
+
+
+
+
 
