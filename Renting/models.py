@@ -71,8 +71,8 @@ class House(db.Model):
     district = db.Column(db.String(10))                 # 地区
     address = db.Column(db.String(100))                #具体地址
     username = db.Column(db.String(10), db.ForeignKey('user.username'))       #房屋主人的名字，外键
-    status = db.Column(db.Integer)                     #房屋状态，0表示未审核，1表示审核
-    upload_time = db.Column(db.DateTime)                    #房屋上传时间
+    status = db.Column(db.Integer)                     #房屋状态，0表示未审核，1表示通过,2表示未通过
+    upload_time = db.Column(db.DateTime)               #房屋上传时间
     url_one = db.Column(db.String(100))                # 房屋图片
     url_two = db.Column(db.String(100))                # 房屋图片
     url_three = db.Column(db.String(100))              # 房屋图片
@@ -103,7 +103,7 @@ class House(db.Model):
         for i in range(len(url)):
             if i == 0:
                 self.url_one = url[0]
-            elif i ==1:
+            elif i == 1:
                 self.url_two = url[1]
             elif i == 2:
                 self.url_three = url[2]
@@ -111,6 +111,7 @@ class House(db.Model):
                 self.url_four = url[3]
             else:
                 self.url_five = url[4]
+
 
 class Facility(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)   # ID 设备唯一的标识 同时表示设备在字符串中的位置

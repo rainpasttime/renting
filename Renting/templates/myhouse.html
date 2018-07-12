@@ -198,6 +198,8 @@
                                     <th>房屋类型</th>
                                     <th>价格</th>
                                     <th>房屋描述</th>
+                                    <th>房屋状态</th>
+                                    <th style="display:none">修改房屋</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -230,6 +232,21 @@
                                     <td>{{item.price}}</td>
                                     {% if item.description!= None %}
                                     <td>{{item.description}}</td>
+                                    <td>
+                                        {% if item.status==0 %}
+                                        未审核
+                                        {% elif item.status==1%}
+                                        通过
+                                        {% else %}
+                                        未通过
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/modify_house/{{item.id}}/" style="color:#FFFFFF">修改信息</a>
+                                       </button>
+                                    </td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}

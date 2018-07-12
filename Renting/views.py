@@ -10,7 +10,6 @@ import uuid
 import os
 from datetime import date, datetime
 
-all_url_image = []
 
 def save_to_local(file, file_name):
     save_dir = app.config['UPLOAD_DIR']
@@ -147,24 +146,6 @@ def release():
     return render_template('release.html')
 
 
-@app.route('/upload/', methods={"post"})
-def upload():
-    print("11111111111")
-    file = request.files['file']
-    file_ext = ''
-    if file.filename.find('.') > 0:
-        file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
-    if file_ext in app.config['ALLOWED_EXT']:
-        file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
-        url = save_to_local(file, file_name)
-        if url is not None:
-            all_url_image.append(url)
-    print("22222222222222222")
-    print(all_url_image)
-    return redirect('/release/')
-    #return all_url_image
-
-
 @app.route('/release_buttom/', methods={'post', 'get'})
 def release_buttom():
     house_name = request.values.get('house_name').strip()
@@ -248,7 +229,6 @@ def release_buttom():
 
     user = current_user
 
-    print("11111111111")
     file = request.files['file']
     file_ext = ''
     if file.filename.find('.') > 0:
@@ -256,23 +236,16 @@ def release_buttom():
     if file_ext in app.config['ALLOWED_EXT']:
         file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
         url = save_to_local(file, file_name)
+        url_list = []
         if url is not None:
-            all_url_image.append(url)
-    print("22222222222222222")
-    print(all_url_image)
+            url_list.append(url)
+            house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price, description,
+                  facility, province, city, district, address, user.username, url_list)
+            db.session.add(house)
+            db.session.commit()
 
-    house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price, description,
-                  facility, province, city, district, address, user.username, all_url_image)
-
-    db.session.add(house)
-    db.session.commit()
-
-    all_house = House.query.filter_by(username=user.username).all()
-
-    while len(all_url_image)>0:
-        all_url_image.pop()
-
-    return render_template('myhouse.html', house=all_house)
+        all_house = House.query.filter_by(username=user.username).all()
+        return render_template('myhouse.html', house=all_house)
 
 
 @app.route('/myhouse/')
@@ -328,6 +301,124 @@ def make_order(house_id):
     return redirect_with_msg('/description/' + str(house_id) + '/', u'预订成功', 'message')
 
 
+@app.route('/modify_house/<int:house_id>/')
+def modify_house(house_id):
+    house = House.query.filter_by(id=house_id).first()
+    return render_template("modify_house.html", house=house)
 
 
+@app.route('/modify_buttom/<int:house_id>/', methods={'post', 'get'})
+def modify_buttom(house_id):
+    house_name = request.values.get('house_name').strip()
+    tem = request.values.get('rent_type').strip()
+    print("house" + house_name)
 
+    if tem == '整租':
+        house_type = 0
+    elif tem == '单间':
+        house_type = 1
+    else:
+        house_type = 2
+
+    area = int(request.values.get('area').strip())
+    people = int(request.values.get('people').strip())
+    bedroom = int(request.values.get('bedroom').strip())
+    toilet = int(request.values.get('toilet').strip())
+
+    tem = request.values.get('kitchen').strip()
+    if tem == "有":
+        kitchen = 1
+    else:
+        kitchen = 0
+
+    bed = int(request.values.get('bed').strip())
+
+    tem = request.values.get('bed_type').strip()
+    if tem == "单人床":
+        bed_type = 0
+    else:
+        bed_type = 1
+
+    description = request.values.get('description').strip()
+    price = int(request.values.get('price').strip())
+    facility =""
+    tem = request.values.get('TV').strip()
+    if tem == "有":
+        facility = facility+"1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('fridge').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('washer').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('conditioner').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('wifi').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('heater').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('wardrobe').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    tem = request.values.get('parking').strip()
+    if tem == "有":
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+
+    province = request.values.get('province').strip()
+    city = request.values.get('city').strip()
+    district = request.values.get('district').strip()
+    address = request.values.get('address').strip()
+
+    all_house = None
+
+    file = request.files['file']
+    file_ext = ''
+    if file.filename.find('.') > 0:
+        file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
+    if file_ext in app.config['ALLOWED_EXT']:
+        file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
+        url = save_to_local(file, file_name)
+        if url is not None:
+            house = House.query.filter_by(id=house_id).first()
+            new_url = []
+            i = -1
+            if house.url_one is not None:
+                new_url.append(house.url_one)
+            if house.url_two is not None:
+                new_url.append(house.url_two)
+            if house.url_three is not None:
+                new_url.append(house.url_three)
+            if house.url_four is not None:
+                new_url.append(house.url_four)
+            if house.url_five is not None:
+                new_url.append(url)
+            if len(new_url) == 5:
+                new_url[4] = url
+            else:
+                new_url.append(url)
+            db.session.delete(house)
+            new_house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price,
+                        description,facility, province, city, district, address, house.username, new_url)
+            db.session.add(new_house)
+            db.session.commit()
+            all_house = House.query.filter_by(username=house.username).all()
+        return render_template('myhouse.html', house=all_house)
