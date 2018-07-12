@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>房屋租赁</title>
+		<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <!-- 可选的Bootstrap主题文件（一般不使用） -->
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--导入菜鸟的JS的validate相关的库-->
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+        <!--导航栏样式文件-->
+        <link href="/static/css/navigation.css" rel="stylesheet">
+        <script src="/static/js/profile.js"></script>
+        <script type="text/javascript" src="/static/js/navigation.js"></script>
+        <link href="/static/css/profile.css" rel="stylesheet">
+        <!--侧边栏样式-->
+         <link href="/static/css/sidebar.css" rel="stylesheet">
+        <script type="text/javascript" src="/static/js/sidebar.js"></script>
+        <!--登录注册弹出框-->
+        <link type="text/css" href="/static/css/dialog.css"  rel="stylesheet"/>
+        <script type="text/javascript" src="/static/js/register.js"></script>
+	</head>
+	<body>
+       <!--导航栏-->
+       <header class="header-navigation" id="header">
+            <nav>
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                        <font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
+                    </div>
+                    <div class="col-md-2 title">
+                    </div>
+                    <div class="col-md-2 title">
+                        <a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
+                    </div>
+                    <div class="col-md-2 title">
+                        <a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
+                    </div>
+                    <div class="col-md-2 title">
+                        {% if current_user.is_authenticated %}
+                        <a href="/profile/{{current_user.id}}">
+                            <font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+                                {{current_user.username}}
+                            </font>
+                        </a>
+                        {% else %}
+                        <a href="javascript:showDialog()">
+                            <font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+                                登陆注册
+                            </font>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </header>
+       <!-- 联系我们-->
+       <div id="dialog_contact" class="htmleaf-container">
+					<div class="login-wrap">
+						<div class="contact-html">
+							<label class="tab" style="">Suggestion</label>
+							<div class="contact">
+								<div class="group">
+									<textarea class="contact_text" rows="10" cols="40">
+									</textarea>
+								</div>
+								<div class="group">
+									<input type="submit" class="button" style="cursor: pointer;" value="Submit">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+       <!--登陆注册-->
+       <div id="dialog_login" class="htmleaf-container">
+        <div class="login-wrap">
+            <div class="login-html">
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                <div class="login-form">
+                    <form  method="post" id="loginform">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="user_login" class="label1" >Username</label>
+                            <input id="user_login" type="text" class="input" name="user_login">
+                            <input type="hidden" name="next" value="{{next}}"/>
+                        </div>
+                        <div class="group">
+                            <label for="pass_login" class="label1" >Password</label>
+                            <input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
+                        </div>
+                        <div class="group">
+                            <!--<input type="submit" class="button" style="cursor: pointer;" value="Sign In">-->
+                            <button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
+                        </div>
+                    </div>
+                    </form>
+                    <form  method="post" id="signupinform">
+                        <div class="sign-up-htm">
+                            <div class="group">
+                                <label for="user_sign" class="label1">Username</label>
+                                <input id="user_sign" type="text" class="input" name="user_sign">
+                                <input type="hidden" name="next" value="{{next}}"/>
+                            </div>
+                            <div class="group">
+                                <label for="pass_sign" class="label1">Password</label>
+                                <input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
+                            </div>
+                            <div class="group">
+                                <label for="pass_repeat" class="label1">Repeat Password</label>
+                                <input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
+                            </div>
+                            <div class="group">
+                                <label for="email" class="label1">Email Address</label>
+                                <input id="email" type="text" class="input" name="email">
+                            </div>
+                            <div class="group">
+                                <!--<input type="submit" class="button" style="cursor: pointer;" value="Sign Up">-->
+                                <button class="button" onclick="form=document.getElementById('signupinform');form.action='/reg/';">Sign Up</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+       <!--侧边栏以及内容-->
+       <!--侧边栏-->
+       <div id="wrapper">
+            <div class="overlay"></div>
+            <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                <ul class="nav sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                        个人中心
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> 订单管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!--查看自己租房子的订单-->
+                            <li><a href="/renting/">查看订房订单</a></li>
+                            <!--只显示自己发布的房屋所需要受理的订单-->
+                            <li><a href="#">未受理的订单</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> 房屋管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!--查看自己发布的房屋-->
+                            <li><a href="/myhouse/">查看我的房屋</a></li>
+                            <!--发布房屋按钮-->
+                            <li><a href="/release/">发布房屋</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-dropbox"></i> Page 5</a>
+                    </li>
+                    <li>
+                        <a href="/logout/">
+                            <i class="fa fa-fw fa-dropbox"></i>
+                            登出
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div id="page-content-wrapper">
+                <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+                    <span class="hamb-top"></span>
+                    <span class="hamb-middle"></span>
+                    <span class="hamb-bottom"></span>
+                </button>
+                <div class="container">
+                    <div class="row">
+                        <table class="table table-striped" style="margin-top:100px">
+                            <thead>
+                                <tr>
+                                    <th>房名</th>
+                                    <th>出租类型</th>
+                                    <th>具体地址地址</th>
+                                    <th>面积</th>
+                                    <th>可住人数</th>
+                                    <th>房屋类型</th>
+                                    <th>价格</th>
+                                    <th>房屋描述</th>
+                                    <th>房屋状态</th>
+                                    <th style="display:none">修改房屋</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in house: %}
+                                <tr>
+                                    <td>{{item.house_name}}</td>
+                                    {% if item.house_type==0 %}
+                                    <td>整租</td>
+                                    {% elif item.house_type==1 %}
+                                    <td>单间</td>
+                                    {% else %}
+                                    <td>床位</td>
+                                    {% endif %}
+                                    <td>{{item.province}}省 {{item.city}}市
+                                        {% if item.district !=None %}
+                                        {{item.district}}区
+                                        {% endif %}
+                                        {{item.address}}
+                                    </td>
+                                    <td>{{item.area}}</td>
+                                    <td>{{item.people}}</td>
+                                    <td>{{item.bedroom}}房
+                                        {% if item.toilet !=0 %}
+                                        {{item.toilet}}卫
+                                        {% endif %}
+                                        {% if item.kitchen !=0 %}
+                                        有厨房
+                                        {% endif %}
+                                        </td>
+                                    <td>{{item.price}}</td>
+                                    {% if item.description!= None %}
+                                    <td>{{item.description}}</td>
+                                    <td>
+                                        {% if item.status==0 %}
+                                        未审核
+                                        {% elif item.status==1%}
+                                        通过
+                                        {% else %}
+                                        未通过
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/modify_house/{{item.id}}/" style="color:#FFFFFF">修改信息</a>
+                                       </button>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

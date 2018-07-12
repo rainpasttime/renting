@@ -1,0 +1,22 @@
+div.navigation{
+	padding-top: 20px;
+}
+div.title{
+	margin-top: 15px;
+}
+div.bottom{
+	margin-top: 22px;
+}
+input.search{
+	height: 50px;
+	border-radius:25px;
+	border-color:#FFFFFF;
+	background:rgba(0, 0, 0, 0);
+}
+button.search{
+	height: 50px;
+	border-radius:25px;
+	border-color:#FFFFFF;
+	background:rgba(0, 0, 0,0);
+}
+
