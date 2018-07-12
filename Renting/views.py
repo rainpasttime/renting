@@ -229,23 +229,26 @@ def release_buttom():
 
     user = current_user
 
-    file = request.files['file']
+    file_list = request.files.getlist('file')
     file_ext = ''
-    if file.filename.find('.') > 0:
-        file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
-    if file_ext in app.config['ALLOWED_EXT']:
-        file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
-        url = save_to_local(file, file_name)
-        url_list = []
-        if url is not None:
-            url_list.append(url)
-            house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price, description,
-                  facility, province, city, district, address, user.username, url_list)
-            db.session.add(house)
-            db.session.commit()
+    url_list = []
 
-        all_house = House.query.filter_by(username=user.username).all()
-        return render_template('myhouse.html', house=all_house)
+    for file in file_list:
+        if file.filename.find('.') > 0:
+            file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
+        if file_ext in app.config['ALLOWED_EXT']:
+            file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
+            url = save_to_local(file, file_name)
+            if url is not None:
+                url_list.append(url)
+
+    house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price, description,
+            facility, province, city, district, address, user.username, url_list)
+    db.session.add(house)
+    db.session.commit()
+
+    all_house = House.query.filter_by(username=user.username).all()
+    return render_template('myhouse.html', house=all_house)
 
 
 @app.route('/myhouse/')
@@ -388,37 +391,25 @@ def modify_buttom(house_id):
     district = request.values.get('district').strip()
     address = request.values.get('address').strip()
 
-    all_house = None
-
-    file = request.files['file']
+    file_list = request.files.getlist('file')
     file_ext = ''
-    if file.filename.find('.') > 0:
-        file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
-    if file_ext in app.config['ALLOWED_EXT']:
-        file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
-        url = save_to_local(file, file_name)
-        if url is not None:
-            house = House.query.filter_by(id=house_id).first()
-            new_url = []
-            i = -1
-            if house.url_one is not None:
-                new_url.append(house.url_one)
-            if house.url_two is not None:
-                new_url.append(house.url_two)
-            if house.url_three is not None:
-                new_url.append(house.url_three)
-            if house.url_four is not None:
-                new_url.append(house.url_four)
-            if house.url_five is not None:
-                new_url.append(url)
-            if len(new_url) == 5:
-                new_url[4] = url
-            else:
-                new_url.append(url)
-            db.session.delete(house)
-            new_house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price,
-                        description,facility, province, city, district, address, house.username, new_url)
-            db.session.add(new_house)
-            db.session.commit()
-            all_house = House.query.filter_by(username=house.username).all()
-        return render_template('myhouse.html', house=all_house)
+    url_list = []
+
+    for file in file_list:
+        if file.filename.find('.') > 0:
+            file_ext = file.filename.rsplit('.', 1)[1].strip().lower()
+        if file_ext in app.config['ALLOWED_EXT']:
+            file_name = str(uuid.uuid1()).replace('-', '') + '.' + file_ext
+            url = save_to_local(file, file_name)
+            if url is not None:
+                url_list.append(url)
+
+
+    house = House.query.filter_by(id=house_id).first()
+    db.session.delete(house)
+    new_house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price,
+        description,facility, province, city, district, address, house.username, url_list)
+    db.session.add(new_house)
+    db.session.commit()
+    all_house = House.query.filter_by(username=house.username).all()
+    return render_template('myhouse.html', house=all_house)
