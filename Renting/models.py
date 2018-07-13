@@ -125,10 +125,10 @@ class Order(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))  # 房屋ID 作为外键
     seller = db.Column(db.String(10), db.ForeignKey('user.username'))  # 房屋的卖家  作为外键
     renter = db.Column(db.String(10), db.ForeignKey('user.username'))  # 房屋租户  作为外键
-    start_time = db.Column(db.DateTime)  # 订单开始时间
-    end_time = db.Column(db.DateTime)  # 订单结束时间
+    start_time = db.Column(db.Date)  # 订单开始时间
+    end_time = db.Column(db.Date)  # 订单结束时间
     total_price = db.Column(db.Integer)  # 订单的价格
-    status = db.Column(db.Integer)  # 订单状态 0表示订单已取消  1表示订单未受理  2表示订单受理  3表示订单正在取消
+    status = db.Column(db.Integer)  # 订单状态 0表示订单已取消  1表示订单未受理  2表示订单已受理  3表示订单正在取消
 
     def __init__(self, house_id, seller, renter, start_time, end_time, total_price, status):
         self.house_id = house_id

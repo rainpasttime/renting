@@ -137,7 +137,7 @@
         </div>
        <!--侧边栏以及内容-->
        <!--侧边栏-->
-       <div id="wrapper">
+       <div id="wrapper" style="margin-top=25px">
             <div class="overlay"></div>
             <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
                 <ul class="nav sidebar-nav">
@@ -191,27 +191,28 @@
                             <thead>
                                 <tr>
                                     <th>房名</th>
-                                    <th>屋主名称</th>
+                                    <th>订房人名称</th>
                                     <th>类型</th>
                                     <th>地址</th>
                                     <th>入住时间</th>
                                     <th>离开时间</th>
                                     <th>订单价格</th>
                                     <th>订单状态</th>
-                                    <th style="display:none">取消订单</th>
+                                    <th style="display:none">操作一</th>
+                                    <th style="display:none">操作二</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for item in result_renter: %}
+                            {% for item in result_seller: %}
                                 <tr>
                                     <td>{{item['house'].house_name}}</td>
-                                    <td>{{item['order'].seller}}</td>
+                                    <td>{{item['order'].renter}}</td>
                                     {% if item['house'].house_type==0 %}
-                                        <td>整租</td>
+                                    <td>整租</td>
                                     {% elif item['house'].house_type==1 %}
-                                        <td>单间</td>
+                                    <td>单间</td>
                                     {% else %}
-                                        <td>床位</td>
+                                    <td>床位</td>
                                     {% endif %}
                                     <td>{{item['house'].province}}省 {{item['house'].city}}市
                                         {% if item['house'].district !=None %}
@@ -223,26 +224,38 @@
                                     <td>{{item['order'].end_time}}</td>
                                     <td>{{item['order'].total_price}}</td>
                                     {% if item['order'].status == 0%}
-                                        <td>订单已取消<td>
+                                    <td>订单已取消<td>
                                     {% elif item['order'].status == 1 %}
-                                        <td>订单未受理<td>
+                                    <td>订单未受理<td>
                                     {% elif item['order'].status == 2 %}
-                                        <td>订单受理<td>
-                                    {% else %}
-                                        <td>订单取消中<td>
+                                    <td>订单受理<td>
+                                    {% elif item['order'].status == 3 %}
+                                    <td>订单取消中<td>
                                     {% endif %}
-                                    {% if item['cancel'] ==1 %}
+                                    {% if item['order'].status ==1 %}
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" >
                                             <span class="glyphicon glyphicon-pencil">
-                                            </span><a href="/cancel_order/{{item['order'].id}}/" style="color:#FFFFFF">取消订单</a>
+                                            </span><a href="/accept_order/{{item['order'].id}}/" style="color:#FFFFFF">受理订单</a>
                                        </button>
                                     </td>
-                                    {% else %}
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" disabled="disabled">
+                                        <button type="button" class="btn btn-primary btn-sm" >
                                             <span class="glyphicon glyphicon-pencil">
-                                            </span>取消订单
+                                            </span><a href="/refuse_order/{{item['order'].id}}/" style="color:#FFFFFF">不受理订单</a>
+                                       </button>
+                                    </td>
+                                    {% elif  item['order'].status ==3 %}
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/accept_cancel/{{item['order'].id}}/" style="color:#FFFFFF">同意取消</a>
+                                       </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/refuse_cancel/{{item['order'].id}}/" style="color:#FFFFFF">不同意取消</a>
                                        </button>
                                     </td>
                                     {% endif %}

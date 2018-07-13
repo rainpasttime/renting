@@ -1,0 +1,99 @@
+*{box-sizing: border-box;}
+body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,dd,a,i,b,em,strong,span,img{padding:0;margin:0;}
+body{font-family: "Microsoft Yahei","微软雅黑",verdana,arial;}
+a{text-decoration:none; color: #333;}
+a:focus{outline:none;}
+li{list-style:none;}
+em,i{font-style:normal;}
+b,strong{font-weight:normal;}
+img{vertical-align:top;}
+a img{ border:none;}
+.fl{float:left;}
+.fr{float:right;}
+.clearfix:after{content:'';display:block;clear:both;visibility:hidden;height:0;}
+.clearfix{zoom:1}
+a:hover{
+text-decoration: none;
+}
+.mar0{
+margin:0 auto;
+}
+.pos1{
+position:relative;
+}
+
+.w100{
+width:100%;
+}
+.h100{
+    height: 100%;
+}
+.w1200{
+    width: 1200px;
+}
+
+
+/*====================3.0中间大轮播图start===================*/
+#lunbo{
+width:900px;
+height:530px;
+margin:30px auto;
+
+}
+#one{
+width:900px;
+height:530px;
+overflow:hidden;
+}
+#one li{
+float:left;
+width:900px;
+height:530px;
+display:none;
+}
+#one li img{
+width:100%;
+height:100%;
+}
+#one .on{display:block;}
+#two .on{ border:1px solid #801b1f;background:#801b1f;}
+#two{
+position:absolute;
+left:110px;
+bottom:20px;
+}
+#two li{
+float:left;
+width:10px;
+height:10px;
+border:1px solid #fff;
+background:#fff;
+margin-left:10px;
+text-align:center;
+}
+/*轮播图左右箭头*/
+.slider-page{display:none;}
+.slider-page a{
+display: block;
+width: 28px;
+height: 62px;
+line-height: 62px;
+background: rgba(0,0,0,.2);
+color: lightseagreen;
+text-align: center;
+font-size: 50px;
+font-weight: 400;
+margin-top: -5px;
+font-family: simsun;
+cursor:pointer;
+}
+#left{
+position:absolute;
+left:0%;
+top:215px;
+}
+#right{position:absolute;
+right:0%;
+top:215px;
+}
+#lunbo:hover .slider-page{display:block;}

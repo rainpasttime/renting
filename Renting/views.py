@@ -106,6 +106,7 @@ def logout():
 def history():
     # 先得到目前的用户然后从数据库中查询这个用户的所有订单
     # 得到这个用户的作为买家的所有订单
+    now_compare = datetime.now().date()
     user = current_user
     result_renter = []
     renter_list = Order.query.filter_by(renter=user.username).all()
@@ -114,6 +115,10 @@ def history():
         one_house = House.query.filter_by(id=item.house_id).first()
         one['order'] = item
         one['house'] = one_house
+        if now_compare < item.start_time and item.status == 1:
+            one['cancel'] = 1
+        else:
+            one['cancel'] = 0
         print(one)
         result_renter.append(one)
     # 返回的是List类型
@@ -453,11 +458,136 @@ def modify_buttom(house_id):
     return render_template('myhouse.html', house=all_house)
 
 
+#用户取消订单的步骤
+@app.route('/cancel_order/<int:order_id>/', methods={'post', 'get'})
+def cancel_order(order_id):
+    #得到订单
+    order = Order.query.filter_by(id=order_id).first()
+    new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 3)
+    db.session.delete(order)
+    db.session.add(new_order)
+    db.session.commit()
+
+    now_compare = datetime.now().date()
+    user = current_user
+    result_renter = []
+    renter_list = Order.query.filter_by(renter=user.username).all()
+    for item in renter_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        if now_compare < item.start_time and item.status == 1:
+            print("item.price"+str(item.price))
+            print("item.status" + str(item.status))
+            one['cancel'] = 1
+        else:
+            one['cancel'] = 0
+        print(one)
+        result_renter.append(one)
+    # 返回的是List类型
+    return render_template('renting.html', result_renter=result_renter)
 
 
+#显示预定我的房子的订单
+@app.route('/rent_house/', methods={'post', 'get'})
+def rent_myhouse():
+    #得到订单
+    username = current_user.username
+    result_seller = []
+    seller_list = Order.query.filter_by(seller=username).all()
+    for item in seller_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+    return render_template('rent_house.html', result_seller=result_seller)
 
 
+#房主同意取消的操作
+@app.route('/accept_cancel/<int:order_id>/', methods={'post', 'get'})
+def accept_cancel_order(order_id):
+    #得到订单
+    order = Order.query.filter_by(id=order_id).first()
+    new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 0)
+    db.session.delete(order)
+    db.session.add(new_order)
+    db.session.commit()
+
+    username = current_user.username
+    result_seller = []
+    seller_list = Order.query.filter_by(seller=username).all()
+    for item in seller_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+    return render_template('rent_house.html', result_seller=result_seller)
 
 
+#房主拒绝取消的操作
+@app.route('/refuse_cancel/<int:order_id>/', methods={'post', 'get'})
+def refuse_cancel(order_id):
+    #得到订单
+    order = Order.query.filter_by(id=order_id).first()
+    new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 2)
+    db.session.delete(order)
+    db.session.add(new_order)
+    db.session.commit()
+
+    username = current_user.username
+    result_seller = []
+    seller_list = Order.query.filter_by(seller=username).all()
+    for item in seller_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+    return render_template('rent_house.html', result_seller=result_seller)
 
 
+#房主接受订单的操作
+@app.route('/accept_order/<int:order_id>/', methods={'post', 'get'})
+def accept_order(order_id):
+    #得到订单
+    order = Order.query.filter_by(id=order_id).first()
+    new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 2)
+    db.session.delete(order)
+    db.session.add(new_order)
+    db.session.commit()
+
+    username = current_user.username
+    result_seller = []
+    seller_list = Order.query.filter_by(seller=username).all()
+    for item in seller_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+    return render_template('rent_house.html', result_seller=result_seller)
+
+
+#房主拒绝受理的操作
+@app.route('/refuse_order/<int:order_id>/', methods={'post', 'get'})
+def refuse_order(order_id):
+    #得到订单
+    order = Order.query.filter_by(id=order_id).first()
+    new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 0)
+    db.session.delete(order)
+    db.session.add(new_order)
+    db.session.commit()
+
+    username = current_user.username
+    result_seller = []
+    seller_list = Order.query.filter_by(seller=username).all()
+    for item in seller_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+    return render_template('rent_house.html', result_seller=result_seller)
