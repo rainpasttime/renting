@@ -6,10 +6,10 @@ from datetime import datetime
 # 用户表的定义
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # ID 用户唯一的标识
-    username = db.Column(db.String(10), unique=True)  # 用户名  唯一   最大10个字符
-    password = db.Column(db.String(20))  # 密码   最大20个字符
+    username = db.Column(db.String(50), unique=True)  # 用户名  唯一   最大10个字符
+    password = db.Column(db.String(100))  # 密码   最大20个字符
     phone_number = db.Column(db.Integer, unique=True)  # 手机号码
-    email = db.Column(db.String(25), unique=True)  # 邮箱  唯一
+    email = db.Column(db.String(100), unique=True)  # 邮箱  唯一
     salt = db.Column(db.String(32))  # 密码加盐
 
     def __init__(self, username, password, email, salt):

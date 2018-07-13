@@ -28,7 +28,7 @@ def profile(user_id):
     user = User.query.get(user_id)
     if user is None:
         return redirect('/')
-    return render_template('profile.html', user=user, result_renter=[])
+    return render_template('profile.html', user=user)
 
 
 def redirect_with_msg(target, msg, category):
@@ -620,3 +620,31 @@ def operating():
         result_seller.append(one)
 
     return render_template('operating.html', result_seller=result_seller)
+
+
+@app.route('/modify_information/<int:user_id>/', methods={'post', 'get'})
+def modify_information(user_id):
+    new_name = request.values.get('name_modify').strip()
+    new_email = request.values.get('email_modify').strip()
+    new_phone = request.values.get('phone_modify').strip()
+    new_password = request.values.get('password_modify').strip()
+    old_user = User.query.filter_by(id=user_id).first()
+
+    user_check = User.query.filter_by(username=new_name).first()
+    if user_check is not None:
+        return redirect_with_msg('/', u'用户名已经存在', 'reglogin')
+
+    salt = '.'.join(random.sample('0123456789ABCdef', 10))
+    m = hashlib.md5()
+    m.update((new_password + salt).encode('utf8'))
+    password = m.hexdigest()
+    user_get = User(new_name, password, new_email, salt)
+    user_get.phone_number = new_phone
+
+    login_user(user_get)
+
+    db.session.add(user_get)
+    db.session.delete(old_user)
+    db.session.commit()
+
+    return redirect_with_msg('/', u'请重新登录', 'reglogin')

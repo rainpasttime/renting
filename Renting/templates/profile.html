@@ -28,6 +28,9 @@
         <!--登录注册弹出框-->
         <link type="text/css" href="/static/css/dialog.css"  rel="stylesheet"/>
         <script type="text/javascript" src="/static/js/register.js"></script>
+        <!--个人信息-->
+        <link rel="stylesheet" href="/static/css/_floating-form-labels.css">
+        <script type="text/javascript" src="/static/js/floatingFormLabels.min.js"></script>
 	</head>
 	<body>
        <!--导航栏-->
@@ -179,7 +182,7 @@
                     </li>
                 </ul>
             </nav>
-            <div id="page-content-wrapper">
+            <div id="page-content-wrapper" style='background:url(../static/image/image.jpg) 50% 50% no-repeat;background-size: cover;height:650px;weight:700px'>
                 <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
                     <span class="hamb-top"></span>
                     <span class="hamb-middle"></span>
@@ -188,9 +191,35 @@
                 <div class="container">
                     <div class="row">
                         <!--个人信息显示以及修改按钮-->
+                        <form method="post" id="modify_form">
+                            <div class="ffl-wrapper">
+                                <label for="name_modify" class="ffl-label">Name</label>
+                                <input type="text" id="name_modify" name="name_modify" value="{{user.username}}">
+                            </div>
+                            <div class="ffl-wrapper">
+                                <label for="email_modify" class="ffl-label">Email</label>
+                                <input type="email" id="email_modify" name="email_modify" value="{{user.email}}">
+                            </div>
+                            <div class="ffl-wrapper">
+                                <label for="phone_modify" class="ffl-label">Phone</label>
+                                <input type="text" id="phone_modify" name="phone_modify">
+                            </div>
+                            <div class="ffl-wrapper">
+                                <label for="password_modify" class="ffl-label">Password</label>
+                                <input type="password" id="password_modify" name="password_modify">
+                            </div>
+                            <div class="ffl-wrapper">
+                                <label for="repeat_modify" class="ffl-label">Repeat Password</label>
+                                <input type="password" id="repeat_modify" name="repeat_modify">
+                            </div>
+                            <button type="submit" onclick="form=document.getElementById('modify_form');form.action='/modify_information/{{user.id}}/';">修改</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </body>
 </html>
+<script type="text/javascript">
+    $('.ffl-wrapper').floatingFormLabels();
+</script>
