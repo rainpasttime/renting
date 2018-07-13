@@ -198,6 +198,8 @@
                                     <th>离开时间</th>
                                     <th>订单价格</th>
                                     <th>订单状态</th>
+                                    <th style="display:none">操作一</th>
+                                    <th style="display:none">操作二</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -229,6 +231,33 @@
                                     <td>订单受理<td>
                                     {% elif item['order'].status == 3 %}
                                     <td>订单取消中<td>
+                                    {% endif %}
+                                    {% if item['order'].status ==1 %}
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/accept_order/{{item['order'].id}}/" style="color:#FFFFFF">受理订单</a>
+                                       </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/refuse_order/{{item['order'].id}}/" style="color:#FFFFFF">不受理订单</a>
+                                       </button>
+                                    </td>
+                                    {% elif  item['order'].status ==3 %}
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/accept_cancel/{{item['order'].id}}/" style="color:#FFFFFF">同意取消</a>
+                                       </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" >
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span><a href="/refuse_cancel/{{item['order'].id}}/" style="color:#FFFFFF">不同意取消</a>
+                                       </button>
+                                    </td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}

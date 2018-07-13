@@ -478,8 +478,6 @@ def cancel_order(order_id):
         one['order'] = item
         one['house'] = one_house
         if now_compare < item.start_time and item.status == 1:
-            print("item.price"+str(item.price))
-            print("item.status" + str(item.status))
             one['cancel'] = 1
         else:
             one['cancel'] = 0
@@ -489,14 +487,21 @@ def cancel_order(order_id):
     return render_template('renting.html', result_renter=result_renter)
 
 
-#显示预定我的房子的订单
+#显示预定我的房子并且状态是已经受理或者已经取消的订单
 @app.route('/rent_house/', methods={'post', 'get'})
 def rent_myhouse():
     #得到订单
     username = current_user.username
     result_seller = []
-    seller_list = Order.query.filter_by(seller=username).all()
+    seller_list = Order.query.filter_by(seller=username, status=0).all()
+    seller_list_two = Order.query.filter_by(seller=username, status=2).all()
     for item in seller_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+    for item in seller_list_two:
         one = {}
         one_house = House.query.filter_by(id=item.house_id).first()
         one['order'] = item
@@ -591,3 +596,27 @@ def refuse_order(order_id):
         one['house'] = one_house
         result_seller.append(one)
     return render_template('rent_house.html', result_seller=result_seller)
+
+
+#显示预定我的房子并且状态是已经受理或者已经取消的订单
+@app.route('/operating/', methods={'post', 'get'})
+def operating():
+    #得到订单
+    username = current_user.username
+    result_seller = []
+    seller_list = Order.query.filter_by(seller=username, status=1).all()
+    seller_list_two = Order.query.filter_by(seller=username, status=3).all()
+    for item in seller_list:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+    for item in seller_list_two:
+        one = {}
+        one_house = House.query.filter_by(id=item.house_id).first()
+        one['order'] = item
+        one['house'] = one_house
+        result_seller.append(one)
+
+    return render_template('operating.html', result_seller=result_seller)
