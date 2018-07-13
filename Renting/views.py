@@ -48,6 +48,10 @@ def reg():
     user_check = User.query.filter_by(username=username).first()
     if user_check is not None:
         return redirect_with_msg('/', u'用户名已经存在', 'reglogin')
+    user_check = User.query.filter_by(email=email).first()
+    if user_check is not None:
+        return redirect_with_msg('/', u'邮箱已经存在', 'reglogin')
+
 
     salt = '.'.join(random.sample('0123456789ABCdef', 10))
     m = hashlib.md5()
@@ -270,7 +274,40 @@ def release_buttom():
     description = request.values.get('description').strip()
     price = int(request.values.get('price').strip())
     facility =""
-    tem = request.values.get('TV').strip()
+    eqipment_list = request.values.getlist("eqipment")
+    if "tv" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    if "icebox" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    if  "washer" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    if "conditioner" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    if "wifi" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    if "heater" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    if "wardrobe" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    if "parking" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+    '''tem = request.values.get('TV').strip()
     if tem == "有":
         facility = facility+"1"
     else:
@@ -309,7 +346,7 @@ def release_buttom():
     if tem == "有":
         facility = facility + "1"
     else:
-        facility = facility + "0"
+        facility = facility + "0"'''
 
     province = request.values.get('province').strip()
     city = request.values.get('city').strip()
