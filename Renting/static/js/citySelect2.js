@@ -95,17 +95,17 @@
 		elemHtml+= '<option value="-1" data-name="请选择" selected>请选择省</option>';
 
 		$(_config.data).each(function(i,curItem){
-			elemHtml += "<option data-name='"+curItem[1]+"' value='"+curItem[0]+"'>"+curItem[1]+"</option>";
+			elemHtml += "<option data-name='"+curItem[0]+"' value='"+curItem[1]+"'>"+curItem[1]+"</option>";
 		});
 		$(_config.provId).html(elemHtml);
-		
+
 		if(_config.isSelect) {
 			$($(_config.provId + " option")[1]).attr("selected",'true');
 			if(this.provCode) {
 				self._setSelectCode(_config.provId,this.provCode);
 			}
 		}
-		
+
 		_config.provCallBack && $.isFunction(_config.provCallBack) && _config.provCallBack();
 	},
 	/*
@@ -121,7 +121,7 @@
 			prov,
 			citys,
 			provOpt;
-		
+
 		provOpt = $($(_config.provId + ' option')[0]).attr("value");
 		var opthtml = '<option value="-1" data-name="请选择" selected>请选择市</option>';
 
@@ -149,7 +149,7 @@
 		elemHtml += '<option value="-1" data-name="请选择">请选择</option>';
 		for(var m = 0; m < citys.length; m++) {
 			var oneCity = citys[m];
-			elemHtml += "<option value='"+oneCity[0]+"' data-name='"+oneCity[1]+"'>"+oneCity[1]+"</option>";
+			elemHtml += "<option value='"+oneCity[1]+"' data-name='"+oneCity[0]+"'>"+oneCity[1]+"</option>";
 		}
 		$(_config.cityId).html(elemHtml);
 
@@ -182,7 +182,7 @@
 			areas,
 			oneCity;
 		var opthtml = '<option value="-1" data-name="请选择" selected>请选择</option>';
-		
+
 		/*
 		 * 如果省选择了 "请选择了" 那么省和市自动切换到请选择 那么相应的索引index-1
 		 * 如果省没有选择 "请选择"，市选择了 "请选择" 那么市的索引index - 1
@@ -194,7 +194,7 @@
 		}else if(provOpt != -1 && cityOpt == -1) {
 			cityIndex--;
 		}
-		
+
 		if(provIndex < 0 || cityIndex < 0){
 			$(_config.cityId).attr("data-code",'-1');
 			$(_config.areaId).attr("data-code",'-1');
@@ -210,7 +210,7 @@
 		if(areas != null) {
 			for(var n = 0; n < areas.length; n++) {
 				var oneArea = areas[n];
-				elemHtml += "<option value='"+oneArea[0]+"' data-name='"+oneArea[1]+"'>"+oneArea[1]+"</option>";
+				elemHtml += "<option value='"+oneArea[1]+"' data-name='"+oneArea[0]+"'>"+oneArea[1]+"</option>";
 			}
 			
 		}

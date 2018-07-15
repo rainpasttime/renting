@@ -307,46 +307,6 @@ def release_buttom():
         facility = facility + "1"
     else:
         facility = facility + "0"
-    '''tem = request.values.get('TV').strip()
-    if tem == "有":
-        facility = facility+"1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('fridge').strip()
-    if tem == "有":
-        facility = facility + "1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('washer').strip()
-    if tem == "有":
-        facility = facility + "1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('conditioner').strip()
-    if tem == "有":
-        facility = facility + "1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('wifi').strip()
-    if tem == "有":
-        facility = facility + "1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('heater').strip()
-    if tem == "有":
-        facility = facility + "1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('wardrobe').strip()
-    if tem == "有":
-        facility = facility + "1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('parking').strip()
-    if tem == "有":
-        facility = facility + "1"
-    else:
-        facility = facility + "0"'''
 
     province = request.values.get('province').strip()
     city = request.values.get('city').strip()
@@ -425,52 +385,51 @@ def modify_buttom(house_id):
 
     description = request.values.get('description').strip()
     price = int(request.values.get('price').strip())
-    facility =""
-    tem = request.values.get('TV').strip()
-    if tem == "有":
-        facility = facility+"1"
-    else:
-        facility = facility + "0"
-    tem = request.values.get('fridge').strip()
-    if tem == "有":
+    facility = ""
+    eqipment_list = request.values.getlist("eqipment")
+    if "tv" in eqipment_list:
         facility = facility + "1"
     else:
         facility = facility + "0"
-    tem = request.values.get('washer').strip()
-    if tem == "有":
+    if "icebox" in eqipment_list:
         facility = facility + "1"
     else:
         facility = facility + "0"
-    tem = request.values.get('conditioner').strip()
-    if tem == "有":
+    if "washer" in eqipment_list:
         facility = facility + "1"
     else:
         facility = facility + "0"
-    tem = request.values.get('wifi').strip()
-    if tem == "有":
+    if "conditioner" in eqipment_list:
         facility = facility + "1"
     else:
         facility = facility + "0"
-    tem = request.values.get('heater').strip()
-    if tem == "有":
+    if "wifi" in eqipment_list:
         facility = facility + "1"
     else:
         facility = facility + "0"
-    tem = request.values.get('wardrobe').strip()
-    if tem == "有":
+    if "heater" in eqipment_list:
         facility = facility + "1"
     else:
         facility = facility + "0"
-    tem = request.values.get('parking').strip()
-    if tem == "有":
+    if "wardrobe" in eqipment_list:
         facility = facility + "1"
     else:
         facility = facility + "0"
+    if "parking" in eqipment_list:
+        facility = facility + "1"
+    else:
+        facility = facility + "0"
+
+    print("one")
 
     province = request.values.get('province').strip()
     city = request.values.get('city').strip()
     district = request.values.get('district').strip()
     address = request.values.get('address').strip()
+
+    print("two")
+
+    user = current_user
 
     file_list = request.files.getlist('file')
     file_ext = ''
@@ -484,6 +443,8 @@ def modify_buttom(house_id):
             url = save_to_local(file, file_name)
             if url is not None:
                 url_list.append(url)
+
+    print("three")
 
     house = House.query.filter_by(id=house_id).first()
     db.session.delete(house)

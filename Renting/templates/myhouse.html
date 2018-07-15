@@ -213,9 +213,10 @@
                                     {% else %}
                                     <td>床位</td>
                                     {% endif %}
-                                    <td>{{item.province}}省 {{item.city}}市
+                                    <td>
+                                        {{item.province}} {{item.city}}
                                         {% if item.district !=None %}
-                                        {{item.district}}区
+                                        {{item.district}}
                                         {% endif %}
                                         {{item.address}}
                                     </td>
