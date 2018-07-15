@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+		<meta charset="utf-8">
+        <title>登录注册</title>
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="/static/css/dialog.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/window.css"/>
+
+		<!--导入菜鸟的JS的validate相关的库-->
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="/static/js/register.js" ></script>
+		<script type="text/javascript" src="/static/js/window.js"></script>
+    </head>
+
+    <body style="background-image: url(/static/image/b1.jpg);" onload="_confirm()">
+		<!--登录注册-->
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<div class="login-wrap"style="background-color:#343d4e;">
+					<div class="login-html"style="text-align: left;">
+						<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+						<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+						<div class="login-form">
+							<form  method="post" id="loginform">
+							<div class="sign-in-htm">
+								<div class="group">
+									<label for="user_login" class="label1" >Username</label>
+									<input id="user_login" type="text" class="input" name="user_login">
+									<input type="hidden" name="next" value="{{next}}"/>
+								</div>
+								<div class="group">
+									<label for="pass_login" class="label1" >Password</label>
+									<input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
+								</div>
+								<div class="group">
+									<button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
+								</div>
+							</div>
+							</form>
+
+							<form  method="post" id="signupform">
+								<div class="sign-up-htm">
+									<div class="group">
+										<label for="user_sign" class="label1">Username</label>
+										<input id="user_sign" type="text" class="input" name="user_sign">
+										<input type="hidden" name="next" value="{{next}}"/>
+									</div>
+									<div class="group">
+										<label for="pass_sign" class="label1">Password</label>
+										<input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
+									</div>
+									<div class="group">
+										<label for="pass_repeat" class="label1">Repeat Password</label>
+										<input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
+									</div>
+									<div class="group">
+										<label for="email" class="label1">Email Address</label>
+										<input id="email" type="text" class="input" name="email">
+									</div>
+									<div class="group">
+										<button class="button" onclick="form=document.getElementById('signupform');form.action='/reg/';">Sign Up</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			function _confirm(){
+				{% if (msg | length) > 0 %}
+					win.confirm('提示', '{{msg}}');
+				{% endif %}
+			}
+		</script>
+    </body>
+</html>

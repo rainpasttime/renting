@@ -13,9 +13,6 @@ def init_database():
     db.create_all()           # 把所有数据类创建
     # db.session.add(User('user1', 'user1', 'ss', ' '))
 
-    # for i in range(0, 10):
-    #     db.session.add(House(i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, 'user1', 1))
-
     # db.session.commit()
 
 

@@ -1,8 +1,8 @@
 # -*- encoding=UTF-8 -*-
 
 from Renting import app, db
-from Renting.models import User, Order, House
-from flask import render_template, request, flash, get_flashed_messages, redirect,send_from_directory
+from Renting.models import User, Order, House, Admin
+from flask import render_template, request, flash, get_flashed_messages, redirect, send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
 from Renting.page_utils import Pagination
 import random
@@ -10,31 +10,43 @@ import hashlib
 import uuid
 import os
 from datetime import date, datetime
+from smtplib import SMTP
+from email.mime.text import MIMEText
+from email.header import Header
 
 
 @app.route('/index/', methods={'post', 'get'})
 @app.route('/', methods={'post', 'get'})
 def index():
-    msg = ''
-    for m in get_flashed_messages(with_categories=False, category_filter=['reglogin']):
-        msg = msg + m
-    return render_template('index.html', msg=msg)
+    return render_template('index.html')
 
 
 # 个人中心页面 带有一个参数user表示现在的user
-@app.route('/profile/<int:user_id>')
+@app.route('/profile/<int:user_id>/')
 @login_required
 def profile(user_id):
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['change']):
+        msg += m
     user = User.query.get(user_id)
     if user is None:
         return redirect('/')
-    return render_template('profile.html', user=user)
+    print(msg)
+    return render_template('profile.html', user=user, result_renter=[], msg=msg)
 
 
 def redirect_with_msg(target, msg, category):
     if msg is not None:
         flash(msg, category=category)
     return redirect(target)
+
+
+@app.route('/reglogin/')
+def reglogin():
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['reglogin']):
+        msg = msg + m
+    return render_template('reglogin.html', msg=msg)
 
 
 @app.route('/reg/', methods={'post', 'get'})
@@ -46,12 +58,12 @@ def reg():
     email = request.values.get('email').strip()
 
     user_check = User.query.filter_by(username=username).first()
+
     if user_check is not None:
-        return redirect_with_msg('/', u'用户名已经存在', 'reglogin')
+        return redirect_with_msg('/reglogin/', u'用户名已经存在', 'reglogin')
     user_check = User.query.filter_by(email=email).first()
     if user_check is not None:
-        return redirect_with_msg('/', u'邮箱已经存在', 'reglogin')
-
+        return redirect_with_msg('/reglogin/', u'邮箱已经存在', 'reglogin')
 
     salt = '.'.join(random.sample('0123456789ABCdef', 10))
     m = hashlib.md5()
@@ -75,21 +87,16 @@ def reg():
 def login():
     username = request.values.get('user_login').strip()        # 得到输入框的用户名
     password = request.values.get('pass_login').strip()        # 得到输入框的密码
-    # 输入的用户名或者密码为空
-
-#    if username == '' or password == '':
-#       return redirect_with_msg('/', u'用户名和密码不能为空', 'reglogin')
-
     user_database = User.query.filter_by(username=username).first()
 
     # 用户名不存在
     if user_database is None:
-        return redirect_with_msg('/', u'用户名不存在', 'reglogin')
+        return redirect_with_msg('/reglogin/', u'用户名不存在', 'reglogin')
 
     m = hashlib.md5()
     m.update((password + user_database.salt).encode('utf8'))
     if m.hexdigest() != user_database.password:
-        return redirect_with_msg('/', u'密码错误', 'reglogin')
+        return redirect_with_msg('/reglogin/', u'密码错误', 'reglogin')
 
     login_user(user_database)
 
@@ -144,6 +151,8 @@ def make_order(house_id):
     seller = house.username
     starttime = request.values.get('datepicker')
     endtime = request.values.get('datepicker1')
+    if starttime is None or endtime is None:
+        return redirect_with_msg('/housedes/' + str(house_id) + '/', u'请选择住房时间', 'message')
 
     startyear = int(starttime[6]) * 1000 + int(starttime[7]) * 100 + int(starttime[8]) * 10 + int(starttime[9])
     startmonth = int(starttime[0]) * 10 + int(starttime[1])
@@ -155,13 +164,21 @@ def make_order(house_id):
     endday = int(endtime[3]) * 10 + int(endtime[4])
     enddate = date(endyear, endmonth, endday)
 
-    if startdate > enddate:
+    cur = datetime.now()
+    today = date(cur.year, cur.month, cur.day)
+
+    if today > startdate:
+        return redirect_with_msg('/housedes/' + str(house_id) + '/', u'住房时间在今天之前， 预订失败', 'message')
+    elif startdate > enddate:
         return redirect_with_msg('/housedes/' + str(house_id) + '/', u'住房时间比退房时间晚，预订失败', 'message')
     elif not current_user.is_authenticated:
         return redirect_with_msg('/housedes/' + str(house_id) + '/', u'请先登陆', 'message')
 
     print(current_user)
     renter = current_user.username
+    if renter == seller:
+        return redirect_with_msg('/housedes/' + str(house_id) + '/', u'您不能租自己的房屋', 'message')
+
     day = (enddate - startdate).days
     status = 1
     total_price = house.price * day
@@ -184,7 +201,7 @@ def mainpage():
     msg = ''
     for m in get_flashed_messages(with_categories=False, category_filter=['research']):
         msg += m
-    house_list = House.query.all()
+    house_list = House.query.filter_by(status=1).all()
     pager_obj = Pagination(request.args.get("page", 1), len(house_list), request.path, request.args, per_page_count=6)
     print(request.path)
     print(request.args)
@@ -204,7 +221,7 @@ def search():
     print(district)
     print(price)
 
-    if province is None or city is None or district is None:
+    if province == '-1' or city == '-1' or district == '-1':
         return redirect_with_msg('/mainpage/', u'请选择省，市，区进行搜索', 'research')
 
     house_list = House.query.filter_by(province=province, city=city, district=district).all()
@@ -213,16 +230,19 @@ def search():
         house_newlist = []
         for house in house_list:
             if price != 10000 and price - 100 < house.price <= price:
+                print(house.price)
                 house_newlist.append(house)
             elif price == 10000 and price > 500:
+                print(house.price)
                 house_newlist.append(house)
         pager_obj = Pagination(request.args.get("page", 1), len(house_newlist), request.path, request.args,
                                per_page_count=6)
+        index_list = house_newlist[pager_obj.start:pager_obj.end]
     else:
         pager_obj = Pagination(request.args.get("page", 1), len(house_list), request.path, request.args,
                                per_page_count=6)
+        index_list = house_list[pager_obj.start:pager_obj.end]
 
-    index_list = house_list[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
     return render_template("mainpage.html", house=index_list, html=html)
 
@@ -230,7 +250,7 @@ def search():
 def save_to_local(file, file_name):
     save_dir = app.config['UPLOAD_DIR']
     file.save(os.path.join(save_dir, file_name))
-    return '../static/image/upload/'+file_name
+    return '/static/image/upload/'+file_name
 
 
 @app.route('/release/', methods={'post', 'get'})
@@ -456,10 +476,102 @@ def modify_buttom(house_id):
     return render_template('myhouse.html', house=all_house)
 
 
-#用户取消订单的步骤
+@app.route('/contact/', methods={'get', 'post'})
+def contact():
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['contact']):
+        msg += m
+    print(msg)
+    return render_template('contact.html', msg=msg)
+
+
+@app.route('/sendemail/', methods={'post', 'get'})
+def sendemail():
+    suggestion = request.values.get('contact_text').strip()
+    print(suggestion)
+
+    if suggestion is None:
+        return redirect_with_msg('/contact/', u'请输入您的建议', 'contact')
+
+    mail_server = 'smtp.163.com'
+    port = '25'
+
+    sender = 'se0enW@163.com'       # 可以替换成用户的邮箱地址
+    sender_pass = '19961027lingfeng'
+    receiver = '1936249423@qq.com'
+
+    if not current_user.is_authenticated:
+        return redirect_with_msg('/contact/', u'请先登陆再发送邮箱', 'contact')
+
+    message = MIMEText(suggestion, 'plain', 'utf-8')
+    message['From'] = current_user.email
+    message['To'] = receiver
+    message['Subject'] = Header('轻松短租网意见收集', 'utf-8')
+
+    try:
+        mail = SMTP(mail_server, port)
+        mail.login(sender, sender_pass)
+        mail.sendmail(sender, (receiver), message.as_string())
+        mail.quit()
+        msg = u'邮件发送成功'
+    except:
+        mail.quit()
+        msg = u'邮件发送失败'
+    return redirect_with_msg('/contact/', msg, 'contact')
+
+
+@app.route('/admin/')
+def admin():
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['login']):
+        msg += m
+    return render_template('login.html', msg=msg)
+
+
+@app.route('/adminlogin/', methods={'get', 'post'})
+def adminlogin():
+    username = request.values.get('user_login').strip()  # 得到输入框的用户名
+    password = request.values.get('pass_login').strip()  # 得到输入框的密码
+
+    # 用户名不存在
+    if username != 'admin':
+        return redirect_with_msg('/admin/', u'管理员用户名不存在', 'login')
+
+    if password != 'admin':
+        return redirect_with_msg('/admin/', u'密码错误', 'login')
+
+    return redirect('/adminprofile/')
+
+
+@app.route('/adminprofile/')
+def adminprofile():
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['message']):
+        msg += m
+    house_list = House.query.filter_by(status=0).all()
+    return render_template('admin.html', house=house_list, msg=msg)
+
+
+@app.route('/check/<int:house_id>/')
+def check(house_id):
+    house = House.query.filter_by(id=house_id).first()
+    house.status = 1
+    db.session.commit()
+    return redirect_with_msg('/adminprofile/', u'审核通过', 'message')
+
+
+@app.route('/pass/<int:houst_id>/')
+def passhouse(house_id):
+    house = House.query.filter_by(id=house_id).first()
+    house.status = 1
+    db.session.commit()
+    return redirect_with_msg('/adminprofile/', u'审核未通过', 'message')
+
+
+# 用户取消订单的步骤
 @app.route('/cancel_order/<int:order_id>/', methods={'post', 'get'})
 def cancel_order(order_id):
-    #得到订单
+    # 得到订单
     order = Order.query.filter_by(id=order_id).first()
     new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 3)
     db.session.delete(order)
@@ -485,10 +597,10 @@ def cancel_order(order_id):
     return render_template('renting.html', result_renter=result_renter)
 
 
-#显示预定我的房子并且状态是已经受理或者已经取消的订单
+# 显示预定我的房子并且状态是已经受理或者已经取消的订单
 @app.route('/rent_house/', methods={'post', 'get'})
 def rent_myhouse():
-    #得到订单
+    # 得到订单
     username = current_user.username
     result_seller = []
     seller_list = Order.query.filter_by(seller=username, status=0).all()
@@ -508,10 +620,10 @@ def rent_myhouse():
     return render_template('rent_house.html', result_seller=result_seller)
 
 
-#房主同意取消的操作
+# 房主同意取消的操作
 @app.route('/accept_cancel/<int:order_id>/', methods={'post', 'get'})
 def accept_cancel_order(order_id):
-    #得到订单
+    # 得到订单
     order = Order.query.filter_by(id=order_id).first()
     new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 0)
     db.session.delete(order)
@@ -530,10 +642,10 @@ def accept_cancel_order(order_id):
     return render_template('rent_house.html', result_seller=result_seller)
 
 
-#房主拒绝取消的操作
+# 房主拒绝取消的操作
 @app.route('/refuse_cancel/<int:order_id>/', methods={'post', 'get'})
 def refuse_cancel(order_id):
-    #得到订单
+    # 得到订单
     order = Order.query.filter_by(id=order_id).first()
     new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 2)
     db.session.delete(order)
@@ -552,10 +664,10 @@ def refuse_cancel(order_id):
     return render_template('rent_house.html', result_seller=result_seller)
 
 
-#房主接受订单的操作
+# 房主接受订单的操作
 @app.route('/accept_order/<int:order_id>/', methods={'post', 'get'})
 def accept_order(order_id):
-    #得到订单
+    # 得到订单
     order = Order.query.filter_by(id=order_id).first()
     new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 2)
     db.session.delete(order)
@@ -574,10 +686,10 @@ def accept_order(order_id):
     return render_template('rent_house.html', result_seller=result_seller)
 
 
-#房主拒绝受理的操作
+# 房主拒绝受理的操作
 @app.route('/refuse_order/<int:order_id>/', methods={'post', 'get'})
 def refuse_order(order_id):
-    #得到订单
+    # 得到订单
     order = Order.query.filter_by(id=order_id).first()
     new_order = Order(order.house_id, order.seller, order.renter, order.start_time, order.end_time, order.total_price, 0)
     db.session.delete(order)
@@ -596,10 +708,10 @@ def refuse_order(order_id):
     return render_template('rent_house.html', result_seller=result_seller)
 
 
-#显示预定我的房子并且状态是已经受理或者已经取消的订单
+# 显示预定我的房子并且状态是已经受理或者已经取消的订单
 @app.route('/operating/', methods={'post', 'get'})
 def operating():
-    #得到订单
+    # 得到订单
     username = current_user.username
     result_seller = []
     seller_list = Order.query.filter_by(seller=username, status=1).all()
@@ -626,23 +738,37 @@ def modify_information(user_id):
     new_email = request.values.get('email_modify').strip()
     new_phone = request.values.get('phone_modify').strip()
     new_password = request.values.get('password_modify').strip()
-    old_user = User.query.filter_by(id=user_id).first()
+    old_user = User.query.filter_by(id=user_id).first()         # 原用户信息
 
-    user_check = User.query.filter_by(username=new_name).first()
-    if user_check is not None:
-        return redirect_with_msg('/', u'用户名已经存在', 'reglogin')
+    if new_name is None or new_email is None or new_phone is None or new_password is None:
+        return redirect_with_msg('/profile' + str(user_id) + '/', u'请填写完整信息', 'change')
+
+    user_check = User.query.filter_by(username=new_name).all()
+    if len(user_check) > 1:
+        return redirect_with_msg('/profile/' + str(user_id) + '/', u'用户名已经存在', 'change')
+
+    user_check = User.query.filter_by(email=new_email).all()
+    if len(user_check) > 1:
+        return redirect_with_msg('/profile/' + str(user_id) + '/', u'邮箱已经存在', 'change')
+
+    user_check = User.query.filter_by(phone_number=new_phone).all()
+    if len(user_check) > 1:
+        return redirect_with_msg('/profile/' + str(user_id) + '/', u'手机号已经存在', 'change')
 
     salt = '.'.join(random.sample('0123456789ABCdef', 10))
     m = hashlib.md5()
     m.update((new_password + salt).encode('utf8'))
     password = m.hexdigest()
-    user_get = User(new_name, password, new_email, salt)
-    user_get.phone_number = new_phone
 
-    login_user(user_get)
-
-    db.session.add(user_get)
-    db.session.delete(old_user)
+    old_user.username = new_name
+    old_user.password = password
+    old_user.phone_number = new_phone
+    old_user.email = new_email
+    old_user.salt = salt
     db.session.commit()
 
-    return redirect_with_msg('/', u'请重新登录', 'reglogin')
+    return redirect_with_msg('/profile/' + str(user_id) + '/', u'修改成功！', 'change')
+
+
+
+

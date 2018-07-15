@@ -4,7 +4,7 @@ $().ready(function(){
          house_name: {
               required: true,
               minlength: 4,
-              maxlength: 10
+              maxlength: 25
          },
          area: {
               required: true,
@@ -45,7 +45,7 @@ $().ready(function(){
          house_name: {
               required: "请输入房屋名字",
               minlength: "房屋名字不小于4个字",
-              maxlength: "房屋名字不超过10个字"
+              maxlength: "房屋名字不超过25个字"
          },
          area: {
               required: "请输入面积",

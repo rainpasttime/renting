@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link type="text/css" rel='stylesheet' href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link type="text/css" rel="stylesheet" href="/static/css/check.css">
+	<link type="text/css" rel="stylesheet" href="/static/css/layer.css">
+	<link type="text/css" rel="stylesheet" href="/static/css/navigation.css">
+
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/js/check.js"></script>
+	<title>审核房屋</title>
+</head>
+	<body>
+		<!--导航栏-->
+		<header class="header-navigation" id="header">
+		<nav>
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-3">
+					<a href="/index/"><font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">轻松短租网</font></a>
+				</div>
+				<div class="col-md-2 title">
+				</div>
+				<div class="col-md-2 title">
+					<a href="/contact/"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4"></font></a>
+				</div>
+				<div class="col-md-2 title">
+					<a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
+				</div>
+				<div class="col-md-2 title">
+
+						<button type="button" class="btn btn-primary btn-lg">
+						  <span class="glyphicon glyphicon-user"></span> Admin
+						</button>
+				</div>
+			</div>
+		</nav>
+		</header>
+
+		<div class="page-container" style="margin-top: 150px; margin-left: 80px; margin-right: 80px;">
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-bg table-hover table-sort">
+					<thead>
+						<tr class="text-c">
+							<th width="100">房屋名称</th>
+							<th width="100">房东</th>
+							<th width="100">房屋图片</th>
+							<th width="100">出租类型</th>
+							<th width="100">面积</th>
+							<th width="100">价格（元/晚）</th>
+							<th width="100">审核状态</th>
+							<th width="100">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in house %}
+						<tr class="text-c">
+							<td style="vertical-align: middle;">{{ item.house_name }}</td>
+							<td style="vertical-align: middle;">{{ item.username }}</td>
+							<td> <img src="{{ item.url_one }}" alt="house1" style="width:100px;height: 80px;"> </td>
+							{% if house.house_type == 0 %}
+							<td style="vertical-align: middle;"> 整租 </td>
+							{% elif house.house_type == 1 %}
+							<td style="vertical-align: middle;"> 单间 </td>
+							{% else %}
+							<td style="vertical-align: middle;"> 单床位 </td>
+							{% endif %}
+
+							<td class="text-c" style="vertical-align: middle;">{{ item.area }}</td>
+							<td style="vertical-align: middle;">{{ item.price }}</td>
+							<td style="vertical-align: middle;" class="td-status"><span class="label label-sucess radius"
+																						style="background-color: red;">待审核</span></td>
+							<form id="check">
+								<td style="vertical-align: middle;" class="td-manage">
+									<a href="/check/{{item.id}}" onclick="picture_stop(this, '100001')"
+									   class="btn btn-info btn-sm" style="border: none;">
+									  <span class="glyphicon glyphicon-ok-sign"></span> Ok
+									</a>
+
+									<a href="/check/{{item.id}}" onclick="picture_stop(this, '100001')"
+									   class="btn btn-info btn-sm" style="background-color: #ff0000; border: none;">
+									  <span class="glyphicon glyphicon-remove-sign"></span> No
+									</a>
+
+								</td>
+							</form>
+							{% endfor %}
+						</tr>
+					</tbody>
+				</table>
+				<!--
+				<nav role="navigation">
+					<ul class="cd-pagination no-space">
+						<li class="button"><a class="disabled" href="#0">上一页</a></li>
+						<li><a class="current" href="#0">1</a></li>
+						<li><a href="#0">2</a></li>
+						<li><span>...</span></li>
+						<li><a href="#0">19</a></li>
+						<li><a href="#0">20</a></li>
+						<li class="button" ><a href="#0">下一页</a></li>
+					</ul>
+				</nav>
+				-->
+			</div>
+		</div>
+	</body>
+</html>

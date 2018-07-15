@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>联系我们</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="/static/css/dialog.css">
+        <link rel="stylesheet" href="/static/css/window.css">
+        <link rel="stylesheet" href="/static/css/form-elements.css">
+        <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/static/js/window.js"></script>
+    </head>
+
+    <body onload="_confirm()" style="background-image: url(/static/image/b1.jpg);" >
+        <!-- 联系我们-->
+        <form id="contactform" method="post">
+                <div class="login-wrap">
+                    <div class="contact-html">
+                        <label class="tab" style="">Suggestion</label>
+                        <div class="contact">
+                            <div class="group">
+                                <textarea class="contact_text" name="contact_text" id="contact_text" rows="10" cols="40" style="width: 360px; height:360px;
+                                    max-height: 360px; max-width: 360px;
+                                    min-height: 360px; min-width: 360px;">
+                                </textarea>
+                            </div>
+
+                            <br/>
+                            <div class="group">
+                                <button class="button" onclick="form=document.getElementById('contactform');form.action='/sendemail/';">发送邮件</button>
+                            </div>
+
+                            <br/>
+                            <div class="group">
+                                <!--<button class="button" onclick="window.location.href='/index/'">返回首页</button>-->
+                                <input type="button" class="button" value="返回首页" onclick="window.location.href='/index/'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        <script type="text/javascript">
+			function _confirm() {
+					{%if (msg | length) > 0 %}
+					 	win.confirm('提示', '{{msg}}');
+					{% endif %}
+				}
+		</script>
+    </body>
+</html>

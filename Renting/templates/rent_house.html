@@ -31,110 +31,40 @@
 	</head>
 	<body>
        <!--导航栏-->
-       <header class="header-navigation" id="header">
-            <nav>
-                <div class="row">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-3">
-                        <font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
-                    </div>
-                    <div class="col-md-2 title">
-                    </div>
-                    <div class="col-md-2 title">
-                        <a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
-                    </div>
-                    <div class="col-md-2 title">
-                        <a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
-                    </div>
-                    <div class="col-md-2 title">
-                        {% if current_user.is_authenticated %}
-                        <a href="/profile/{{current_user.id}}">
-                            <font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
-                                {{current_user.username}}
-                            </font>
-                        </a>
-                        {% else %}
-                        <a href="javascript:showDialog()">
-                            <font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
-                                登陆注册
-                            </font>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </nav>
-        </header>
-       <!-- 联系我们-->
-       <div id="dialog_contact" class="htmleaf-container">
-					<div class="login-wrap">
-						<div class="contact-html">
-							<label class="tab" style="">Suggestion</label>
-							<div class="contact">
-								<div class="group">
-									<textarea class="contact_text" rows="10" cols="40">
-									</textarea>
-								</div>
-								<div class="group">
-									<input type="submit" class="button" style="cursor: pointer;" value="Submit">
-								</div>
-							</div>
-						</div>
-					</div>
+		<header class="header-navigation" id="header">
+		<nav>
+			<div class="row">
+				<div class="col-md-1">
 				</div>
-       <!--登陆注册-->
-       <div id="dialog_login" class="htmleaf-container">
-        <div class="login-wrap">
-            <div class="login-html">
-                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                <div class="login-form">
-                    <form  method="post" id="loginform">
-                    <div class="sign-in-htm">
-                        <div class="group">
-                            <label for="user_login" class="label1" >Username</label>
-                            <input id="user_login" type="text" class="input" name="user_login">
-                            <input type="hidden" name="next" value="{{next}}"/>
-                        </div>
-                        <div class="group">
-                            <label for="pass_login" class="label1" >Password</label>
-                            <input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
-                        </div>
-                        <div class="group">
-                            <!--<input type="submit" class="button" style="cursor: pointer;" value="Sign In">-->
-                            <button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
-                        </div>
-                    </div>
-                    </form>
-                    <form  method="post" id="signupinform">
-                        <div class="sign-up-htm">
-                            <div class="group">
-                                <label for="user_sign" class="label1">Username</label>
-                                <input id="user_sign" type="text" class="input" name="user_sign">
-                                <input type="hidden" name="next" value="{{next}}"/>
-                            </div>
-                            <div class="group">
-                                <label for="pass_sign" class="label1">Password</label>
-                                <input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
-                            </div>
-                            <div class="group">
-                                <label for="pass_repeat" class="label1">Repeat Password</label>
-                                <input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
-                            </div>
-                            <div class="group">
-                                <label for="email" class="label1">Email Address</label>
-                                <input id="email" type="text" class="input" name="email">
-                            </div>
-                            <div class="group">
-                                <!--<input type="submit" class="button" style="cursor: pointer;" value="Sign Up">-->
-                                <button class="button" onclick="form=document.getElementById('signupinform');form.action='/reg/';">Sign Up</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </div>
+				<div class="col-md-3">
+					<a href="/index/"><font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">轻松短租网</font></a>
+				</div>
+				<div class="col-md-2 title">
+				</div>
+				<div class="col-md-2 title">
+					<a href="/contact/"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
+				</div>
+				<div class="col-md-2 title">
+					<a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
+				</div>
+				<div class="col-md-2 title">
+					{% if current_user.is_authenticated %}
+					<a href="/profile/{{current_user.id}}">
+						<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+							{{current_user.username}}
+						</font>
+					</a>
+					{% else %}
+					<a href="/reglogin/">
+						<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+							登陆注册
+						</font>
+					</a>
+					{% endif %}
+				</div>
+			</div>
+		</nav>
+		</header>
        <!--侧边栏以及内容-->
        <!--侧边栏-->
        <div id="wrapper" style="margin-top=25px">

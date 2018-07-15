@@ -9,23 +9,20 @@
 		<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!--导入菜鸟的JS的validate相关的库-->
-		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
-		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 		<!--导入自己的js文件-->
 		<script type="text/javascript" src="../static/js/register.js"></script>
 		<script type="text/javascript" src="../static/js/index_of.js"></script>
 		<script type="text/javascript" src="../static/js/navigation.js"></script>
-		<script type="text/javascript" src="../static/js/window.js"></script>
+
 		<!-- 页面内用到的css-->
 		<link type="text/css" href="../static/css/index.css" rel="stylesheet"/>
 		<link type="text/css" href="../static/css/dialog.css"  rel="stylesheet"/>
 		<link type="text/css" href="../static/css/navigation.css"  rel="stylesheet"/>
-		<link type="text/css" href="../static/css/window.css"  rel="stylesheet"/>
+
 		<meta charset="UTF-8">
 		<title>房屋租赁</title>
 	</head>
-	<body onload="init(); _confirm()">
+	<body onload="init(); ">
 		<!--首页顶部-->
 		<div class='banner extBanner' fbHeight='850' defaultwidth='0' style=' height: 850px; background: none;' >
 			<div id='bannerV2' class='banner defaultBannerMain J_bannerItem' style='background:url(../static/image/1.jpg) 50% 50% no-repeat;background-size: cover;height:850px;'>
@@ -36,12 +33,12 @@
 							<div class="col-md-1">
 							</div>
 							<div class="col-md-3">
-								<font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
+								<a href="/index/"><font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">轻松短租网</font>
 							</div>
 							<div class="col-md-2 title">
 							</div>
 							<div class="col-md-2 title">
-								<a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
+								<a href="/contact/"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
 							</div>
 							<div class="col-md-2 title">
 								<!--<a href="#" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>-->
@@ -55,7 +52,7 @@
 									</font>
 								</a>
 								{% else %}
-								<a href="javascript:showDialog()">
+								<a href="/reglogin/">
 									<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
 										登陆/注册
 									</font>
@@ -65,78 +62,12 @@
 						</div>
 					</nav>
 				</header>
-				<!-- 联系我们-->
-				<div id="dialog_contact" class="htmleaf-container">
-					<div class="login-wrap">
-						<div class="contact-html">
-							<label class="tab" style="">Suggestion</label>
-							<div class="contact">
-								<div class="group">
-									<textarea class="contact_text" rows="10" cols="40">
-									</textarea>
-								</div>
-								<div class="group">
-									<input type="submit" class="button" style="cursor: pointer;" value="Submit">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--登陆注册-->
-				<div id="dialog_login" class="htmleaf-container">
-					<div class="login-wrap">
-						<div class="login-html">
-							<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-							<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-							<div class="login-form">
-								<form  method="post" id="loginform">
-								<div class="sign-in-htm">
-									<div class="group">
-										<label for="user_login" class="label1" >Username</label>
-										<input id="user_login" type="text" class="input" name="user_login">
-										<input type="hidden" name="next" value="{{next}}"/>
-									</div>
-									<div class="group">
-										<label for="pass_login" class="label1" >Password</label>
-										<input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
-									</div>
-									<div class="group">
-										<button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
-									</div>
-								</div>
-								</form>
-								<form  method="post" id="signupform">
-									<div class="sign-up-htm">
-										<div class="group">
-											<label for="user_sign" class="label1">Username</label>
-											<input id="user_sign" type="text" class="input" name="user_sign">
-											<input type="hidden" name="next" value="{{next}}"/>
-										</div>
-										<div class="group">
-											<label for="pass_sign" class="label1">Password</label>
-											<input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
-										</div>
-										<div class="group">
-											<label for="pass_repeat" class="label1">Repeat Password</label>
-											<input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
-										</div>
-										<div class="group">
-											<label for="email" class="label1">Email Address</label>
-											<input id="email" type="text" class="input" name="email">
-										</div>
-										<div class="group">
-											<button class="button" onclick="form=document.getElementById('signupform');form.action='/reg/';">Sign Up</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					</div>
+				<!-- 搜索框-->
 				<div class="border" id="useragain"></div>
 			</div>
 		</div>
-		<!-- 房子推荐的文本部分 静态 -->
+
+		<!-- 房子推荐的文本部分 静态-->
 		<div class="row" style='background-color: #00000;background-size: cover;height:100px;'>
 			<div class="col-md-1">
 			</div>
@@ -164,6 +95,7 @@
 				</p>
 			</div>
 		</div>
+
 		<!--房子推荐的图片部分-->
 		<div class="row" style="margin-top: 70px">
 			<div class="col-md-1">
@@ -195,6 +127,9 @@
 			<div class="col-md-1">
 			</div>
 		</div>
+
+
+
 		<!--页面中订房流程介绍部分-->
 		<div class="row" style='background-color: #00000;background-size: cover;height:100px;'>
 			<div class="col-md-1" style="margin-top: 30px">
@@ -245,36 +180,39 @@
 		</div>
 		<!--页面底部-->
 		<div class="row" style='background-color: #696969;background-size: cover;height:150px;'>
-			<div class="col-md-1">
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1 title">
+					<img src="../static/image/icon_button1.png">
+				</div>
+				<div class="col-md-2 bottom">
+					<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">联系我们</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">020-00000000</span></p></span>
+				</div>
+				<div class="col-md-1 title">
+					<img src="../static/image/icon_button2.png">
+				</div>
+				<div class="col-md-2 bottom">
+					<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">预约看房</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">预约成功后线下看房选房</span></p></span>
+				</div>
+				<div class="col-md-1 title">
+					<img src="../static/image/icon_button3.png">
+				</div>
+				<div class="col-md-2 bottom">
+					<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">欢迎咨询</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">有任何问题请联系我们</span></p></span>
+				</div>
+				<div class="col-md-1">
+				</div>
 			</div>
-			<div class="col-md-1 title">
-				<img src="../static/image/icon_button1.png">
-			</div>
-			<div class="col-md-2 bottom">
-				<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">联系我们</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">020-00000000</span></p></span>
-			</div>
-			<div class="col-md-1 title">
-				<img src="../static/image/icon_button2.png">
-			</div>
-			<div class="col-md-2 bottom">
-				<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">预约看房</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">预约成功后线下看房选房</span></p></span>
-			</div>
-			<div class="col-md-1 title">
-				<img src="../static/image/icon_button3.png">
-			</div>
-			<div class="col-md-2 bottom">
-				<span style="line-height: 22px;"><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">欢迎咨询</span></p><p style="color: rgb(0, 0, 0); font-family: 宋体; font-size: 12px;"><span style="color: rgb(204, 204, 204); font-family: 微软雅黑; font-size: 16px; line-height: 21px;">有任何问题请联系我们</span></p></span>
-			</div>
-			<div class="col-md-1">
+			<div class="row" style="margin-top:30px">
+				<div class="col-md-5">
+				</div>
+				<div class="col-md-2">
+					<a href="/admin/"><font color="#FFF">管理员登录</font></a>
+				</div>
+				<div class="col-md-5">
+				</div>
 			</div>
 		</div>
-
-		<script type="text/javascript">
-			{%if (msg | length) > 0 %}
-			function _confirm() {
-				 win.confirm('提示', '{{msg}}');
-				}
-			{% endif %}
-		</script>
 	</body>
 </html>

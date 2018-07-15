@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta charset="utf-8" />
-		<title>房屋租赁</title>
-		<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>房屋租赁</title>
+        <meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <!-- 新 Bootstrap 核心 CSS 文件 -->
         <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <!-- 可选的Bootstrap主题文件（一般不使用） -->
@@ -15,7 +15,7 @@
         <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
         <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!--导入菜鸟的JS的validate相关的库-->
-		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
         <!--导航栏样式文件-->
         <link href="/static/css/navigation.css" rel="stylesheet">
@@ -31,115 +31,45 @@
         <!--发布房屋的表单验证-->
         <script type="text/javascript" src="/static/js/release_validate.js"></script>
         <script type="text/javascript" src="/static/js/jquery-1.4.4.min.js"></script>
-  		<script type="text/javascript" src="/static/js/city2.js"></script>
-  		<script type="text/javascript" src="/static/js/citySelect2.js"></script>
-	</head>
-	<body>
+        <script type="text/javascript" src="/static/js/city2.js"></script>
+        <script type="text/javascript" src="/static/js/citySelect2.js"></script>
+    </head>
+    <body>
        <!--导航栏-->
-       <header class="header-navigation" id="header">
-            <nav>
-                <div class="row">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-3">
-                        <font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
-                    </div>
-                    <div class="col-md-2 title">
-                    </div>
-                    <div class="col-md-2 title">
-                        <a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
-                    </div>
-                    <div class="col-md-2 title">
-                        <a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
-                    </div>
-                    <div class="col-md-2 title">
-                        {% if current_user.is_authenticated %}
-                        <a href="/profile/{{current_user.id}}">
-                            <font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
-                                {{current_user.username}}
-                            </font>
-                        </a>
-                        {% else %}
-                        <a href="javascript:showDialog()">
-                            <font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
-                                登陆注册
-                            </font>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </nav>
-        </header>
-       <!-- 联系我们-->
-       <div id="dialog_contact" class="htmleaf-container">
-					<div class="login-wrap">
-						<div class="contact-html">
-							<label class="tab" style="">Suggestion</label>
-							<div class="contact">
-								<div class="group">
-									<textarea class="contact_text" rows="10" cols="40">
-									</textarea>
-								</div>
-								<div class="group">
-									<input type="submit" class="button" style="cursor: pointer;" value="Submit">
-								</div>
-							</div>
-						</div>
-					</div>
+		<header class="header-navigation" id="header">
+		<nav>
+			<div class="row">
+				<div class="col-md-1">
 				</div>
-       <!--登陆注册-->
-       <div id="dialog_login" class="htmleaf-container">
-        <div class="login-wrap">
-            <div class="login-html">
-                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                <div class="login-form">
-                    <form  method="post" id="loginform">
-                    <div class="sign-in-htm">
-                        <div class="group">
-                            <label for="user_login" class="label1" >Username</label>
-                            <input id="user_login" type="text" class="input" name="user_login">
-                            <input type="hidden" name="next" value="{{next}}"/>
-                        </div>
-                        <div class="group">
-                            <label for="pass_login" class="label1" >Password</label>
-                            <input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
-                        </div>
-                        <div class="group">
-                            <!--<input type="submit" class="button" style="cursor: pointer;" value="Sign In">-->
-                            <button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
-                        </div>
-                    </div>
-                    </form>
-                    <form  method="post" id="signupinform">
-                        <div class="sign-up-htm">
-                            <div class="group">
-                                <label for="user_sign" class="label1">Username</label>
-                                <input id="user_sign" type="text" class="input" name="user_sign">
-                                <input type="hidden" name="next" value="{{next}}"/>
-                            </div>
-                            <div class="group">
-                                <label for="pass_sign" class="label1">Password</label>
-                                <input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
-                            </div>
-                            <div class="group">
-                                <label for="pass_repeat" class="label1">Repeat Password</label>
-                                <input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
-                            </div>
-                            <div class="group">
-                                <label for="email" class="label1">Email Address</label>
-                                <input id="email" type="text" class="input" name="email">
-                            </div>
-                            <div class="group">
-                                <!--<input type="submit" class="button" style="cursor: pointer;" value="Sign Up">-->
-                                <button class="button" onclick="form=document.getElementById('signupinform');form.action='/reg/';">Sign Up</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </div>
+				<div class="col-md-3">
+					<a href="/index/"><font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">轻松短租网</font></a>
+				</div>
+				<div class="col-md-2 title">
+				</div>
+				<div class="col-md-2 title">
+					<a href="/contact/"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
+				</div>
+				<div class="col-md-2 title">
+					<a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
+				</div>
+				<div class="col-md-2 title">
+					{% if current_user.is_authenticated %}
+					<a href="/profile/{{current_user.id}}">
+						<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+							{{current_user.username}}
+						</font>
+					</a>
+					{% else %}
+					<a href="/reglogin/">
+						<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
+							登陆注册
+						</font>
+					</a>
+					{% endif %}
+				</div>
+			</div>
+		</nav>
+		</header>
        <!--侧边栏以及内容-->
        <!--侧边栏-->
        <div id="wrapper">
@@ -200,17 +130,17 @@
                                     <label class="control-label" style="height: 40px;">出租类型</label><br/>
                                     <div class="choice">
                                         {% if house.house_type==0 %}
-                                    	<label class="radio">整租&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="1" checked><i></i></label>&nbsp;&nbsp;
-										<label class="radio">单间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="2"><i></i></label>&nbsp;&nbsp;
-										<label class="radio">床位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="3"><i></i></label>
+                                        <label class="radio">整租&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="1" checked><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">单间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="2"><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">床位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="3"><i></i></label>
                                         {% elif house.house_type==1 %}
-                                    	<label class="radio">整租&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="1"><i></i></label>&nbsp;&nbsp;
-										<label class="radio">单间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="2" checked><i></i></label>&nbsp;&nbsp;
-										<label class="radio">床位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="3"><i></i></label>
+                                        <label class="radio">整租&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="1"><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">单间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="2" checked><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">床位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="3"><i></i></label>
                                         {% else %}
-                                    	<label class="radio">整租&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="1"><i></i></label>&nbsp;&nbsp;
-										<label class="radio">单间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="2"><i></i></label>&nbsp;&nbsp;
-										<label class="radio">床位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="3" checked><i></i></label>
+                                        <label class="radio">整租&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="1"><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">单间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="2"><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">床位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rent_type" value="3" checked><i></i></label>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -238,11 +168,11 @@
                                     <label  class="control-label">是否有厨房</label>
                                     <div class="choice">
                                         {% if house.kitchen==1 %}
-                                    	<label class="radio">有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="kitchen" value="1" checked><i></i></label>&nbsp;&nbsp;
-										<label class="radio">无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="kitchen" value="2"><i></i></label>
+                                        <label class="radio">有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="kitchen" value="1" checked><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="kitchen" value="2"><i></i></label>
                                         {% else %}
                                         <label class="radio">有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="kitchen" value="1"><i></i></label>&nbsp;&nbsp;
-										<label class="radio">无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="kitchen" value="2" checked><i></i></label>
+                                        <label class="radio">无&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="kitchen" value="2" checked><i></i></label>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -250,11 +180,11 @@
                                     <label  class="control-label">选择床型</label>
                                     <div class="choice">
                                         {% if house.bed_type ==0 %}
-                                    	<label class="radio">单人床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bed_type" value="1" checked><i></i></label>&nbsp;&nbsp;
-										<label class="radio">双人床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bed_type" value="2" ><i></i></label>
+                                        <label class="radio">单人床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bed_type" value="1" checked><i></i></label>&nbsp;&nbsp;
+                                        <label class="radio">双人床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bed_type" value="2" ><i></i></label>
                                         {% else %}
                                         <label class="radio">单人床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bed_type" value="1"><i></i></label>&nbsp;&nbsp;
-										<label class="radio">双人床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bed_type" value="2" checked><i></i></label>
+                                        <label class="radio">双人床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="bed_type" value="2" checked><i></i></label>
                                         {% endif %}
                                     </div>
                                     <label for="description" class="control-label">房屋描述</label>
@@ -266,7 +196,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-6">
-                                    	<label for="description" class="control-label" style="margin-left: -16px;">设备信息</label>
+                                        <label for="description" class="control-label" style="margin-left: -16px;">设备信息</label>
                                         {% if house.facility[0] =="1" %}
                                         <input type="checkbox" name="eqipment" value="tv" checked>电视&nbsp;&nbsp;&nbsp;
                                         {% else %}
@@ -311,23 +241,23 @@
                                 </div>
                                 <label for="address" class="control-label" style="margin-left: -16px;">输入省市区</label>
                                 <div style="height: 30px;margin-bottom: 20px;margin-left: -16px;">
-                                	<div id="city_5">
-  										<select class="prov" id="prov5" name="province" ></select>
-    									<select class="city" id="city5" name="city"></select>
-        								<select class="dist" id="area5" name="district"></select>
-    								</div>
-									<script>
-											var selectVa2 = new CitySelect({
-												data   : data,
-												provId : "#prov5",
-												cityId : '#city5',
-												areaId : '#area5',
-												isSelect: false
-											});
+                                    <div id="city_5">
+                                        <select class="prov" id="prov5" name="province" ></select>
+                                        <select class="city" id="city5" name="city"></select>
+                                        <select class="dist" id="area5" name="district"></select>
+                                    </div>
+                                    <script>
+                                            var selectVa2 = new CitySelect({
+                                                data   : data,
+                                                provId : "#prov5",
+                                                cityId : '#city5',
+                                                areaId : '#area5',
+                                                isSelect: false
+                                            });
 
-									</script>
-                             	</div>
-                             	<div class="form-group">
+                                    </script>
+                                </div>
+                                <div class="form-group">
                                     <label for="address" class="control-label" style="margin-left: -16px;">输入具体地址</label>
                                     <input type="text" class="form-control" id="address" name="address" value="{{house.address}}" style="width: 450px;margin-left: -16px;">
                                 </div>

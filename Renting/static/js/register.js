@@ -79,44 +79,4 @@ $().ready(function(){
    }
  })
 
- $("#modify_form").validate({
-   rules:{
-     name_modify: {
-       minlength: 2,
-       maxlength: 50
-     },
-     password_modify: {
-        minlength: 2,
-        maxlength: 100
-     },
-     repeat_modify:{
-        equalTo: "#password_modify"
-     },
-     email_modify:{
-        email: true
-     },
-     phone_modify:{
-        digits:true
-     }
-   },
-   messages: {
-     name_modify: {
-       minlength: "名称最小2个字符",
-       maxlength: "名称最多50个字符"
-     },
-     password_modify: {
-        minlength: "密码最小2个字符",
-        maxlength: "密码最多100个字符"
-     },
-     repeat_modify:{
-        equalTo: "两次密码不一致"
-     },
-     email_modify:{
-        email: "请输入正确邮箱"
-     },
-     phone_modify:{
-        digits:"请输入正确的阿拉伯数字"
-     }
-   }
- })
 });

@@ -1,45 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta name="renderer" content="webkit">
-		<meta content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" name="viewport" />
-		<meta content="yes" name="apple-mobile-web-app-capable" /> 
-		<meta content="black" name="apple-mobile-web-app-status-bar-style" /> 
-		<meta content="telephone=no" name="format-detection" />
 		<title>房屋详情</title>
-
-		<!-- 新 Bootstrap 核心 CSS 文件 -->
-        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-        <!-- 可选的Bootstrap主题文件（一般不使用） -->
-        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
-        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!--导入菜鸟的JS的validate相关的库-->
-		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
-        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
-        <!--导航栏样式文件-->
-        <link href="/static/css/navigation.css" rel="stylesheet">
-        <script src="/static/js/profile.js"></script>
-        <script type="text/javascript" src="/static/js/navigation.js"></script>
-        <link href="/static/css/profile.css" rel="stylesheet">
-        <!--侧边栏样式-->
-         <link href="/static/css/sidebar.css" rel="stylesheet">
-        <script type="text/javascript" src="/static/js/sidebar.js"></script>
-        <!--登录注册弹出框-->
-        <link type="text/css" href="/static/css/dialog.css"  rel="stylesheet"/>
-        <script type="text/javascript" src="/static/js/register.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 		<link type="text/css" rel="stylesheet" href="/static/css/detail.css"/>
 		<link type="text/css" rel="stylesheet" href="/static/css/ceshi.css"/>
-		<link type="text/css" rel="stylesheet" href="/static/css/window.css"  />
+		<link type="text/css" rel="stylesheet" href="/static/css/window.css"/>
 		<link type="text/css" rel="stylesheet" href="/static/css/date.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/css/navigation.css"/>
+
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     	<script type="text/javascript" src="/static/js/window.js"></script>
 		<script type="text/javascript" src="/static/js/ceshi.js"></script>
 		<script type="text/javascript" src="/static/js/date.js"></script>
-
 
 	</head>
 		<body onload="_confirm()">
@@ -50,12 +24,12 @@
 				<div class="col-md-1">
 				</div>
 				<div class="col-md-3">
-					<font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">Find what you like</font>
+					<a href="/index/"><font color="#4ab344" style="color: rgb(74, 179, 68);" size="6">轻松短租网</font></a>
 				</div>
 				<div class="col-md-2 title">
 				</div>
 				<div class="col-md-2 title">
-					<a href="javascript:showDialogContact()"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
+					<a href="/contact/"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
 				</div>
 				<div class="col-md-2 title">
 					<a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
@@ -68,7 +42,7 @@
 						</font>
 					</a>
 					{% else %}
-					<a href="javascript:showDialog()">
+					<a href="/reglogin/">
 						<font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">
 							登陆注册
 						</font>
@@ -78,76 +52,7 @@
 			</div>
 		</nav>
 		</header>
-		<!-- 联系我们-->
-		<div id="dialog_contact" class="htmleaf-container">
-				<div class="login-wrap">
-					<div class="contact-html">
-						<label class="tab" style="">Suggestion</label>
-						<div class="contact">
-							<div class="group">
-								<textarea class="contact_text" rows="10" cols="40">
-								</textarea>
-							</div>
-							<div class="group">
-								<input type="submit" class="button" style="cursor: pointer;" value="Submit">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		<!--登陆注册-->
-		<div id="dialog_login" class="htmleaf-container">
-			<div class="login-wrap">
-				<div class="login-html">
-					<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-					<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-					<div class="login-form">
-						<form  method="post" id="loginform">
-						<div class="sign-in-htm">
-							<div class="group">
-								<label for="user_login" class="label1" >Username</label>
-								<input id="user_login" type="text" class="input" name="user_login">
-								<input type="hidden" name="next" value="{{next}}"/>
-							</div>
-							<div class="group">
-								<label for="pass_login" class="label1" >Password</label>
-								<input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
-							</div>
-							<div class="group">
-								<!--<input type="submit" class="button" style="cursor: pointer;" value="Sign In">-->
-								<button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
-							</div>
-						</div>
-						</form>
-						<form  method="post" id="signupinform">
-							<div class="sign-up-htm">
-								<div class="group">
-									<label for="user_sign" class="label1">Username</label>
-									<input id="user_sign" type="text" class="input" name="user_sign">
-									<input type="hidden" name="next" value="{{next}}"/>
-								</div>
-								<div class="group">
-									<label for="pass_sign" class="label1">Password</label>
-									<input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
-								</div>
-								<div class="group">
-									<label for="pass_repeat" class="label1">Repeat Password</label>
-									<input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
-								</div>
-								<div class="group">
-									<label for="email" class="label1">Email Address</label>
-									<input id="email" type="text" class="input" name="email">
-								</div>
-								<div class="group">
-									<!--<input type="submit" class="button" style="cursor: pointer;" value="Sign Up">-->
-									<button class="button" onclick="form=document.getElementById('signupinform');form.action='/reg/';">Sign Up</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-			</div>
+
 		<div class="wrap clear con_bg">
 			<div class="con_l">
 				<div class="pho_info">
@@ -158,24 +63,35 @@
 				<div class="pho_show clear user_unselectable" id="detailImageBox" onselectstart="return false">
 					<div class="w100">
 						<div id="lunbo" class="pos1">
-						<ul id="one">
-							<li class="on"><a href="javascript:;"><img src="/static/image/photo1.jpg"></a></li>
-							<li><a href="javascript:;"><img src="/static/image/photo2.jpg"></a></li>
-							<li><a href="javascript:;"><img src="/static/image/photo3.jpg"></a></li>
-							<li><a href="javascript:;"><img src="/static/image/photo4.jpg"></a></li>
-							<li><a href="javascript:;"><img src="/static/image/photo6.jpg"></a></li>
-						</ul>
-						<ul id="two">
-							<li class="on"></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</ul>
-						<div class="slider-page">
-						<a href="javascript:;" id="left"></a>
-						<a href="javascript:;" id="right">></a>
-						</div>
+							<ul id="one">
+								<li class="on"><a href="javascript:;">
+									{% if house.url_one %}
+									<img src="{{house.url_one}}"></a></li>
+									{% endif %}
+								{% if house.url_two %}
+								<li><a href="javascript:;"><img src="{{house.url_two}}"></a></li>
+								{% endif %}
+								{% if house.url_three %}
+								<li><a href="javascript:;"><img src="{{house.url_three}}"></a></li>
+								{% endif %}
+								{% if house.url_four %}
+								<li><a href="javascript:;"><img src="{{house.url_four}}"></a></li>
+								{% endif %}
+								{% if house.url_five %}
+								<li><a href="javascript:;"><img src="{{house.url_five}}"></a></li>
+								{% endif %}
+							</ul>
+							<ul id="two">
+								<li class="on"></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+							</ul>
+							<div class="slider-page">
+							<a href="javascript:;" id="left"></a>
+							<a href="javascript:;" id="right"></a>
+							</div>
 						</div>
 					</div>
 					
@@ -348,6 +264,7 @@
 
 										<!--预订按钮-->
 										<div class="order_btn_container">
+											<!--<button id='order_btn' class="button" onclick="javascript: var a=_confirm();if (a){form=document.getElementById('housedate');form.action='/makeorder/{{house.id}}/';}">立即预订</button>-->
 											<button id='order_btn' class="button" onclick="form=document.getElementById('housedate');form.action='/makeorder/{{house.id}}/';">立即预订</button>
 										</div>
 								</div>
@@ -359,12 +276,20 @@
 		</div>
 
 		<script type="text/javascript">
-			{%if (msg | length) > 0 %}
 			function _confirm() {
-				 win.confirm('提示', '{{msg}}');
+					{%if (msg | length) > 0 %}
+					 	win.confirm('提示', '{{msg}}');
+					{% endif %}
 				}
-			{% endif %}
 		</script>
-
+		<!--
+		<script type="text/javascript">
+			function _confirm() {
+			  win.confirm('确认预定', '请问您确定预定该房屋吗？', function (r) {
+				 return r;
+			 });
+			}
+		</script>
+		-->
 	</body>
 </html>

@@ -6,8 +6,8 @@ from datetime import datetime
 # 用户表的定义
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # ID 用户唯一的标识
-    username = db.Column(db.String(50), unique=True)  # 用户名  唯一   最大10个字符
-    password = db.Column(db.String(100))  # 密码   最大20个字符
+    username = db.Column(db.String(50), unique=True)  # 用户名  唯一   最大50个字符
+    password = db.Column(db.String(100))  # 密码   最大100个字符
     phone_number = db.Column(db.Integer, unique=True)  # 手机号码
     email = db.Column(db.String(100), unique=True)  # 邮箱  唯一
     salt = db.Column(db.String(32))  # 密码加盐
@@ -53,7 +53,7 @@ class Admin(db.Model):
 # 房屋表的定义
 class House(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # ID 房屋唯一的标识
-    house_name = db.Column(db.String(20))  # 房屋名  唯一   最大10个字符
+    house_name = db.Column(db.String(25))  # 房屋名  唯一   最大25个字符
     house_type = db.Column(db.Integer)  # 房屋类型，0表示整租，1表示单间 ，2表示床位
     area = db.Column(db.Integer)  # 房屋面积
     people = db.Column(db.Integer)  # 可住人数
@@ -71,7 +71,6 @@ class House(db.Model):
     address = db.Column(db.String(100))  # 具体地址
     username = db.Column(db.String(10), db.ForeignKey('user.username'))  # 房屋主人的名字，外键
     status = db.Column(db.Integer)  # 房屋状态，0表示未审核，1表示通过,2表示未通过
-    upload_time = db.Column(db.DateTime)  # 房屋上传时间
     url_one = db.Column(db.String(100))  # 房屋图片
     url_two = db.Column(db.String(100))  # 房屋图片
     url_three = db.Column(db.String(100))  # 房屋图片
@@ -97,7 +96,6 @@ class House(db.Model):
         self.district = district
         self.address = address
         self.username = username
-        self.upload_time = datetime.now()
         self.status = 0
         for i in range(len(url)):
             if i == 0:
@@ -112,14 +110,6 @@ class House(db.Model):
                 self.url_five = url[4]
 
 
-class Facility(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # ID 设备唯一的标识 同时表示设备在字符串中的位置
-    facility_name = db.Column(db.String(20), unique=True)  # 设备名  唯一   最大10个字符
-
-    def __init__(self, facility):
-        self.facility = facility
-
-
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 订单唯一的ID
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))  # 房屋ID 作为外键
@@ -128,7 +118,7 @@ class Order(db.Model):
     start_time = db.Column(db.Date)  # 订单开始时间
     end_time = db.Column(db.Date)  # 订单结束时间
     total_price = db.Column(db.Integer)  # 订单的价格
-    status = db.Column(db.Integer)  # 订单状态 0表示订单已取消  1表示订单未受理  2表示订单已受理  3表示订单正在取消
+    status = db.Column(db.Integer)  # 订单状态 0表示订单已取消  1表示订单未受理  2表示订单受理  3表示订单正在取消
 
     def __init__(self, house_id, seller, renter, start_time, end_time, total_price, status):
         self.house_id = house_id
@@ -143,3 +133,4 @@ class Order(db.Model):
 @login_manager.user_loader
 def load_user(userid):
     return User.query.get(userid)
+
