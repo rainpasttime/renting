@@ -3,7 +3,6 @@
 	<head>
 		<title>主页</title>
 		<meta charset="utf-8" />
-
 		<link rel='stylesheet' href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 		<link rel='stylesheet' type='text/css' href="/static/css/style.css" />
 		<link rel='stylesheet' type='text/css' href="/static/css/window.css" />
@@ -69,7 +68,6 @@
 		</nav>
 		</header>
 		</div>
-
 		<!--省份的三级联动-->
 		<form id="addressform" method="post">
 			<div class="container">
@@ -81,19 +79,16 @@
 							<select class="prov" id="prov5" name="prov5"></select>
 							</div>
 						</div>
-
 						<div class="col-md-3 dropdown-button">
 							<div class="book_date">
 								<select class="city" id="city5" name="city5"></select>
 							</div>
 						</div>
-
 						<div class="col-md-3 dropdown-button">
 							<div class="book_date">
 								<select class="dist" id="area5" name="area5"></select>
 							</div>
 						</div>
-
 						<script>
 						var selectVa2 = new CitySelect({
 							data   : data,
@@ -103,7 +98,6 @@
 							isSelect: false
 						});
 						</script>
-
 						<div class="col-md-3 dropdown-button">
 						  <div class="section_1">
 							 <select id="price" name="price" onChange="change_country(this.value)" class="frm-field required">
@@ -129,25 +123,48 @@
 		<!-- offers -->
 		<div class="offers" style="margin-top:-10px">
 			<div class="container">
-				{% for item in house %}
-					<div class="col-md-4 offers-left" style="margin-top:30px;">
-						<h3> {{ item.price }} 元/晚 </h3>
-						<img src="{{item.url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
-						<h4> {{item.province}}  {{item.city}} {{item.district}} {{ item.address }} </h4>
-						<p>  {{ item.description}} </p>
-						<a class="hvr-shutter-in-horizontal" href="/housedes/{{ item.id }}/">查看详情</a>
+				{% for item in range(group) %}
+					<div class="row">
+						<div class="col-md-4 offers-left" style="margin-top:30px;">
+							<h3> {{ house[3*item].price }} 元/晚 </h3>
+							<img src="{{house[3*item].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
+							<h4> {{house[3*item].province}}  {{house[3*item].city}} {{house[3*item].district}} {{ house[3*item].address }} </h4>
+							<p>  {{ house[3*item].description}} </p>
+							<a class="hvr-shutter-in-horizontal" href="/housedes/{{ item.id }}/">查看详情</a>
+						</div>
+						<div class="col-md-4 offers-left" style="margin-top:30px;">
+							<h3> {{ house[3*item+1].price }} 元/晚 </h3>
+							<img src="{{house[3*item+1].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
+							<h4> {{house[3*item+1].province}}  {{house[3*item+1].city}} {{house[3*item+1].district}} {{ house[3*item+1].address }} </h4>
+							<p>  {{ house[3*item+1].description}} </p>
+							<a class="hvr-shutter-in-horizontal" href="/housedes/{{ item.id }}/">查看详情</a>
+						</div>
+						<div class="col-md-4 offers-left" style="margin-top:30px;">
+							<h3> {{ house[3*item+2].price }} 元/晚 </h3>
+							<img src="{{house[3*item+2].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
+							<h4> {{house[3*item+2].province}}  {{house[3*item+2].city}} {{house[3*item+2].district}} {{ house[3*item+2].address }} </h4>
+							<p>  {{ house[3*item+2].description}} </p>
+							<a class="hvr-shutter-in-horizontal" href="/housedes/{{ item.id }}/">查看详情</a>
+						</div>
 					</div>
 				{% endfor %}
+				{% if remain>0 %}
+				<div class="row">
+				{% for item in range(remain) %}
+				<div class="col-md-4 offers-left" style="margin-top:30px;">
+					<h3> {{ house[length-1-item].price }} 元/晚 </h3>
+					<img src="{{house[length-1-item].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
+					<h4> {{house[length-1-item].province}}  {{house[length-1-item].city}} {{house[length-1-item].district}} {{ house[length-1-item].address }} </h4>
+					<p>  {{ house[length-1-item].description}} </p>
+					<a class="hvr-shutter-in-horizontal" href="/housedes/{{ item.id }}/">查看详情</a>
+				</div>
+				{% endfor %}
+				{% endif %}
 			 </div>
 		</div>
-		<!--<div style="margin-bottom: 20px;">
-		<div id="pagination">
-			<nav aria-label="Page navigation" class="pull-right">-->
-				<ul class="pagination" id="mypage" style="margin-left:600px;">
-					{{ html| safe }}
-				</ul>
-		<!--	</nav>
-		</div>-->
+		<ul class="pagination" id="mypage" style="margin-left:600px;">
+			{{ html| safe }}
+		</ul>
 		<div class="footer-bottom">
 				<div class="container">
 					<a href="/admin/">

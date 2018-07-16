@@ -211,7 +211,10 @@ def mainpage():
     print(request.args)
     index_list = house_list[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
-    return render_template("mainpage.html", house=index_list, html=html, msg=msg)
+    length = len(index_list)
+    group = int(length / 3)
+    remain = int(length % 3)
+    return render_template("mainpage.html", house=index_list, html=html, msg=msg, length=length, group=group, remain=remain)
 
 
 @app.route('/search/', methods={'get', 'post'})
