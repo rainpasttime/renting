@@ -47,7 +47,6 @@
 				<div class="col-md-2 title">
 				</div>
 				<div class="col-md-2 title">
-					<a href="/contact/"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">联系我们</font></a>
 				</div>
 				<div class="col-md-2 title">
 					<a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
@@ -120,23 +119,23 @@
                         <!--个人信息显示以及修改按钮-->
                         <form method="post" id="modify_form">
                             <div class="ffl-wrapper">
-                                <label for="name_modify" class="ffl-label">Name</label>
+                                <label for="name_modify" class="ffl-label">名字</label>
                                 <input type="text" id="name_modify" name="name_modify" value="{{user.username}}">
                             </div>
                             <div class="ffl-wrapper">
-                                <label for="email_modify" class="ffl-label">Email</label>
+                                <label for="email_modify" class="ffl-label">邮箱</label>
                                 <input type="email" id="email_modify" name="email_modify" value="{{user.email}}">
                             </div>
                             <div class="ffl-wrapper">
-                                <label for="phone_modify" class="ffl-label">Phone</label>
+                                <label for="phone_modify" class="ffl-label">手机号</label>
                                 <input type="text" id="phone_modify" name="phone_modify">
                             </div>
                             <div class="ffl-wrapper">
-                                <label for="password_modify" class="ffl-label">Password</label>
+                                <label for="password_modify" class="ffl-label">密码</label>
                                 <input type="password" id="password_modify" name="password_modify">
                             </div>
                             <div class="ffl-wrapper">
-                                <label for="repeat_modify" class="ffl-label">Repeat Password</label>
+                                <label for="repeat_modify" class="ffl-label">重复密码</label>
                                 <input type="password" id="repeat_modify" name="repeat_modify">
                             </div>
                             <button type="submit" onclick="form=document.getElementById('modify_form');form.action='/modify_information/{{user.id}}/';">修改</button>
