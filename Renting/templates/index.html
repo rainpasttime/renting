@@ -10,10 +10,9 @@
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!--导入自己的js文件-->
-		<script type="text/javascript" src="../static/js/register.js"></script>
+		<!--script type="text/javascript" src="../static/js/register.js"></script-->
 		<script type="text/javascript" src="../static/js/index_of.js"></script>
 		<script type="text/javascript" src="../static/js/navigation.js"></script>
-
 		<!-- 页面内用到的css-->
 		<link type="text/css" href="../static/css/index.css" rel="stylesheet"/>
 		<link type="text/css" href="../static/css/dialog.css"  rel="stylesheet"/>
@@ -67,10 +66,18 @@
 					<div class="col-md-2">
 					</div>
 					<div class="col-md-8 input-group search">
-						<input type="text" class="form-control search">
-                    	<span class="input-group-btn">
-                        	<button class="btn btn-default search" type="button"><font size="5" color="#FFFFFF">Go!</font></button>
-                    	</span>
+						<form method="post" id="search_index">
+							<!--div class="row">
+								<div class="col-md-10 search-div-right"-->
+									<input type="text" class="form-control search" name="search" style="color:#FFF">
+								<!--/div-->
+								<!--div class="col-md-2 search-div-left"-->
+									<span class="input-group-btn">
+										<button class="button btn btn-default search" onclick="form=document.getElementById('search_index');form.action='/search_index/';"><font size="5" color="#FFFFFF">Go!</font></button>
+									</span>
+								<!--/div-->
+							<!--/div-->
+						</form>
 					</div>
 					<div class="col-md-2">
 					</div>
@@ -78,7 +85,6 @@
 				<div class="border" id="useragain"></div>
 			</div>
 		</div>
-
 		<!-- 房子推荐的文本部分 静态-->
 		<div class="row" style='background-color: #00000;background-size: cover;height:100px;'>
 			<div class="col-md-1">
@@ -107,7 +113,6 @@
 				</p>
 			</div>
 		</div>
-
 		<!--房子推荐的图片部分-->
 		<div class="row" style="margin-top: 70px">
 			<div class="col-md-1">
@@ -139,9 +144,6 @@
 			<div class="col-md-1">
 			</div>
 		</div>
-
-
-
 		<!--页面中订房流程介绍部分-->
 		<div class="row" style='background-color: #00000;background-size: cover;height:100px;'>
 			<div class="col-md-1" style="margin-top: 30px">
@@ -228,3 +230,10 @@
 		</div>
 	</body>
 </html>
+<script>
+	function search_onclick(){
+		print("search_index")
+		my_form=document.getElementById('index_form');
+		my_form.action='/search_index/';
+	}
+</script>

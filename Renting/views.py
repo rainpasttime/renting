@@ -13,6 +13,7 @@ from datetime import date, datetime
 from smtplib import SMTP
 from email.mime.text import MIMEText
 from email.header import Header
+from sqlalchemy import or_
 
 
 @app.route('/index/', methods={'post', 'get'})
@@ -776,6 +777,28 @@ def modify_information(user_id):
 
     return redirect_with_msg('/profile/' + str(user_id) + '/', u'修改成功！', 'change')
 
+
+@app.route('/search_index/', methods={'post', 'get'})
+def search_index():
+    print("serach_index")
+    msg = ''
+    for m in get_flashed_messages(with_categories=False, category_filter=['research']):
+        msg += m
+
+    search_index = request.values.get('search').strip()
+    search_list = House.query.filter(or_(House.address.like("%"+search_index+"%") if search_index is not None else "",
+                                            House.house_name.like("%"+search_index+"%") if search_index is not None else "")).all()
+
+    pager_obj = Pagination(request.args.get("page", 1), len(search_list), request.path, request.args, per_page_count=6)
+    print(request.path)
+    print(request.args)
+    index_list = search_list[pager_obj.start:pager_obj.end]
+    html = pager_obj.page_html()
+    length = len(index_list)
+    group = int(length / 3)
+    remain = int(length % 3)
+    return render_template("mainpage.html", house=index_list, html=html, msg=msg, length=length, group=group,
+                           remain=remain)
 
 
 
