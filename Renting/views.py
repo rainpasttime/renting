@@ -151,7 +151,11 @@ def make_order(house_id):
     seller = house.username
     starttime = request.values.get('datepicker')
     endtime = request.values.get('datepicker1')
-    if starttime is None or endtime is None:
+    print("starttime"+starttime)
+    print("endtime"+endtime)
+    if starttime == '入住时间' or endtime == "离开时间":
+        return redirect_with_msg('/housedes/' + str(house_id) + '/', u'请选择住房时间', 'message')
+    if starttime == 'Check In' or endtime == "Check Out":
         return redirect_with_msg('/housedes/' + str(house_id) + '/', u'请选择住房时间', 'message')
 
     startyear = int(starttime[6]) * 1000 + int(starttime[7]) * 100 + int(starttime[8]) * 10 + int(starttime[9])
