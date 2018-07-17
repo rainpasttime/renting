@@ -27,7 +27,7 @@ $().ready(function(){
                digits:true
          },
          description: {
-               maxlength: 100
+               maxlength: 200
          },
          price: {
                required: true,
@@ -68,7 +68,7 @@ $().ready(function(){
                digits:"床位数必须是数字"
          },
          description: {
-               maxlength: "房屋描述必须小于100个字"
+               maxlength: "房屋描述必须小于200个字"
          },
          price: {
                required: "请输入房屋价格",

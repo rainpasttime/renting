@@ -24,46 +24,46 @@
 			<div class="col-sm-6 col-sm-offset-3">
 				<div class="login-wrap"style="background-color:#343d4e;">
 					<div class="login-html"style="text-align: left;">
-						<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-						<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+						<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">登录</label>
+						<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">注册</label>
 						<div class="login-form">
 							<form  method="post" id="loginform">
 							<div class="sign-in-htm">
 								<div class="group">
-									<label for="user_login" class="label1" >Username</label>
+									<label for="user_login" class="label1" >用户名</label>
 									<input id="user_login" type="text" class="input" name="user_login">
 									<input type="hidden" name="next" value="{{next}}"/>
 								</div>
 								<div class="group">
-									<label for="pass_login" class="label1" >Password</label>
+									<label for="pass_login" class="label1" >密码</label>
 									<input id="pass_login" type="password" class="input" data-type="password" name="pass_login">
 								</div>
 								<div class="group">
-									<button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">Sign In</button>
+									<button class="button" onclick="form=document.getElementById('loginform');form.action='/login/';">登录</button>
 								</div>
 							</div>
 							</form>
 							<form  method="post" id="signupform">
 								<div class="sign-up-htm">
 									<div class="group">
-										<label for="user_sign" class="label1">Username</label>
+										<label for="user_sign" class="label1">用户名</label>
 										<input id="user_sign" type="text" class="input" name="user_sign">
 										<input type="hidden" name="next" value="{{next}}"/>
 									</div>
 									<div class="group">
-										<label for="pass_sign" class="label1">Password</label>
+										<label for="pass_sign" class="label1">密码</label>
 										<input id="pass_sign" type="password" class="input" data-type="password" name="pass_sign">
 									</div>
 									<div class="group">
-										<label for="pass_repeat" class="label1">Repeat Password</label>
+										<label for="pass_repeat" class="label1">重复密码</label>
 										<input id="pass_repeat" type="password" class="input" data-type="password" name="pass_repeat">
 									</div>
 									<div class="group">
-										<label for="email" class="label1">Email Address</label>
+										<label for="email" class="label1">邮箱</label>
 										<input id="email" type="text" class="input" name="email">
 									</div>
 									<div class="group">
-										<button class="button" onclick="form=document.getElementById('signupform');form.action='/reg/';">Sign Up</button>
+										<button class="button" onclick="form=document.getElementById('signupform');form.action='/reg/';">注册</button>
 									</div>
 								</div>
 							</form>

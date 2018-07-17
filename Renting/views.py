@@ -19,7 +19,8 @@ from sqlalchemy import or_
 @app.route('/index/', methods={'post', 'get'})
 @app.route('/', methods={'post', 'get'})
 def index():
-    return render_template('index.html')
+    house = House.query.limit(4).all()
+    return render_template('index.html',house=house)
 
 
 # 个人中心页面 带有一个参数user表示现在的user
@@ -134,7 +135,12 @@ def history():
         print(one)
         result_renter.append(one)
     # 返回的是List类型
-    return render_template('renting.html', result_renter=result_renter)
+
+    pager_obj = Pagination(request.args.get("page", 1), len(result_renter), request.path, request.args, per_page_count=2)
+    renter_list = result_renter[pager_obj.start:pager_obj.end]
+    html = pager_obj.page_html()
+
+    return render_template('renting.html', result_renter=renter_list, html=html)
 
 
 @app.route('/housedes/<int:house_id>/')
@@ -361,16 +367,18 @@ def release_buttom():
     db.session.add(house)
     db.session.commit()
 
-    all_house = House.query.filter_by(username=user.username).all()
-    return render_template('myhouse.html', house=all_house)
+    return redirect('/myhouse/')
 
 
 @app.route('/myhouse/')
 def myhouse():
     '''根据当前用户查询房屋表，得到这个用户的房屋信息返回给前端'''
     user = current_user
-    house = House.query.filter_by(username=user.username).all()
-    return render_template('myhouse.html', house=house)
+    house_list = House.query.filter_by(username=user.username).all()
+    pager_obj = Pagination(request.args.get("page", 1), len(house_list), request.path, request.args, per_page_count=2)
+    index_list = house_list[pager_obj.start:pager_obj.end]
+    html = pager_obj.page_html()
+    return render_template("myhouse.html", house=index_list, html=html)
 
 
 @app.route('/modify_house/<int:house_id>/')
@@ -457,8 +465,6 @@ def modify_buttom(house_id):
 
     print("two")
 
-    user = current_user
-
     file_list = request.files.getlist('file')
     file_ext = ''
     url_list = []
@@ -480,8 +486,8 @@ def modify_buttom(house_id):
                       description, facility, province, city, district, address, house.username, url_list)
     db.session.add(new_house)
     db.session.commit()
-    all_house = House.query.filter_by(username=house.username).all()
-    return render_template('myhouse.html', house=all_house)
+    return redirect("/myhouse/")
+
 
 
 @app.route('/contact/', methods={'get', 'post'})
@@ -585,24 +591,7 @@ def cancel_order(order_id):
     db.session.delete(order)
     db.session.add(new_order)
     db.session.commit()
-
-    now_compare = datetime.now().date()
-    user = current_user
-    result_renter = []
-    renter_list = Order.query.filter_by(renter=user.username).all()
-    for item in renter_list:
-        one = {}
-        one_house = House.query.filter_by(id=item.house_id).first()
-        one['order'] = item
-        one['house'] = one_house
-        if now_compare < item.start_time and item.status == 1:
-            one['cancel'] = 1
-        else:
-            one['cancel'] = 0
-        print(one)
-        result_renter.append(one)
-    # 返回的是List类型
-    return render_template('renting.html', result_renter=result_renter)
+    return redirect('/renting/')
 
 
 # 显示预定我的房子并且状态是已经受理或者已经取消的订单
@@ -625,7 +614,12 @@ def rent_myhouse():
         one['order'] = item
         one['house'] = one_house
         result_seller.append(one)
-    return render_template('rent_house.html', result_seller=result_seller)
+
+    pager_obj = Pagination(request.args.get("page", 1), len(result_seller), request.path, request.args,
+                               per_page_count=2)
+    seller_list = result_seller[pager_obj.start:pager_obj.end]
+    html = pager_obj.page_html()
+    return render_template('rent_house.html', result_seller=seller_list, html=html)
 
 
 # 房主同意取消的操作
@@ -637,17 +631,7 @@ def accept_cancel_order(order_id):
     db.session.delete(order)
     db.session.add(new_order)
     db.session.commit()
-
-    username = current_user.username
-    result_seller = []
-    seller_list = Order.query.filter_by(seller=username).all()
-    for item in seller_list:
-        one = {}
-        one_house = House.query.filter_by(id=item.house_id).first()
-        one['order'] = item
-        one['house'] = one_house
-        result_seller.append(one)
-    return render_template('rent_house.html', result_seller=result_seller)
+    return redirect('/rent_house/')
 
 
 # 房主拒绝取消的操作
@@ -659,17 +643,7 @@ def refuse_cancel(order_id):
     db.session.delete(order)
     db.session.add(new_order)
     db.session.commit()
-
-    username = current_user.username
-    result_seller = []
-    seller_list = Order.query.filter_by(seller=username).all()
-    for item in seller_list:
-        one = {}
-        one_house = House.query.filter_by(id=item.house_id).first()
-        one['order'] = item
-        one['house'] = one_house
-        result_seller.append(one)
-    return render_template('rent_house.html', result_seller=result_seller)
+    return redirect('/rent_house/')
 
 
 # 房主接受订单的操作
@@ -681,17 +655,7 @@ def accept_order(order_id):
     db.session.delete(order)
     db.session.add(new_order)
     db.session.commit()
-
-    username = current_user.username
-    result_seller = []
-    seller_list = Order.query.filter_by(seller=username).all()
-    for item in seller_list:
-        one = {}
-        one_house = House.query.filter_by(id=item.house_id).first()
-        one['order'] = item
-        one['house'] = one_house
-        result_seller.append(one)
-    return render_template('rent_house.html', result_seller=result_seller)
+    return redirect('/rent_house/')
 
 
 # 房主拒绝受理的操作
@@ -703,17 +667,7 @@ def refuse_order(order_id):
     db.session.delete(order)
     db.session.add(new_order)
     db.session.commit()
-
-    username = current_user.username
-    result_seller = []
-    seller_list = Order.query.filter_by(seller=username).all()
-    for item in seller_list:
-        one = {}
-        one_house = House.query.filter_by(id=item.house_id).first()
-        one['order'] = item
-        one['house'] = one_house
-        result_seller.append(one)
-    return render_template('rent_house.html', result_seller=result_seller)
+    return redirect('/rent_house/')
 
 
 # 显示预定我的房子并且状态是已经受理或者已经取消的订单
@@ -737,9 +691,14 @@ def operating():
         one['house'] = one_house
         result_seller.append(one)
 
-    return render_template('operating.html', result_seller=result_seller)
+    pager_obj = Pagination(request.args.get("page", 1), len(result_seller), request.path, request.args, per_page_count=2)
+    seller_list = result_seller[pager_obj.start:pager_obj.end]
+    html = pager_obj.page_html()
+
+    return render_template('operating.html', result_seller=seller_list, html=html)
 
 
+#修改个人信息
 @app.route('/modify_information/<int:user_id>/', methods={'post', 'get'})
 def modify_information(user_id):
     new_name = request.values.get('name_modify').strip()
@@ -778,6 +737,7 @@ def modify_information(user_id):
     return redirect_with_msg('/profile/' + str(user_id) + '/', u'修改成功！', 'change')
 
 
+#首页搜索框
 @app.route('/search_index/', methods={'post', 'get'})
 def search_index():
     print("serach_index")
@@ -802,3 +762,5 @@ def search_index():
 
 
 
+#首页搜索框需要修改
+#首页的四个房子需要从数据库取出

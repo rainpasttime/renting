@@ -6,13 +6,17 @@
 		<link type="text/css" rel="stylesheet" href="/static/css/detail.css"/>
 		<link type="text/css" rel="stylesheet" href="/static/css/ceshi.css"/>
 		<link type="text/css" rel="stylesheet" href="/static/css/window.css"/>
-		<link type="text/css" rel="stylesheet" href="/static/css/date.css"/>
+
 		<link type="text/css" rel="stylesheet" href="/static/css/navigation.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/css/artdialog.css"/>
+		<link type="text/css" rel="stylesheet" href="/static/css/photoshow.css"/>
 
 		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     	<script type="text/javascript" src="/static/js/window.js"></script>
-		<script type="text/javascript" src="/static/js/ceshi.js"></script>
+		<script type="text/javascript" src="/static/js/ceshi.js"></script><link type="text/css" rel="stylesheet" href="/static/css/date.css"/>
+		<script type="text/javascript" src="/static/js/sdcms.photo.js"></script>
+		<script type="text/javascript" src="/static/js/picture.js"></script>
 		<script type="text/javascript" src="/static/js/date.js"></script>
 
 	</head>
@@ -29,6 +33,7 @@
 				<div class="col-md-2 title">
 				</div>
 				<div class="col-md-2 title">
+					<a href="#"></a>
 				</div>
 				<div class="col-md-2 title">
 					<a href="/mainpage/" target="_blank"><font color="#FFFFFF" style="color: rgb(255, 255, 255);" size="4">租房</font></a>
@@ -59,43 +64,57 @@
 						<em>{{ house.house_name }}</em>
 					</h2>
 				</div>
-				<div class="pho_show clear user_unselectable" id="detailImageBox" onselectstart="return false">
-					<div class="w100">
-						<div id="lunbo" class="pos1">
-							<ul id="one">
-								<li class="on"><a href="javascript:;">
+
+					<!--房屋图片显示-->
+				<div>
+					<div class="w740">
+						<div id="originalpic">
+							{% if house.url_one %}
+							<img src="{{ house.url_one }}" alt=""/>
+							{% endif %}
+							{% if house.url_two %}
+							<img src="{{ house.url_two }}" alt=""/>
+							{% endif %}
+							{% if house.url_three %}
+							<img src="{{ house.url_three }}" alt=""/>
+							{% endif %}
+							{% if house.url_four %}
+							<img src="{{ house.url_four }}" alt=""/>
+							{% endif %}
+							{% if house.url_five %}
+							<img src="{{ house.url_five }}" alt=""/>
+							{% endif %}
+							<a id="aPrev" style="cursor:url(/static/image/prev.cur),auto"></a>
+							<a id="aNext" style="cursor:url(/static/image/next.cur),auto"></a>
+						</div>
+
+						<div class="thumbpic">
+							<a href="javascript:;" class="bntprev"></a>
+							<div id="piclist" style="margin-top: 0px;">
+								<ul>
 									{% if house.url_one %}
-									<img src="{{house.url_one}}"></a></li>
+									<li><img src="{{ house.url_one }}" alt="" /><tt></tt></li>
 									{% endif %}
-								{% if house.url_two %}
-								<li><a href="javascript:;"><img src="{{house.url_two}}"></a></li>
-								{% endif %}
-								{% if house.url_three %}
-								<li><a href="javascript:;"><img src="{{house.url_three}}"></a></li>
-								{% endif %}
-								{% if house.url_four %}
-								<li><a href="javascript:;"><img src="{{house.url_four}}"></a></li>
-								{% endif %}
-								{% if house.url_five %}
-								<li><a href="javascript:;"><img src="{{house.url_five}}"></a></li>
-								{% endif %}
-							</ul>
-							<ul id="two">
-								<li class="on"></li>
-								<li></li>
-								<li></li>
-								<li></li>
-								<li></li>
-							</ul>
-							<div class="slider-page">
-							<a href="javascript:;" id="left"></a>
-							<a href="javascript:;" id="right"></a>
+									{% if house.url_two %}
+									<li><img src="{{ house.url_two }}" alt="" /><tt></tt></li>
+									{% endif %}
+									{% if house.url_three %}
+									<li><img src="{{ house.url_three }}" alt="" /><tt></tt></li>
+									{% endif %}
+									{% if house.url_four %}
+									<li><img src="{{ house.url_four }}" alt="" /><tt></tt></li>
+									{% endif %}
+									{% if house.url_five %}
+									<li><img src="{{ house.url_five }}" alt="" /><tt></tt></li>
+									{% endif %}
+								</ul>
 							</div>
+							<a href="javascript:;" class="bntnext"></a>
 						</div>
 					</div>
-					
 				</div>
-				<div id="introducePart">
+				<!-- 简介部分 -->
+				<div id="introducePart" style="margin-top: 50px">
 					<div class="box_white clear detail_infro_item" hideheight="135" showheight="120">
 						<div class="info_l">
 							<span class="info_ico1">
@@ -115,7 +134,7 @@
 								<p> {{house.description }}</p>
 							</div>
 						</div>
-					</div>	
+					</div>
 					<div class="box_gray clear detail_infro_item" hideheight="135" showheight="120">
 						<div class="info_l">
 							<span class="info_ico2">
@@ -128,7 +147,7 @@
 								<p> {{house.address}} </p>
 							</div>
 						</div>
-					</div>	
+					</div>
 					<div class="box_white clear detail_infro_item" hideheight="135" showheight="120">
 						<div class="info_l">
 							<span class="info_ico3">
@@ -203,11 +222,12 @@
 										{% endif %}
 										衣柜
 									</li>
-									
+
 								</ul>
 							</div>
 						</div>
-					</div>	
+					</div>
+
 					<div class="box_gray clear detail_infro_item" hideheight="135" showheight="120">
 						<div class="info_l">
 							<span class="info_ico4">
@@ -226,11 +246,12 @@
 								</p>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</div>
-				
 			</div>
-			<div class="con_r">
+
+
+			<div class="con_r" style="margin-top:30px;">
 				<div class="top_bar clear">
 				</div>
 
@@ -240,7 +261,7 @@
 							&#165;
 							<span> {{ house.price }} </span>
 							<em>起</em>
-						</div>	
+						</div>
 						<div class="day_r">每晚</div>
 					</div>
 					<form id="housedate" method="post">
@@ -281,14 +302,5 @@
 					{% endif %}
 				}
 		</script>
-		<!--
-		<script type="text/javascript">
-			function _confirm() {
-			  win.confirm('确认预定', '请问您确定预定该房屋吗？', function (r) {
-				 return r;
-			 });
-			}
-		</script>
-		-->
 	</body>
 </html>
