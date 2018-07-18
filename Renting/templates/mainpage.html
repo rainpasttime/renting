@@ -120,46 +120,27 @@
 			</div>
 		</form>
 		<!-- offers -->
+		{% if length==0 %}
+		<div class="row" style="margin-top:20px;margin-left:30px;">
+			<div class="col-md-5">
+			</div>
+			<div class="col-md-3">
+				<h4>没有任何符合条件的房子</h4>
+			</div>
+			<div class="col-md-4">
+			</div>
+		</div>
+		{% endif %}
 		<div class="offers" style="margin-top:-10px">
 			<div class="container">
-				{% for item in range(group) %}
-					<div class="row">
-						<div class="col-md-4 offers-left" style="margin-top:30px;">
-							<h3> {{ house[3*item].price }} 元/晚 </h3>
-							<img src="{{house[3*item].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
-							<h4>{{house[3*item].house_name}}</h4>
-							<h4> {{house[3*item].province}}  {{house[3*item].city}} {{house[3*item].district}} {{ house[3*item].address }} </h4>
-							<a class="hvr-shutter-in-horizontal" href="/housedes/{{ house[3*item].id }}/">查看详情</a>
-						</div>
-						<div class="col-md-4 offers-left" style="margin-top:30px;">
-							<h3> {{ house[3*item+1].price }} 元/晚 </h3>
-							<img src="{{house[3*item+1].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
-							<h4>{{house[3*item+1].house_name}}</h4>
-							<h4> {{house[3*item+1].province}}  {{house[3*item+1].city}} {{house[3*item+1].district}} {{ house[3*item+1].address }} </h4>
-							<a class="hvr-shutter-in-horizontal" href="/housedes/{{ house[3*item+1].id }}/">查看详情</a>
-						</div>
-						<div class="col-md-4 offers-left" style="margin-top:30px;">
-							<h3> {{ house[3*item+2].price }} 元/晚 </h3>
-							<img src="{{house[3*item+2].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
-							<h4>{{house[3*item+2].house_name}}</h4>
-							<h4> {{house[3*item+2].province}}  {{house[3*item+2].city}} {{house[3*item+2].district}} {{ house[3*item+2].address }} </h4>
-							<a class="hvr-shutter-in-horizontal" href="/housedes/{{ house[3*item+2].id }}/">查看详情</a>
-						</div>
+				{% for item in house %}
+					<div class="col-md-4 offers-left" style="margin-top:30px;">
+						<h3> {{ item.price }} 元/晚 </h3>
+						<img src="{{item.url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
+						<h4> {{ item.address }} </h4>
+						<a class="hvr-shutter-in-horizontal" href="/housedes/{{ item.id }}/">查看详情</a>
 					</div>
 				{% endfor %}
-				{% if remain>0 %}
-				<div class="row">
-				{% for item in range(remain) %}
-				<div class="col-md-4 offers-left" style="margin-top:30px;">
-					<h3> {{ house[length-1-item].price }} 元/晚 </h3>
-					<img src="{{house[length-1-item].url_one}}" class="img-responsive" alt="" style="height: 230px;width: 408px;">
-					<h4>{{house[length-1-item].house_name}}</h4>
-					<h4> {{house[length-1-item].province}}  {{house[length-1-item].city}} {{house[length-1-item].district}} {{ house[length-1-item].address }} </h4>
-					<a class="hvr-shutter-in-horizontal" href="/housedes/{{ house[length-1-item].id }}/">查看详情</a>
-				</div>
-				{% endfor %}
-				</div>
-				{% endif %}
 			 </div>
 		</div>
 		<ul class="pagination" id="mypage" style="margin-left:600px;">

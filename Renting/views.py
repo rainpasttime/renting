@@ -136,7 +136,7 @@ def history():
         result_renter.append(one)
     # 返回的是List类型
 
-    pager_obj = Pagination(request.args.get("page", 1), len(result_renter), request.path, request.args, per_page_count=2)
+    pager_obj = Pagination(request.args.get("page", 1), len(result_renter), request.path, request.args, per_page_count=7)
     renter_list = result_renter[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
 
@@ -219,9 +219,7 @@ def mainpage():
     index_list = house_list[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
     length = len(index_list)
-    group = int(length / 3)
-    remain = int(length % 3)
-    return render_template("mainpage.html", house=index_list, html=html, msg=msg, length=length, group=group, remain=remain)
+    return render_template("mainpage.html", house=index_list, html=html, msg=msg, length=length)
 
 
 @app.route('/search/', methods={'get', 'post'})
@@ -258,7 +256,8 @@ def search():
         index_list = house_list[pager_obj.start:pager_obj.end]
 
     html = pager_obj.page_html()
-    return render_template("mainpage.html", house=index_list, html=html)
+    length = len(index_list)
+    return render_template("mainpage.html", house=index_list, html=html, length=length)
 
 
 def save_to_local(file, file_name):
@@ -375,7 +374,7 @@ def myhouse():
     '''根据当前用户查询房屋表，得到这个用户的房屋信息返回给前端'''
     user = current_user
     house_list = House.query.filter_by(username=user.username).all()
-    pager_obj = Pagination(request.args.get("page", 1), len(house_list), request.path, request.args, per_page_count=2)
+    pager_obj = Pagination(request.args.get("page", 1), len(house_list), request.path, request.args, per_page_count=7)
     index_list = house_list[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
     return render_template("myhouse.html", house=index_list, html=html)
@@ -512,7 +511,7 @@ def sendemail():
 
     sender = 'se0enW@163.com'       # 可以替换成用户的邮箱地址
     sender_pass = '19961027lingfeng'
-    receiver = '1936249423@qq.com'
+    receiver = '2923336451@qq.com'
 
     if not current_user.is_authenticated:
         return redirect_with_msg('/contact/', u'请先登陆再发送邮箱', 'contact')
@@ -616,7 +615,7 @@ def rent_myhouse():
         result_seller.append(one)
 
     pager_obj = Pagination(request.args.get("page", 1), len(result_seller), request.path, request.args,
-                               per_page_count=2)
+                               per_page_count=7)
     seller_list = result_seller[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
     return render_template('rent_house.html', result_seller=seller_list, html=html)
@@ -691,7 +690,7 @@ def operating():
         one['house'] = one_house
         result_seller.append(one)
 
-    pager_obj = Pagination(request.args.get("page", 1), len(result_seller), request.path, request.args, per_page_count=2)
+    pager_obj = Pagination(request.args.get("page", 1), len(result_seller), request.path, request.args, per_page_count=7)
     seller_list = result_seller[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
 
@@ -755,12 +754,5 @@ def search_index():
     index_list = search_list[pager_obj.start:pager_obj.end]
     html = pager_obj.page_html()
     length = len(index_list)
-    group = int(length / 3)
-    remain = int(length % 3)
-    return render_template("mainpage.html", house=index_list, html=html, msg=msg, length=length, group=group,
-                           remain=remain)
+    return render_template("mainpage.html", house=index_list, html=html, msg=msg, length=length)
 
-
-
-#首页搜索框需要修改
-#首页的四个房子需要从数据库取出

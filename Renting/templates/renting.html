@@ -112,17 +112,17 @@
                 </button>
                 <div class="container">
                     <div class="row">
-                        <table class="table table-striped" style="margin-top:100px">
+                        <table class="table table-striped" style="margin-top:100px;text-align:center;">
                             <thead>
                                 <tr>
-                                    <th>房名</th>
-                                    <th>屋主名称</th>
-                                    <th>类型</th>
-                                    <th>地址</th>
-                                    <th>入住时间</th>
-                                    <th>离开时间</th>
-                                    <th>订单价格</th>
-                                    <th>订单状态</th>
+                                    <th style="text-align:center">房名</th>
+                                    <th style="text-align:center">屋主名称</th>
+                                    <th style="text-align:center">类型</th>
+                                    <th style="text-align:center">地址</th>
+                                    <th style="text-align:center">入住时间</th>
+                                    <th style="text-align:center">离开时间</th>
+                                    <th style="text-align:center">订单价格</th>
+                                    <th style="text-align:center">订单状态</th>
                                     <th style="display:none">取消订单</th>
                                 </tr>
                             </thead>
@@ -138,10 +138,7 @@
                                     {% else %}
                                         <td>床位</td>
                                     {% endif %}
-                                    <td>{{item['house'].province}}省 {{item['house'].city}}市
-                                        {% if item['house'].district !=None %}
-                                        {{item['house'].district}}区
-                                        {% endif %}
+                                    <td>
                                         {{item['house'].address}}
                                     </td>
                                     <td>{{item['order'].start_time}}</td>
@@ -158,10 +155,12 @@
                                     {% endif %}
                                     {% if item['cancel'] ==1 %}
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" >
-                                            <span class="glyphicon glyphicon-pencil">
-                                            </span><a href="/cancel_order/{{item['order'].id}}/" style="color:#FFFFFF">取消订单</a>
-                                       </button>
+                                        <a href="/cancel_order/{{item['order'].id}}/" style="color:#FFFFFF">
+                                            <button type="button" class="btn btn-primary btn-sm" >
+                                                <span class="glyphicon glyphicon-pencil"> </span>
+                                                取消订单
+                                            </button>
+                                        </a>
                                     </td>
                                     {% else %}
                                     <td>

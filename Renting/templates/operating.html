@@ -112,17 +112,17 @@
                 </button>
                 <div class="container">
                     <div class="row">
-                        <table class="table table-striped" style="margin-top:100px">
+                        <table class="table table-striped" style="margin-top:100px;text-align:center">
                             <thead>
                                 <tr>
-                                    <th>房名</th>
-                                    <th>订房人名称</th>
-                                    <th>类型</th>
-                                    <th>地址</th>
-                                    <th>入住时间</th>
-                                    <th>离开时间</th>
-                                    <th>订单价格</th>
-                                    <th>订单状态</th>
+                                    <th style="text-align:center">房名</th>
+                                    <th style="text-align:center">订房人名称</th>
+                                    <th style="text-align:center">类型</th>
+                                    <th style="text-align:center">地址</th>
+                                    <th style="text-align:center">入住时间</th>
+                                    <th style="text-align:center">离开时间</th>
+                                    <th style="text-align:center">订单价格</th>
+                                    <th style="text-align:center">订单状态</th>
                                     <th style="display:none">操作一</th>
                                     <th style="display:none">操作二</th>
                                 </tr>
@@ -159,29 +159,37 @@
                                     {% endif %}
                                     {% if item['order'].status ==1 %}
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" >
-                                            <span class="glyphicon glyphicon-pencil">
-                                            </span><a href="/accept_order/{{item['order'].id}}/" style="color:#FFFFFF">受理订单</a>
-                                       </button>
+                                        <a href="/accept_order/{{item['order'].id}}/" style="color:#000">
+                                            <button type="button" class="btn btn-primary btn-sm" >
+                                                <span class="glyphicon glyphicon-pencil">
+                                                </span>受理订单
+                                            </button>
+                                        </a>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" >
-                                            <span class="glyphicon glyphicon-pencil">
-                                            </span><a href="/refuse_order/{{item['order'].id}}/" style="color:#FFFFFF">不受理订单</a>
-                                       </button>
+                                        <a href="/refuse_order/{{item['order'].id}}/" style="color:#000">
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-pencil">
+                                                </span>不受理订单
+                                            </button>
+                                        </a>
                                     </td>
                                     {% elif  item['order'].status ==3 %}
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" >
-                                            <span class="glyphicon glyphicon-pencil">
-                                            </span><a href="/accept_cancel/{{item['order'].id}}/" style="color:#FFFFFF">同意取消</a>
-                                       </button>
+                                        <a href="/accept_cancel/{{item['order'].id}}/" style="color:#000">
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="/accept_cancel/{{item['order'].id}}/">
+                                                <span class="glyphicon glyphicon-pencil">
+                                                </span>同意取消
+                                            </button>
+                                        </a>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" >
+                                        <a href="/refuse_cancel/{{item['order'].id}}/" style="color:#000">
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="/refuse_cancel/{{item['order'].id}}/">
+                                            </button>
                                             <span class="glyphicon glyphicon-pencil">
-                                            </span><a href="/refuse_cancel/{{item['order'].id}}/" style="color:#FFFFFF">不同意取消</a>
-                                       </button>
+                                            </span>不同意取消
+                                        </a>
                                     </td>
                                     {% endif %}
                                 </tr>
