@@ -16,6 +16,6 @@ function g(id){
 }
 
 function init(){
-	setInterval("changeImg()",3000);
+	setInterval("changeImg()",20000);
 }
 
