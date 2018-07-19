@@ -142,10 +142,7 @@
                                     {% else %}
                                     <td>床位</td>
                                     {% endif %}
-                                    <td>{{item['house'].province}}省 {{item['house'].city}}市
-                                        {% if item['house'].district !=None %}
-                                        {{item['house'].district}}区
-                                        {% endif %}
+                                    <td>
                                         {{item['house'].address}}
                                     </td>
                                     <td>{{item['order'].start_time}}</td>

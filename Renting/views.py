@@ -19,7 +19,7 @@ from sqlalchemy import or_
 @app.route('/index/', methods={'post', 'get'})
 @app.route('/', methods={'post', 'get'})
 def index():
-    house = House.query.limit(4).all()
+    house = House.query.filter_by(status=1).limit(4)
     return render_template('index.html',house=house)
 
 
@@ -278,12 +278,16 @@ def release_buttom():
     tem = request.values.get('rent_type').strip()
     print("house" + house_name)
 
-    if tem == '整租':
+    if tem == '1':
         house_type = 0
-    elif tem == '单间':
+    elif tem == '2':
         house_type = 1
     else:
         house_type = 2
+
+    print("tem"+str(tem))
+    print("tem == '整租'"+str(tem == '整租'))
+    print("house_type:"+str(house_type))
 
     area = int(request.values.get('area').strip())
     people = int(request.values.get('people').strip())
@@ -291,7 +295,7 @@ def release_buttom():
     toilet = int(request.values.get('toilet').strip())
 
     tem = request.values.get('kitchen').strip()
-    if tem == "有":
+    if tem == "1":
         kitchen = 1
     else:
         kitchen = 0
@@ -299,7 +303,7 @@ def release_buttom():
     bed = int(request.values.get('bed').strip())
 
     tem = request.values.get('bed_type').strip()
-    if tem == "单人床":
+    if tem == "1":
         bed_type = 0
     else:
         bed_type = 1
@@ -388,38 +392,39 @@ def modify_house(house_id):
 
 @app.route('/modify_buttom/<int:house_id>/', methods={'post', 'get'})
 def modify_buttom(house_id):
-    house_name = request.values.get('house_name').strip()
+
+    house = House.query.filter_by(id=house_id).first()
+    house.house_name = request.values.get('house_name').strip()
     tem = request.values.get('rent_type').strip()
-    print("house" + house_name)
 
-    if tem == '整租':
-        house_type = 0
-    elif tem == '单间':
-        house_type = 1
+    if tem == '1':
+        house.house_type = 0
+    elif tem == '2':
+        house.house_type = 1
     else:
-        house_type = 2
+        house.house_type = 2
 
-    area = int(request.values.get('area').strip())
-    people = int(request.values.get('people').strip())
-    bedroom = int(request.values.get('bedroom').strip())
-    toilet = int(request.values.get('toilet').strip())
+    house.area = int(request.values.get('area').strip())
+    house.people = int(request.values.get('people').strip())
+    house.bedroom = int(request.values.get('bedroom').strip())
+    house.toilet = int(request.values.get('toilet').strip())
 
     tem = request.values.get('kitchen').strip()
-    if tem == "有":
-        kitchen = 1
+    if tem == "1":
+        house.kitchen = 1
     else:
-        kitchen = 0
+        house.kitchen = 0
 
-    bed = int(request.values.get('bed').strip())
+        house.bed = int(request.values.get('bed').strip())
 
     tem = request.values.get('bed_type').strip()
-    if tem == "单人床":
-        bed_type = 0
+    if tem == "1":
+        house.bed_type = 0
     else:
-        bed_type = 1
+        house.bed_type = 1
 
-    description = request.values.get('description').strip()
-    price = int(request.values.get('price').strip())
+    house.description = request.values.get('description').strip()
+    house.price = int(request.values.get('price').strip())
     facility = ""
     eqipment_list = request.values.getlist("eqipment")
     if "tv" in eqipment_list:
@@ -455,14 +460,12 @@ def modify_buttom(house_id):
     else:
         facility = facility + "0"
 
-    print("one")
+    house.facility = facility
 
-    province = request.values.get('province').strip()
-    city = request.values.get('city').strip()
-    district = request.values.get('district').strip()
-    address = request.values.get('address').strip()
-
-    print("two")
+    house.province = request.values.get('province').strip()
+    house.city = request.values.get('city').strip()
+    house.district = request.values.get('district').strip()
+    house.address = request.values.get('address').strip()
 
     file_list = request.files.getlist('file')
     file_ext = ''
@@ -476,14 +479,18 @@ def modify_buttom(house_id):
             url = save_to_local(file, file_name)
             if url is not None:
                 url_list.append(url)
+    for i in range(len(url_list)):
+        if i == 0:
+            house.url_one = url_list[0]
+        if i == 1:
+            house.url_two = url_list[1]
+        if i == 2:
+            house.url_three = url_list[2]
+        if i == 3:
+            house.url_four = url_list[3]
+        if i ==4:
+            house.url_five = url_list[4]
 
-    print("three")
-
-    house = House.query.filter_by(id=house_id).first()
-    db.session.delete(house)
-    new_house = House(house_name, house_type, area, people, bedroom, toilet, kitchen, bed, bed_type, price,
-                      description, facility, province, city, district, address, house.username, url_list)
-    db.session.add(new_house)
     db.session.commit()
     return redirect("/myhouse/")
 
