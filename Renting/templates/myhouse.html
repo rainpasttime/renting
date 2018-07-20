@@ -81,6 +81,8 @@
                         <ul class="dropdown-menu" role="menu">
                             <!--查看自己租房子的订单-->
                             <li><a href="/renting/">查看我的订单</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -88,6 +90,8 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/rent_house/">查看我的订单</a></li>
                             <li><a href="/operating/">未处理的订单</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -144,10 +148,6 @@
                                     <td>床位</td>
                                     {% endif %}
                                     <td>
-                                        {{item.province}} {{item.city}}
-                                        {% if item.district !=None %}
-                                        {{item.district}}
-                                        {% endif %}
                                         {{item.address}}
                                     </td>
                                     <td>{{item.area}}</td>
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <div style="margin-top:200px">
+        <div style="margin-top:60px">
             <ul class="pagination" id="mypage" style="margin-left:550px;">
 					{{ html| safe }}
             </ul>

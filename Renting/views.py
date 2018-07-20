@@ -568,8 +568,14 @@ def adminprofile():
     msg = ''
     for m in get_flashed_messages(with_categories=False, category_filter=['message']):
         msg += m
-    house_list = House.query.filter_by(status=0).all()
-    return render_template('admin.html', house=house_list, msg=msg)
+    uncheck_list = House.query.filter_by(status=0).all()
+
+    pager_obj = Pagination(request.args.get("page", 1), len(uncheck_list), request.path, request.args,
+                           per_page_count=7)
+    house_list = uncheck_list[pager_obj.start:pager_obj.end]
+    html = pager_obj.page_html()
+
+    return render_template('admin.html', house=house_list, msg=msg, html=html)
 
 
 @app.route('/check/<int:house_id>/')
